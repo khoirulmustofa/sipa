@@ -166,7 +166,7 @@
                     targets: 9,
                     render: function(data, type, row, meta) {
                         let result = "";
-                        if (data) {
+                        if (data == "") {
                             result = `-`;
                         } else {
                             result = `<a href="<?php echo base_url('kerjasama/assets/file_dok/') ?>${data}" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>`;
