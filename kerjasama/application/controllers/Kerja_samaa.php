@@ -15,10 +15,10 @@ class Kerja_sama extends CI_Controller
     {
         $data['menu'] = 'menu_kerja_sama';
         $data['title'] = "Daftar Kerja Sama";
-        $data['load_css'] = 'kerja_sama/css_index';
-        $data['load_js'] = 'kerja_sama/js_index';
+        $data['load_css'] = 'tu/css_index';
+        $data['load_js'] = 'tu/js_index';
 
-        $this->template->load('_template/main_template', 'kerja_sama/view_index', $data);
+        $this->template->load('_template/main_template', 'tu/view_index', $data);
     }
 
     public function get_kerja_sama_json()
@@ -71,7 +71,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('kerja_sama/view_from', $data, true)
+            'view_modal_form' => $this->load->view('tu/view_from', $data, true)
         );
         echo json_encode($data_response);
     }
@@ -199,7 +199,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('kerja_sama/view_from', $data, true)
+            'view_modal_form' => $this->load->view('tu/view_from', $data, true)
         );
         echo json_encode($data_response);
     }
@@ -341,7 +341,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('kerja_sama/view_detail', $data, true)
+            'view_modal_form' => $this->load->view('tu/view_detail', $data, true)
         );
         echo json_encode($data_response);
     }
