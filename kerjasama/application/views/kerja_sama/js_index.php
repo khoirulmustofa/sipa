@@ -96,25 +96,41 @@
                     searchable: false
                 }, {
                     data: "jenis_kerjasama",
+                    orderable: false,
+                    searchable: false
                 }, {
                     data: "lembaga_mitra",
+                    orderable: false,
+                    searchable: false
                 }, {
-                    data: "nama_negara"
+                    data: "nama_negara",
+                    orderable: false,
+                    searchable: false
                 },
                 {
-                    data: "alamat_mitra"
+                    data: "alamat_mitra",
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: "durasi_kerjasama",
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: "tgl_kerjasama",
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: "akhir_kerjasama",
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data: "dokumen_kerjasama",
+                    orderable: false,
+                    searchable: false
                 },
             ],
             columnDefs: [{
