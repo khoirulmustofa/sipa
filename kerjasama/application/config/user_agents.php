@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -59,53 +59,55 @@ $platforms = array(
 // The order of this array should NOT be changed. Many browsers return
 // multiple browser types so we want to identify the sub-type first.
 $browsers = array(
-	'OPR'			=> 'Opera',
-	'Flock'			=> 'Flock',
-	'Edge'			=> 'Edge',
-	'Chrome'		=> 'Chrome',
+	'OPR'    => 'Opera',
+	'Flock'  => 'Flock',
+	'Edge'   => 'Spartan',
+	'Edg'    => 'Edge',
+	'Chrome' => 'Chrome',
 	// Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the user agent string
-	'Opera.*?Version'	=> 'Opera',
-	'Opera'			=> 'Opera',
-	'MSIE'			=> 'Internet Explorer',
-	'Internet Explorer'	=> 'Internet Explorer',
-	'Trident.* rv'	=> 'Internet Explorer',
-	'Shiira'		=> 'Shiira',
-	'Firefox'		=> 'Firefox',
-	'Chimera'		=> 'Chimera',
-	'Phoenix'		=> 'Phoenix',
-	'Firebird'		=> 'Firebird',
-	'Camino'		=> 'Camino',
-	'Netscape'		=> 'Netscape',
-	'OmniWeb'		=> 'OmniWeb',
-	'Safari'		=> 'Safari',
-	'Mozilla'		=> 'Mozilla',
-	'Konqueror'		=> 'Konqueror',
-	'icab'			=> 'iCab',
-	'Lynx'			=> 'Lynx',
-	'Links'			=> 'Links',
-	'hotjava'		=> 'HotJava',
-	'amaya'			=> 'Amaya',
-	'IBrowse'		=> 'IBrowse',
-	'Maxthon'		=> 'Maxthon',
-	'Ubuntu'		=> 'Ubuntu Web Browser'
+	'Opera.*?Version'   => 'Opera',
+	'Opera'             => 'Opera',
+	'MSIE'              => 'Internet Explorer',
+	'Internet Explorer' => 'Internet Explorer',
+	'Trident.* rv'      => 'Internet Explorer',
+	'Shiira'            => 'Shiira',
+	'Firefox'           => 'Firefox',
+	'Chimera'           => 'Chimera',
+	'Phoenix'           => 'Phoenix',
+	'Firebird'          => 'Firebird',
+	'Camino'            => 'Camino',
+	'Netscape'          => 'Netscape',
+	'OmniWeb'           => 'OmniWeb',
+	'Safari'            => 'Safari',
+	'Mozilla'           => 'Mozilla',
+	'Konqueror'         => 'Konqueror',
+	'icab'              => 'iCab',
+	'Lynx'              => 'Lynx',
+	'Links'             => 'Links',
+	'hotjava'           => 'HotJava',
+	'amaya'             => 'Amaya',
+	'IBrowse'           => 'IBrowse',
+	'Maxthon'           => 'Maxthon',
+	'Ubuntu'            => 'Ubuntu Web Browser',
+	'Vivaldi'           => 'Vivaldi',
 );
 
 $mobiles = array(
 	// legacy array, old values commented out
 	'mobileexplorer'	=> 'Mobile Explorer',
-//  'openwave'			=> 'Open Wave',
-//	'opera mini'		=> 'Opera Mini',
-//	'operamini'			=> 'Opera Mini',
-//	'elaine'			=> 'Palm',
+	//  'openwave'			=> 'Open Wave',
+	//	'opera mini'		=> 'Opera Mini',
+	//	'operamini'			=> 'Opera Mini',
+	//	'elaine'			=> 'Palm',
 	'palmsource'		=> 'Palm',
-//	'digital paths'		=> 'Palm',
-//	'avantgo'			=> 'Avantgo',
-//	'xiino'				=> 'Xiino',
+	//	'digital paths'		=> 'Palm',
+	//	'avantgo'			=> 'Avantgo',
+	//	'xiino'				=> 'Xiino',
 	'palmscape'			=> 'Palmscape',
-//	'nokia'				=> 'Nokia',
-//	'ericsson'			=> 'Ericsson',
-//	'blackberry'		=> 'BlackBerry',
-//	'motorola'			=> 'Motorola'
+	//	'nokia'				=> 'Nokia',
+	//	'ericsson'			=> 'Ericsson',
+	//	'blackberry'		=> 'BlackBerry',
+	//	'motorola'			=> 'Motorola'
 
 	// Phones and Manufacturers
 	'motorola'		=> 'Motorola',
@@ -152,6 +154,11 @@ $mobiles = array(
 	'open web'		=> 'Open Web',
 	'openweb'		=> 'OpenWeb',
 	'meizu'                 => 'Meizu',
+	'huawei'                => 'Huawei',
+	'xiaomi'                => 'Xiaomi',
+	'oppo'                  => 'Oppo',
+	'vivo'                  => 'Vivo',
+	'infinix'               => 'Infinix',
 
 	// Operating Systems
 	'android'		=> 'Android',
@@ -212,5 +219,6 @@ $robots = array(
 	'curious george'	=> 'Curious George',
 	'ia_archiver'		=> 'Alexa Crawler',
 	'MJ12bot'		=> 'Majestic-12',
-	'Uptimebot'		=> 'Uptimebot'
+	'Uptimebot'		=> 'Uptimebot',
+	'UptimeRobot'		=> 'UptimeRobot'
 );

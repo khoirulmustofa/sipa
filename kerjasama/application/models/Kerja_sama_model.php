@@ -15,7 +15,7 @@ class Kerja_sama_model extends CI_Model
     {
         $this->datatables->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
         $this->datatables->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
-        $this->datatables->select('date(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as tgl_peringatan');
+        $this->datatables->select("DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as 'tgl_peringatan'");
         $this->datatables->from('tb_kerjasama as a');
         $this->datatables->join('master_negara as b', 'b.id = a.negara_id');
         $this->datatables->join('master_provinsi as c', 'c.master_provinsi_id = a.provinsi_id', 'left');
