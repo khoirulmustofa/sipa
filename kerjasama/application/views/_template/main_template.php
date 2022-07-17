@@ -55,7 +55,7 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><img style="width: 50px;" src="<?php echo base_url('templates') ?>/img/logo/logo.png" alt="logo"> <span>Gentelella Alela!</span></a>
+                        <a href="#" class="site_title"><img style="width: 50px;" src="<?php echo base_url('templates') ?>/img/logo/logo.png" alt="logo"> <span>Halo</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -93,8 +93,8 @@
                                 <li <?php echo $menu == "menu_dashboard" ? 'class="active"' : "" ?>><a href="<?php echo base_url('dashboard') ?>"><i class="fa fa-dashboard"></i> Dashboard</a>
                                 <li <?php echo $menu == "menu_kerja_sama" ? 'class="active"' : "" ?>><a href="<?php echo base_url('kerja_sama') ?>"><i class="fa fa-connectdevelop "></i> Kerja Sama</a>
                                 </li>
-                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url())?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-send-o"></i> Kembali Ke SiPA </a></li>
-                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url('logout'))?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-sign-out"></i> Keluar </a></li>
+                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url()) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-send-o"></i> Kembali Ke SiPA </a></li>
+                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url('logout')) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-sign-out"></i> Keluar </a></li>
                             </ul>
                         </div>
 
@@ -251,7 +251,7 @@
     ?>
 
     <!-- Custom Theme Scripts -->
-    <script src="<?php  base_url('templates/gentelella/build/js/custom.js') ?>"></script>
+    <script src="<?php base_url('templates/gentelella/build/js/custom.js') ?>"></script>
 </body>
 
 </html>
