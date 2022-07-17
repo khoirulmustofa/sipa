@@ -71,7 +71,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('tu/view_from', $data, true)
+            'view_modal_form' => $this->load->view('tu/view_form', $data, true)
         );
         echo json_encode($data_response);
     }

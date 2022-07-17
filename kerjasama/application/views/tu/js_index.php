@@ -312,7 +312,7 @@
     function btn_delete(id) {
         Swal.fire({
             title: 'Question ?',
-            text: "Apakah kamu ingin Menhapus data ini?",
+            text: "Apakah kamu ingin Menghapus data ini?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#00a65a',
