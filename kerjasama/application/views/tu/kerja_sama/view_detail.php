@@ -48,7 +48,18 @@
                 <td><?php echo $durasi_kerjasama." Tahun"; ?></td>
             </tr>
             <?php
-            if (strtotime(date("Y-m-d")) >= strtotime($tgl_peringatan)) {
+
+            if ($jenis_kerjasama == "MOA") {
+                // peringatan 3 bulan
+                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
+                $tanggal_dikurangi->sub(new DateInterval('P3M')); // 3 bulan                
+            } else {
+                // peringatan 6 bulan
+                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
+                $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan                
+            }
+
+            if (strtotime(date("Y-m-d")) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
                 $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) ." (Segera berakhir)";
             } else {
                 $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);

@@ -48,8 +48,6 @@ class Kerja_sama extends CI_Controller
             // cek jenis kerja sama
             if ($kerja_sama->jenis_kerjasama == "MOA") {
                 // peringatan 3 bulan
-                // $tanggal_dikurangi = date("Y-m-d", strtotime("-3 months"));
-                // date_create($date);
                 $tanggal_dikurangi = new DateTime($akhir_kerjasama);
                 $tanggal_dikurangi->sub(new DateInterval('P3M')); // 3 bulan
                 if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
