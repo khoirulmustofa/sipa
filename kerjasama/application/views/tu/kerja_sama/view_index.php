@@ -5,16 +5,10 @@
                 <h3><?php echo $title ?></h3>
 
             </div>
-        </div>
-        <p><?php echo $this->session->login_smpu; ?>
-            <br>
-            <?php echo $this->session->status_login; ?>
-        </p>
-        <i class="fa fa-edit"></i>
+        </div>        
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-
                     <div class="x_content">
                         <div class="row">
                             <div class="col-md-4">
@@ -56,7 +50,7 @@
                                 </tr>
                             </thead>
                            
-                            <!-- <tfoot>
+                            <tfoot>
                                 <tr>
                                     <th><b>NO</b></th>
                                     <th><b>AKSI</b></th>
@@ -69,7 +63,7 @@
                                     <th><b>AKHIR KERJASAMA</b></th>
                                     <th><b>DOKUMEN KERJASAMA</b></th>
                                 </tr>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
                 </div>
