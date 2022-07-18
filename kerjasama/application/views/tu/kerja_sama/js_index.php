@@ -38,7 +38,7 @@
                     tahun_kerja_sama: $("[name='tahun_kerja_sama']").val()
                 },
                 "type": "POST"
-            },            
+            },
         });
     }
 
@@ -165,13 +165,13 @@
 
     function btn_delete(id) {
         Swal.fire({
-            title: 'Question ?',
-            text: "Apakah kamu ingin Menghapus data ini?",
+            title: 'Question?',
+            text: "Apakah anda ingin menghapus data ini?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#00a65a',
             cancelButtonColor: '#dd4b39',
-            confirmButtonText: 'Yes, Yakin!',
+            confirmButtonText: 'Ya, Yakin!',
             allowOutsideClick: false,
             allowEscapeKey: false
         }).then((result) => {

@@ -60,7 +60,7 @@ class Kerja_sama extends CI_Controller
                 $tanggal_dikurangi = new DateTime($akhir_kerjasama);
                 $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan
                 if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
-                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">'. format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
+                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
                 } else {
                     $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
                 }
@@ -319,7 +319,7 @@ class Kerja_sama extends CI_Controller
 
                 $data_response =  array(
                     'status' => true,
-                    'messege' => '<p>Tambah Kerja Sama Berhasil Disimpan</p>',
+                    'messege' => '<p>Kerja Sama Berhasil Diubah</p>',
                 );
                 echo json_encode($data_response);
             } else {
@@ -362,7 +362,7 @@ class Kerja_sama extends CI_Controller
 
                     $data_response =  array(
                         'status' => true,
-                        'messege' => '<p>Tambah Kerja Sama Berhasil Disimpan</p>',
+                        'messege' => '<p>Tambah Kerja Sama Berhasil Diubah</p>',
                     );
                     echo json_encode($data_response);
                 }

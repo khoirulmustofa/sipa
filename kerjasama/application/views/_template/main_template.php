@@ -27,7 +27,7 @@
     <?php if ($load_css != '') {
         $this->load->view($load_css);
     }
-    ?>    
+    ?>
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url('templates/gentelella') ?>/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -38,7 +38,7 @@
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><img style="width: 50px;" src="<?php echo base_url('templates') ?>/img/logo/logo.png" alt="logo"> <span>Halo</span></a>
+                        <center><a href="#" class="site_title"><img style="width: 50px;" src="<?php echo base_url('templates') ?>/img/logo/logo.png" alt="logo"></a></center>
                     </div>
 
                     <div class="clearfix"></div>

@@ -5,7 +5,7 @@
                 <h3><?php echo $title ?></h3>
 
             </div>
-        </div>        
+        </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <hr>
-                        <p><b>Keterangan :</b> Peringatan MOU adalah 3 Bulan sebelum akhir masa kerja sama. dll ..........</p>
+                        <p><b>Keterangan :</b> Peringatan akan tampil H-3 bulan (MoA) dan H-6 (MoU) sebelum akhir masa kerja sama.</p>
                         <button type="button" onclick="btn_tambah_kerja_sama()" class="btn btn-success"> Tambah Kerja Sama</button>
                         <table id="dt_kerja_sama" class="table table-striped table-bordered" style="width:100%">
                             <thead>
@@ -50,7 +50,7 @@
                                     <th><b>DOKUMEN KERJASAMA</b></th>
                                 </tr>
                             </thead>
-                           
+
                             <tfoot>
                                 <tr>
                                     <th><b>NO</b></th>
