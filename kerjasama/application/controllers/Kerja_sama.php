@@ -34,6 +34,7 @@ class Kerja_sama extends CI_Controller
         $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
 
         header('Content-Type: application/json');
+        // ambil data dari model Kerja_sama_model
         $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama, $tahun_kerja_sama);
         $data = array();
         $no = $this->input->post('start');
@@ -43,11 +44,28 @@ class Kerja_sama extends CI_Controller
         //looping data mahasiswa
         foreach ($list as $kerja_sama) {
             $btn_peringatan = '';
-            if ($date_now < $kerja_sama->tgl_peringatan) {
-              $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">'.format_tgl_dMY($kerja_sama->akhir_kerjasama).'</button>';
+            $akhir_kerjasama = $kerja_sama->akhir_kerjasama;
+            // cek jenis kerja sama
+            if ($kerja_sama->jenis_kerjasama == "MOA") {
+                // peringatan 3 bulan
+                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
+                $tanggal_dikurangi->sub(new DateInterval('P3M')); // 3 bulan
+                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
+                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
+                } else {
+                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
+                }
             } else {
-                $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">'.format_tgl_dMY($kerja_sama->akhir_kerjasama).'</button>';
+                // peringatan 6 bulan
+                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
+                $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan
+                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
+                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">'. format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
+                } else {
+                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
+                }
             }
+
             $no++;
             $row = array();
 
@@ -60,10 +78,10 @@ class Kerja_sama extends CI_Controller
             $row[] = $kerja_sama->lembaga_mitra;
             $row[] = $kerja_sama->alamat_mitra;
             $row[] = $kerja_sama->nama_negara;
-            $row[] = $kerja_sama->durasi_kerjasama." Tahun";
+            $row[] = $kerja_sama->durasi_kerjasama . " Tahun";
             $row[] = format_tgl_dMY($kerja_sama->tgl_kerjasama);
             $row[] = $btn_peringatan;
-            $row[] = '<a href="'.base_url('kerjasama/assets/file_dok/'.$kerja_sama->dokumen_kerjasama).'" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>';
+            $row[] = '<a href="' . base_url('kerjasama/assets/file_dok/' . $kerja_sama->dokumen_kerjasama) . '" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>';
             $data[] = $row;
         }
         $output = array(
