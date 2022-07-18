@@ -63,7 +63,7 @@ class Kerja_sama extends CI_Controller
             $row[] = $kerja_sama->durasi_kerjasama;
             $row[] = format_tgl_dMY($kerja_sama->tgl_kerjasama);
             $row[] = $btn_peringatan;
-            $row[] = $kerja_sama->tgl_kerjasama;
+            $row[] = '<a href="'.base_url('kerjasama/assets/file_dok/'.$kerja_sama->dokumen_kerjasama).'" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>';
             $data[] = $row;
         }
         $output = array(
