@@ -34,33 +34,42 @@ class Kerja_sama extends CI_Controller
         $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
 
         header('Content-Type: application/json');
-        $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama,$tahun_kerja_sama);
+        $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama, $tahun_kerja_sama);
         $data = array();
         $no = $this->input->post('start');
+
+        $date_now = date("Y-m-d"); // this format is string comparable
+
         //looping data mahasiswa
         foreach ($list as $kerja_sama) {
+            $btn_peringatan = '';
+            if ($date_now < $kerja_sama->tgl_peringatan) {
+              $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">'.format_tgl_dMY($kerja_sama->akhir_kerjasama).'</button>';
+            } else {
+                $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">'.format_tgl_dMY($kerja_sama->akhir_kerjasama).'</button>';
+            }
             $no++;
             $row = array();
-            
+
             //row pertama akan kita gunakan untuk btn edit dan delete
             $row[] = $no;
-            $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-eye"></i> </a>
-                        <a class="btn btn-warning btn-sm" onclick="btn_edit('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-edit"></i> </a>
-                        <a class="btn btn-danger btn-sm" onclick="btn_delete('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-trash"></i> </a>';
+            $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>
+                        <a class="btn btn-warning btn-sm" onclick="btn_edit(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-edit"></i> </a>
+                        <a class="btn btn-danger btn-sm" onclick="btn_delete(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-trash"></i> </a>';
             $row[] = $kerja_sama->jenis_kerjasama;
             $row[] = $kerja_sama->lembaga_mitra;
             $row[] = $kerja_sama->alamat_mitra;
             $row[] = $kerja_sama->nama_negara;
             $row[] = $kerja_sama->durasi_kerjasama;
-            $row[] = $kerja_sama->tgl_kerjasama;
-            $row[] = $kerja_sama->tgl_kerjasama;
+            $row[] = format_tgl_dMY($kerja_sama->tgl_kerjasama);
+            $row[] = $btn_peringatan;
             $row[] = $kerja_sama->tgl_kerjasama;
             $data[] = $row;
         }
         $output = array(
             "draw" => $this->input->post('draw'),
             "recordsTotal" => $this->Kerja_sama_model->count_all(),
-            "recordsFiltered" => $this->Kerja_sama_model->count_filtered($jenis_kerjasama,$tahun_kerja_sama),
+            "recordsFiltered" => $this->Kerja_sama_model->count_filtered($jenis_kerjasama, $tahun_kerja_sama),
             "data" => $data,
         );
         //output to json format
