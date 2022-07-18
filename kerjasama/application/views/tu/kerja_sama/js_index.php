@@ -19,174 +19,28 @@
     setInterval(function() {
         $(".berkedip").toggle();
     }, 300);
+
     $(document).ready(function() {
-
-        api_data_table();
-        $("#dt_kerja_sama").DataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#dt_kerja_sama_filter input')
-                    .off(".DT")
-                    .on("keyup.DT", function(e) {
-                        if (e.keyCode == 13) {
-                            api.search(this.value).draw();
-                        }
-                    });
-            },
-            oLanguage: {
-                sProcessing: '<i class="fas fa-circle-notch"></i><span>Loading...</span> '
-            },
-            dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-6'i><'col-sm-6'p>>",
-            bDestroy: true,
-            processing: true,
-            serverSide: true,
-            responsive: false,
-            lengthChange: true,
-            autoWidth: false,
-            lengthMenu: [
-                [10, 25, 50, 100, 200, -1],
-                [10, 25, 50, 100, 200, "All"]
-            ],
-            buttons: [{
-                    extend: "copy",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4]
-                    }
-                }, {
-                    extend: "csv",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4]
-                    }
-                },
-                {
-                    extend: "excel",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4]
-                    }
-                },
-                {
-                    extend: "pdf",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4]
-                    }
-                },
-                {
-                    extend: "print",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4]
-                    }
-                },
-
-            ],
-            ajax: {
-                url: "<?php echo base_url('Kerja_sama/get_kerja_sama_json') ?>",
-                type: "GET",
-                dataType: "JSON",
-            },
-            columns: [{
-                    data: "id_kerjasama",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "id_kerjasama",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "jenis_kerjasama",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "lembaga_mitra",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "nama_negara",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "alamat_mitra",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "durasi_kerjasama",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "tgl_kerjasama",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "akhir_kerjasama",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "dokumen_kerjasama",
-                    orderable: false,
-                    searchable: false
-                },
-            ],
-            columnDefs: [{
-                    targets: 1,
-                    render: function(data, type, row, meta) {
-                        let result = `<button type="button" onclick="btn_detail('${data}')" class="btn btn-round btn-info btn-sm"><i class="fa fa-eye"></i> Detail</button>
-                    <button type="button" onclick="btn_edit('${data}')" class="btn btn-round btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</button>
-                    <button type="button" onclick="btn_delete('${data}')" class="btn btn-round btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete</button>`;
-                        return result;
-                    }
-                },
-                {
-                    targets: 7,
-                    render: function(data, type, row, meta) {
-                        return getFormattedDate(data);
-                    }
-                },
-                {
-                    targets: 8,
-                    render: function(data, type, row, meta) {
-                        let specific_date = new Date(row['tgl_peringatan']);
-                        let current_date = new Date();
-                        let result = "";
-                        if (Date.parse(specific_date) > Date.parse(current_date)) {
-                            result = `<button type="button" class="btn btn-success btn-sm">${getFormattedDate(data)}</button>`;
-                        } else {
-                            result = `<button type="button" class="btn btn-danger btn-sm berkedip">${getFormattedDate(data)}</button>`;
-                        }
-                        return result;
-                    }
-                },
-                {
-                    targets: 9,
-                    render: function(data, type, row, meta) {
-                        let result = "";
-                        if (data == "") {
-                            result = `-`;
-                        } else {
-                            result = `<a href="<?php echo base_url('kerjasama/assets/file_dok/') ?>${data}" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>`;
-                        }
-                        return result;
-                    }
-                },
-            ],
-            order: [
-                // [1, 'asc']
-            ],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
-            }
-        });
+        load_data_kerja_sama();
     });
+
+    function load_data_kerja_sama() {
+        $('#dt_kerja_sama').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "bDestroy": true,
+            "order": [],
+            "ajax": {
+                //panggil method ajax list dengan ajax
+                "url": '<?php echo base_url('Kerja_sama/get_kerja_sama_json') ?>',
+                "data": {
+                    jenis_kerjasama: $("[name='jenis_kerjasama']").val(),
+                    tahun_kerja_sama: $("[name='tahun_kerja_sama']").val()
+                },
+                "type": "POST"
+            },            
+        });
+    }
 
     function getFormattedDate(date) {
         var dt = new Date(date);

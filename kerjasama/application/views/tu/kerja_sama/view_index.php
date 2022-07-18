@@ -16,8 +16,31 @@
                 <div class="x_panel">
 
                     <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="fullname">Jenis Kerja Sama :</label>
+                                <select class="form-control" name="jenis_kerjasama">
+                                    <option value="">--Pilih Kerja Sama--</option>
+                                    <option value="MOU">MOU</option>
+                                    <option value="MOA">MOA</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fullname">Tahun Kerja Sama :</label>
+                                <select class="form-control" name="tahun_kerja_sama">
+                                    <option value="">--Pilih Tahun--</option>
+                                    <?php foreach ($tahun_kerja_sama_result as $key => $value) {
+                                        echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
+                                    } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="load_data_kerja_sama()" class="btn btn-secondary"><i class="fa fa-send-o"></i> Filter</button>
+                            </div>
+                        </div>
+                        <hr>
                         <button type="button" onclick="btn_tambah_kerja_sama()" class="btn btn-success"> Tambah Kerja Sama</button>
-                        <table id="dt_kerja_sama" class="table table-striped table-bordered">
+                        <table id="dt_kerja_sama" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th><b>NO</b></th>
@@ -25,28 +48,28 @@
                                     <th><b>JENIS KERJASAMA</b></th>
                                     <th><b>LEMBAGA MITRA</b></th>
                                     <th><b>ALAMAT MITRA</b></th>
-                                    <th><b>NEGARA</b></th>                                                                      
+                                    <th><b>NEGARA</b></th>
                                     <th><b>DURASI KERJASAMA (TAHUN)</b></th>
                                     <th><b>AWAL KERJASAMA</b></th>
                                     <th><b>AKHIR KERJASAMA</b></th>
                                     <th><b>DOKUMEN KERJASAMA</b></th>
                                 </tr>
                             </thead>
-
-                            <tfoot>
+                           
+                            <!-- <tfoot>
                                 <tr>
-                                <th><b>NO</b></th>
+                                    <th><b>NO</b></th>
                                     <th><b>AKSI</b></th>
                                     <th><b>JENIS KERJASAMA</b></th>
                                     <th><b>LEMBAGA MITRA</b></th>
                                     <th><b>ALAMAT MITRA</b></th>
-                                    <th><b>NEGARA</b></th>                                                                      
+                                    <th><b>NEGARA</b></th>
                                     <th><b>DURASI KERJASAMA (TAHUN)</b></th>
                                     <th><b>AWAL KERJASAMA</b></th>
                                     <th><b>AKHIR KERJASAMA</b></th>
                                     <th><b>DOKUMEN KERJASAMA</b></th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>

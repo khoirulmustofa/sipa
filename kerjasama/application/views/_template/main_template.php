@@ -27,24 +27,7 @@
     <?php if ($load_css != '') {
         $this->load->view($load_css);
     }
-    ?>
-    <script type="text/javascript">
-        function api_data_table() {
-            $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
-                return {
-                    "iStart": oSettings._iDisplayStart,
-                    "iEnd": oSettings.fnDisplayEnd(),
-                    "iLength": oSettings._iDisplayLength,
-                    "iTotal": oSettings.fnRecordsTotal(),
-                    "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                    "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                    "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-                };
-            };
-        }
-    </script>
-
-
+    ?>    
     <!-- Custom Theme Style -->
     <link href="<?php echo base_url('templates/gentelella') ?>/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -251,7 +234,7 @@
     ?>
 
     <!-- Custom Theme Scripts -->
-    <script src="<?php base_url('templates/gentelella/build/js/custom.js') ?>"></script>
+    <script src="<?php base_url('templates/gentelella/build/js/custom.min.js') ?>"></script>
 </body>
 
 </html>

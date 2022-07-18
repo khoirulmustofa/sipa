@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 $active_group = 'default';
 $query_builder = TRUE;
@@ -10,6 +10,9 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'ftuir3',
+	// 'username' => 'smpu',
+	// 'password' => 'smpu@2021',
+	// 'database' => 'smpu',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -21,7 +24,7 @@ $db['default'] = array(
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
-	'stricton' => FALSE,
+	'stricton' => TRUE,
 	'failover' => array(),
 	'save_queries' => TRUE
 );
