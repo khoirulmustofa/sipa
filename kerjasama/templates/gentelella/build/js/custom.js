@@ -5051,7 +5051,7 @@ if (typeof NProgress != 'undefined') {
 		init_skycons();
 		init_select2();
 		init_validator();
-		// init_DataTables();
+		init_DataTables();
 		init_chart_doughnut();
 		init_gauge();
 		init_PNotify();

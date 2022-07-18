@@ -13,21 +13,58 @@ class Kerja_sama extends CI_Controller
 
     public function index()
     {
+        // load model
+        $this->load->model('Kerja_sama_model');
+
+        $tahun_kerja_sama_result = $this->Kerja_sama_model->get_tahun_kerja_sama()->result();
+
         $data['menu'] = 'menu_kerja_sama';
         $data['title'] = "Daftar Kerja Sama";
-        $data['load_css'] = 'tu/css_index';
-        $data['load_js'] = 'tu/js_index';
+        $data['load_css'] = 'tu/kerja_sama/css_index';
+        $data['load_js'] = 'tu/kerja_sama/js_index';
+        $data['tahun_kerja_sama_result'] = $tahun_kerja_sama_result;
 
-        $this->template->load('_template/main_template', 'tu/view_index', $data);
+        $this->template->load('_template/main_template', 'tu/kerja_sama/view_index', $data);
     }
 
     public function get_kerja_sama_json()
     {
-        // load model
         $this->load->model('Kerja_sama_model');
+        $jenis_kerjasama = $this->input->post('jenis_kerjasama', TRUE);
+        $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
+
         header('Content-Type: application/json');
-        // query tbl tb_kerjasama
-        echo $this->Kerja_sama_model->get_tb_kerjasama();
+        $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama,$tahun_kerja_sama);
+        $data = array();
+        $no = $this->input->post('start');
+        //looping data mahasiswa
+        foreach ($list as $kerja_sama) {
+            $no++;
+            $row = array();
+            
+            //row pertama akan kita gunakan untuk btn edit dan delete
+            $row[] = $no;
+            $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-eye"></i> </a>
+                        <a class="btn btn-warning btn-sm" onclick="btn_edit('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-edit"></i> </a>
+                        <a class="btn btn-danger btn-sm" onclick="btn_delete('."'".$kerja_sama->id_kerjasama."'".')"><i class="fa fa-trash"></i> </a>';
+            $row[] = $kerja_sama->jenis_kerjasama;
+            $row[] = $kerja_sama->lembaga_mitra;
+            $row[] = $kerja_sama->alamat_mitra;
+            $row[] = $kerja_sama->nama_negara;
+            $row[] = $kerja_sama->durasi_kerjasama;
+            $row[] = $kerja_sama->tgl_kerjasama;
+            $row[] = $kerja_sama->tgl_kerjasama;
+            $row[] = $kerja_sama->tgl_kerjasama;
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->Kerja_sama_model->count_all(),
+            "recordsFiltered" => $this->Kerja_sama_model->count_filtered($jenis_kerjasama,$tahun_kerja_sama),
+            "data" => $data,
+        );
+        //output to json format
+        $this->output->set_output(json_encode($output));
     }
 
     public function buat_kerja_sama()
@@ -71,7 +108,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('tu/view_form', $data, true)
+            'view_modal_form' => $this->load->view('tu/kerja_sama/view_form', $data, true)
         );
         echo json_encode($data_response);
     }
@@ -109,7 +146,7 @@ class Kerja_sama extends CI_Controller
             // $config['max_width']            = 1024;
             // $config['max_height']           = 768;
 
-            $this->upload->initialize($config);
+            // $this->upload->initialize($config);
             $this->load->library('upload', $config);
 
             if (!$this->upload->do_upload('dokumen_kerjasama')) {
@@ -199,7 +236,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('tu/view_from', $data, true)
+            'view_modal_form' => $this->load->view('tu/kerja_sama/view_form', $data, true)
         );
         echo json_encode($data_response);
     }
@@ -341,7 +378,7 @@ class Kerja_sama extends CI_Controller
         );
         $data_response =  array(
             'status' => true,
-            'view_modal_form' => $this->load->view('tu/view_detail', $data, true)
+            'view_modal_form' => $this->load->view('tu/kerja_sama/view_detail', $data, true)
         );
         echo json_encode($data_response);
     }
