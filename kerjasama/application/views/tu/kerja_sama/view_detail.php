@@ -45,13 +45,13 @@
             </tr>
             <tr>
                 <td>Durasi Kerjasama</td>
-                <td><?php echo $durasi_kerjasama; ?></td>
+                <td><?php echo $durasi_kerjasama." Tahun"; ?></td>
             </tr>
             <?php
             if (strtotime(date("Y-m-d")) >= strtotime($tgl_peringatan)) {
-                $tgl_peringtan = '<button type="button" class="btn btn-danger btn-block btn-sm berkedip">'.date('d F Y', strtotime($akhir_kerjasama)).'</button>';
+                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) ." (Segera berakhir)";
             } else {
-                $tgl_peringtan = '<button type="button" class="btn btn-success btn-block btn-sm">'.date('d F Y', strtotime($akhir_kerjasama)).'</button>';
+                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
             }
             ?>
             <tr>

@@ -33,6 +33,7 @@
                             </div>
                         </div>
                         <hr>
+                        <p><b>Keterangan :</b> Peringatan MOU adalah 3 Bulan sebelum akhir masa kerja sama. dll ..........</p>
                         <button type="button" onclick="btn_tambah_kerja_sama()" class="btn btn-success"> Tambah Kerja Sama</button>
                         <table id="dt_kerja_sama" class="table table-striped table-bordered" style="width:100%">
                             <thead>
