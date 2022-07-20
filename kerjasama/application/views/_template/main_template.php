@@ -74,7 +74,8 @@
                             <h3>General</h3>
                             <ul class="nav side-menu">
                                 <li <?php echo $menu == "menu_dashboard" ? 'class="active"' : "" ?>><a href="<?php echo base_url('dashboard') ?>"><i class="fa fa-dashboard"></i> Dashboard</a>
-                                <li <?php echo $menu == "menu_kerja_sama" ? 'class="active"' : "" ?>><a href="<?php echo base_url('kerja_sama') ?>"><i class="fa fa-connectdevelop "></i> Kerja Sama</a>
+                                <li <?php echo $menu == "menu_kerja_sama" ? 'class="active"' : "" ?>><a href="<?php echo base_url('kerja_sama') ?>"><i class="fa fa-connectdevelop"></i> Kerja Sama</a>
+                                <li <?php echo $menu == "menu_jenis_kegiatan" ? 'class="active"' : "" ?>><a href="<?php echo base_url('prodi/kegiatan') ?>"><i class="fa fa-tasks"></i> Kegiatan</a>
                                 </li>
                                 <li><a href="<?php echo str_replace("kerjasama/", "", base_url()) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-send-o"></i> Kembali Ke SiPA </a></li>
                                 <li><a href="<?php echo str_replace("kerjasama/", "", base_url('logout')) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-sign-out"></i> Keluar </a></li>
