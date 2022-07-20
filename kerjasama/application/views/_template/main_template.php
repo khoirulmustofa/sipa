@@ -234,7 +234,7 @@
     ?>
 
     <!-- Custom Theme Scripts -->
-    <script src="<?php base_url('templates/gentelella/build/js/custom.min.js') ?>"></script>
+    <script src="<?php echo base_url('templates/gentelella/build/js/custom.js') ?>"></script>
 </body>
 
 </html>
