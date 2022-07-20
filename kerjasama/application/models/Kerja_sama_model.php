@@ -12,14 +12,14 @@ class Kerja_sama_model extends CI_Model
     }
 
     //set kolom order, kolom pertama saya null untuk kolom edit dan hapus
-    var $column_order = array(null,'jenis_kerjasama','lembaga_mitra',null,'nama_negara',null,'tgl_kerjasama','akhir_kerjasama',null);
+    var $column_order = array(null, 'jenis_kerjasama', 'lembaga_mitra', null, 'nama_negara', null, 'tgl_kerjasama', 'akhir_kerjasama', null);
 
     var $column_search = array('lembaga_mitra', 'negara_id');
     // default order 
     var $order = array('id_kerjasama' => 'asc');
 
 
-    private function _get_datatables_query($jenis_kerjasama,$tahun_kerja_sama)
+    private function _get_datatables_query($jenis_kerjasama, $tahun_kerja_sama)
     {
         $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
         $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
@@ -64,18 +64,18 @@ class Kerja_sama_model extends CI_Model
         }
     }
 
-    function get_datatables($jenis_kerjasama,$tahun_kerja_sama)
+    function get_datatables($jenis_kerjasama, $tahun_kerja_sama)
     {
-        $this->_get_datatables_query($jenis_kerjasama,$tahun_kerja_sama);
+        $this->_get_datatables_query($jenis_kerjasama, $tahun_kerja_sama);
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
         $query = $this->db->get();
         return $query->result();
     }
 
-    function count_filtered($jenis_kerjasama,$tahun_kerja_sama)
+    function count_filtered($jenis_kerjasama, $tahun_kerja_sama)
     {
-        $this->_get_datatables_query($jenis_kerjasama,$tahun_kerja_sama);
+        $this->_get_datatables_query($jenis_kerjasama, $tahun_kerja_sama);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -151,11 +151,14 @@ class Kerja_sama_model extends CI_Model
         return  $this->db->get();
     }
 
-    public function get_count_kerja_sama()
+    public function get_count_kerja_sama($tahun_kerja_sama = "")
     {
         $this->db->select("COUNT(IF(jenis_kerjasama = 'MOU', jenis_kerjasama, NULL)) AS MOU");
         $this->db->select("COUNT(IF(jenis_kerjasama = 'MOA', jenis_kerjasama, NULL)) AS MOA");
         $this->db->from("tb_kerjasama");
+        if ($tahun_kerja_sama != "") {
+            $this->db->where("YEAR(tgl_kerjasama)", $tahun_kerja_sama);
+        }
         return  $this->db->get();
     }
 }

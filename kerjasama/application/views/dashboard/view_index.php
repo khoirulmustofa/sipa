@@ -26,21 +26,36 @@
                         <div class="title_left">
                             <h3>Total Kerja Sama</h3>
                         </div>
+                        <div class="row">                            
+                            <div class="col-md-4">
+                                <label for="fullname">Tahun Kerja Sama :</label>
+                                <select class="form-control" name="tahun_kerja_sama">
+                                    <option value="">--Pilih Tahun--</option>
+                                    <?php foreach ($tahun_kerja_sama_result as $key => $value) {
+                                        echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
+                                    } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" onclick="btn_load_kerja_sama()" class="btn btn-secondary"><i class="fa fa-send-o"></i> Filter</button>
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <div class="animated flipInY col-lg-6 col-md-6 col-sm-6  ">
-                                <div class="tile-stats">
+                                <div class="tile-stats" style="background: #00C9FF;background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);background: linear-gradient(to right, #92FE9D, #00C9FF);">
                                     <div class="icon"><i class="fa fa-folder-open-o"></i>
                                     </div>
-                                    <div class="count"><?php echo $jumlah_kerja_sama_row->MOU ?></div>
-                                    <h3>MOU</h3>
+                                    <div class="count" style="color: #fff;" id="mou">0</div>
+                                    <h3 style="color: #fff;">MOU</h3>
                                 </div>
                             </div>
                             <div class="animated flipInY col-lg-6 col-md-6 col-sm-6  ">
-                                <div class="tile-stats">
+                                <div class="tile-stats" style="background: #f46b45;background: -webkit-linear-gradient(to right, #eea849, #f46b45);background: linear-gradient(to right, #eea849, #f46b45);">
                                     <div class="icon"><i class="fa fa-folder-open-o"></i>
                                     </div>
-                                    <div class="count"><?php echo $jumlah_kerja_sama_row->MOA ?></div>
-                                    <h3>MOA</h3>
+                                    <div class="count" style="color: #fff;" id="moa">0</div>
+                                    <h3 style="color: #fff;">MOA</h3>
                                 </div>
                             </div>
                         </div>
