@@ -151,18 +151,11 @@ class Kerja_sama_model extends CI_Model
         return  $this->db->get();
     }
 
-    public function get_tb_kerjasama_dll_by_id($id_kerjasama = "")
+    public function get_count_kerja_sama()
     {
-        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
-        $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
-        $this->db->select('DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as tgl_peringatan');
-        $this->db->from("tb_kerjasama as a");
-        $this->db->join('master_negara as b', 'b.id = a.negara_id');
-        $this->db->join('master_provinsi as c', 'c.master_provinsi_id = a.provinsi_id', 'left');
-        $this->db->join('master_kota_kabupaten as d', 'd.master_kota_kabupaten_id = a.kabupaten_kota_id', 'left');
-        $this->db->join('master_kecamatan as e', 'e.master_kecamatan_id = a.kecamatan_id', 'left');
-        $this->db->join('master_kelurahan as f', 'f.master_kelurahan_id = a.kelurahan_id', 'left');
-        $this->db->where("a.id_kerjasama", $id_kerjasama);
+        $this->db->select("COUNT(IF(jenis_kerjasama = 'MOU', jenis_kerjasama, NULL)) AS MOU");
+        $this->db->select("COUNT(IF(jenis_kerjasama = 'MOA', jenis_kerjasama, NULL)) AS MOA");
+        $this->db->from("tb_kerjasama");
         return  $this->db->get();
     }
 }
