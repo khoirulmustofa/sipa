@@ -1,5 +1,5 @@
 <?php
-$attribute = array('role' => 'form', 'id' => 'form_kerja_sama');
+$attribute = array('role' => 'form', 'id' => 'form_kegiatan');
 echo form_open_multipart($action, $attribute);
 ?>
 <div class="modal-content">
@@ -11,9 +11,9 @@ echo form_open_multipart($action, $attribute);
     <div class="modal-body">
         <div class="form-group">
             <label>Jenis Kegiatan</label>
-            <select class="form-control" name="id_kegiatan" id="id_kegiatan">
+            <select class="form-control" name="jenis_kegiatan" id="jenis_kegiatan">
                 <option value="">--Pilih Kegiatan--</option>
-                <option value="Pendidikan/Pengajaran">Pendidikan/Pengajaran</option>
+                <option value="Pendidikan/Pengajaran" <?php echo $jenis_kegiatan == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
                 <option value="Penelitian">Penelitian</option>
                 <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
             </select>
@@ -36,49 +36,52 @@ echo form_open_multipart($action, $attribute);
         </div>
         <div class="form-group">
             <label>Dokumen Udangan</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+            <input type="file" class="form-control" name="doc_undangan">
         </div>
         <div class="form-group">
             <label>Dokumen Absensi</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+            <input type="file" class="form-control" name="doc_absensi">
         </div>
         <div class="form-group">
             <label>Dokumen Materi</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+            <input type="file" class="form-control" name="doc_materi">
         </div>
         <div class="form-group">
             <label>Dokumen Foto</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+            <input type="file" class="form-control" name="doc_foto">
         </div>
-        <hr>
-        <div class="form-group">
-            <label id="doc_1">P1</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+        <div id="doc_tambahan">
+            <hr>
+            <div class="form-group">
+                <label id="doc_1">P1</label>
+                <input type="file" class="form-control" name="doc_1">
+            </div>
+            <div class="form-group">
+                <label id="doc_2">P2</label>
+                <input type="file" class="form-control" name="doc_2">
+            </div>
+            <div class="form-group">
+                <label id="doc_3">P3</label>
+                <input type="file" class="form-control" name="doc_3">
+            </div>
+            <div class="form-group">
+                <label id="doc_4">P4</label>
+                <input type="file" class="form-control" name="doc_4">
+            </div>
+            <div class="form-group">
+                <label id="doc_5">P5</label>
+                <input type="file" class="form-control" name="doc_5">
+            </div>
+            <div class="form-group">
+                <label id="doc_6">P6</label>
+                <input type="file" class="form-control" name="doc_6">
+            </div>
         </div>
-        <div class="form-group">
-            <label id="doc_2">P2</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
-        </div>
-        <div class="form-group">
-            <label id="doc_3">P3</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
-        </div>
-        <div class="form-group">
-            <label id="doc_4">P4</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
-        </div>
-        <div class="form-group">
-            <label id="doc_5">P5</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
-        </div>
-        <div class="form-group">
-            <label id="doc_6">P6</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
-        </div>
+
 
     </div>
     <div class="modal-footer">
-        <input type="hidden" name="id_kerjasama" value="<?php echo $id_kegiatan ?>">
+        <input type="hidden" name="id_kegiatan" value="<?php echo $id_kegiatan ?>">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-fw fa-close"></i> Tutup</button>
         <button type="submit" id="submit" class="btn btn-success"><i class="fa fa-fw fa-send-o"></i> Simpan</button>
     </div>
@@ -86,23 +89,73 @@ echo form_open_multipart($action, $attribute);
 <?php echo form_close() ?>
 
 <script>
-     $("#id_kegiatan").change(function() {
-        let id_kegiatan = $('#id_kegiatan').val();
-        if (id_kegiatan == "Pendidikan/Pengajaran") {
+    $(document).ready(function() {
+        $('#doc_tambahan').hide();
+
+        // Simpan Form
+        $('form#form_kegiatan').on('submit', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('#submit').prop('disabled', true);
+            $.ajax({
+                url: $(this).attr('action'),
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                cache: false,
+                async: false,
+                type: 'POST',
+                dataType: "JSON",
+                success: function(respon) {
+                    $('#submit').prop('disabled', false);
+                    if (respon.status) {
+                        Swal.fire({
+                            title: "Success",
+                            icon: "success",
+                            html: respon.messege,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            timer: 1000,
+                        }).then((result) => {
+                            $("#dt_kegiatan").DataTable().ajax.reload(null, false);
+                            $('#modal_form').modal('hide');
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Ooops..",
+                            icon: "warning",
+                            html: respon.messege,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    Swal.close();
+                    alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+                }
+            });
+        });
+    });
+    $("#jenis_kegiatan").change(function() {
+        let jenis_kegiatan = $('#jenis_kegiatan').val();
+        $('#doc_tambahan').show();
+        if (jenis_kegiatan == "Pendidikan/Pengajaran") {
             $('#doc_1').text("P 1");
             $('#doc_2').text("P 2");
             $('#doc_3').text("P 3");
             $('#doc_4').text("P 4");
             $('#doc_5').text("P 5");
             $('#doc_6').text("P 6");
-        } else if (id_kegiatan == "Penelitian") {
+        } else if (jenis_kegiatan == "Penelitian") {
             $('#doc_1').text("PN 1");
             $('#doc_2').text("PN 2");
             $('#doc_3').text("PN 3");
             $('#doc_4').text("PN 4");
             $('#doc_5').text("PN 5");
             $('#doc_6').text("PN 6");
-        }else{
+        } else {
             $('#doc_1').text("PM 1");
             $('#doc_2').text("PM 2");
             $('#doc_3').text("PM 3");
@@ -110,5 +163,5 @@ echo form_open_multipart($action, $attribute);
             $('#doc_5').text("PM 5");
             $('#doc_6').text("PM 6");
         }
-     });
+    });
 </script>

@@ -20,7 +20,7 @@
                                     <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <button type="button" onclick="load_data_kerja_sama()" class="btn btn-secondary"><i class="fa fa-send-o"></i> Filter</button>
                             </div>
@@ -28,19 +28,17 @@
                         <hr>
                         <p><b>Keterangan :</b> Peringatan akan tampil H-3 bulan (MoA) dan H-6 (MoU) sebelum akhir masa kerja sama.</p>
                         <button type="button" onclick="btn_add_kegiatan()" class="btn btn-success"> Tambah Kegiatan</button>
-                        <table id="dt_kerja_sama" class="table table-striped table-bordered" style="width:100%">
+                        <table id="dt_kegiatan" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th><b>NO</b></th>
                                     <th><b>AKSI</b></th>
-                                    <th><b>JENIS KERJASAMA</b></th>
-                                    <th><b>LEMBAGA MITRA</b></th>
-                                    <th><b>ALAMAT MITRA</b></th>
-                                    <th><b>NEGARA</b></th>
-                                    <th><b>DURASI KERJASAMA (TAHUN)</b></th>
-                                    <th><b>AWAL KERJASAMA</b></th>
-                                    <th><b>AKHIR KERJASAMA</b></th>
-                                    <th><b>DOKUMEN KERJASAMA</b></th>
+                                    <th><b>JENIS KEGIATAN</b></th>
+                                    <th><b>JUDUL KEGIATAN</b></th>
+                                    <th><b>MANFAAT KEGIATAN</b></th>
+                                    <th><b>AWAL PELAKSANA</b></th>
+                                    <th><b>AKHIR PELAKSANA</b></th>
+                                    <th><b>LAMA PELAKSANA (HARI)</b></th>
                                 </tr>
                             </thead>
 
@@ -48,14 +46,12 @@
                                 <tr>
                                     <th><b>NO</b></th>
                                     <th><b>AKSI</b></th>
-                                    <th><b>JENIS KERJASAMA</b></th>
-                                    <th><b>LEMBAGA MITRA</b></th>
-                                    <th><b>ALAMAT MITRA</b></th>
-                                    <th><b>NEGARA</b></th>
-                                    <th><b>DURASI KERJASAMA (TAHUN)</b></th>
-                                    <th><b>AWAL KERJASAMA</b></th>
-                                    <th><b>AKHIR KERJASAMA</b></th>
-                                    <th><b>DOKUMEN KERJASAMA</b></th>
+                                    <th><b>JENIS KEGIATAN</b></th>
+                                    <th><b>JUDUL KEGIATAN</b></th>
+                                    <th><b>MANFAAT KEGIATAN</b></th>
+                                    <th><b>AWAL PELAKSANA</b></th>
+                                    <th><b>AKHIR PELAKSANA</b></th>
+                                    <th><b>LAMA PELAKSANA (HARI)</b></th>
                                 </tr>
                             </tfoot>
                         </table>
