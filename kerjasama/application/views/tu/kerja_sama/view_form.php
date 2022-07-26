@@ -124,7 +124,7 @@ echo form_open_multipart($action, $attribute);
                 $('#is_indo').hide();
             }
             $.ajax({
-                url: '<?php echo base_url('kerja_sama/get_kota_kabupaten') ?>',
+                url: '<?php echo base_url('tu/kerja_sama/get_kota_kabupaten') ?>',
                 data: {
                     provinsi_id: provinsi_id
                 },
@@ -158,7 +158,7 @@ echo form_open_multipart($action, $attribute);
         $("#provinsi_id").change(function() {
             let provinsi_id = $('#provinsi_id').val();
             $.ajax({
-                url: '<?php echo base_url('kerja_sama/get_kota_kabupaten') ?>',
+                url: '<?php echo base_url('tu/kerja_sama/get_kota_kabupaten') ?>',
                 data: {
                     provinsi_id: provinsi_id
                 },
@@ -192,7 +192,7 @@ echo form_open_multipart($action, $attribute);
         $("#kabupaten_kota_id").change(function() {
             let kabupaten_kota_id = $('#kabupaten_kota_id').val();
             $.ajax({
-                url: '<?php echo base_url('kerja_sama/get_kecamatan') ?>',
+                url: '<?php echo base_url('tu/kerja_sama/get_kecamatan') ?>',
                 data: {
                     kabupaten_kota_id: kabupaten_kota_id
                 },
@@ -227,7 +227,7 @@ echo form_open_multipart($action, $attribute);
         $("#kecamatan_id").change(function() {
             let kecamatan_id = $('#kecamatan_id').val();
             $.ajax({
-                url: '<?php echo base_url('kerja_sama/get_kelurahan') ?>',
+                url: '<?php echo base_url('tu/kerja_sama/get_kelurahan') ?>',
                 data: {
                     kecamatan_id: kecamatan_id
                 },
