@@ -19,6 +19,10 @@
                 <td><?php echo $lembaga_mitra; ?></td>
             </tr>
             <tr>
+                <td>Periode</td>
+                <td><?php echo $periode; ?></td>
+            </tr>
+            <tr>
                 <td>Alamat Mitra</td>
                 <td><?php echo $alamat_mitra; ?></td>
             </tr>
@@ -68,7 +72,12 @@
 
 
             if ($tgl_sekarang > $akhir_kerjasama) {
-                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) ".'<button type="button" onclick="btn_perbaharui()" class="btn btn-success"><i class="fa fa-file-o"></i> Perbaharui</button>';
+                if ($perbaharui == "0") {
+                    $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) ".'<button type="button" onclick="btn_perbaharui(\''.$id_kerjasama.'\')" class="btn btn-success"><i class="fa fa-file-o"></i> Perbaharui</button>';
+                } else {
+                    $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) ";
+                }                
+                
             } else {
                 if (strtotime(date("Y-m-d")) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
                     $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)";
@@ -76,8 +85,6 @@
                     $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
                 }
             }
-
-
             ?>
             <tr>
                 <td>Akhir Kerjasama</td>
@@ -96,7 +103,42 @@
 <?php echo form_close() ?>
 
 <script>
-    function btn_perbaharui() {
-       alert("Perbaharui");
+    function btn_perbaharui(id) {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url('kerja_sama/perbaharui') ?>',
+            data: {
+                id_kerjasama: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    Swal.fire({
+                        title: "Ooops..",
+                        icon: 'warning',
+                        html: respon.messege,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
     }
 </script>

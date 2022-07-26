@@ -32,7 +32,7 @@
             "order": [],
             "ajax": {
                 //panggil method ajax list dengan ajax
-                "url": '<?php echo base_url('Kerja_sama/get_kerja_sama_json') ?>',
+                "url": '<?php echo base_url('tu/Kerja_sama/get_kerja_sama_json') ?>',
                 "data": {
                     jenis_kerjasama: $("[name='jenis_kerjasama']").val(),
                     tahun_kerja_sama: $("[name='tahun_kerja_sama']").val()
@@ -60,7 +60,7 @@
             }
         });
         $.ajax({
-            url: '<?php echo base_url('kerja_sama/detail_kerja_sama') ?>',
+            url: '<?php echo base_url('tu/kerja_sama/detail_kerja_sama') ?>',
             data: {
                 id_kerjasama: id
             },
@@ -99,7 +99,7 @@
             }
         });
         $.ajax({
-            url: '<?php echo base_url('kerja_sama/buat_kerja_sama') ?>',
+            url: '<?php echo base_url('tu/kerja_sama/buat_kerja_sama') ?>',
             type: "GET",
             dataType: "JSON",
             success: function(respon) {
@@ -135,7 +135,7 @@
             }
         });
         $.ajax({
-            url: '<?php echo base_url('kerja_sama/edit_kerja_sama') ?>',
+            url: '<?php echo base_url('tu/kerja_sama/edit_kerja_sama') ?>',
             data: {
                 id_kerjasama: id
             },
@@ -177,7 +177,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '<?php echo base_url('kerja_sama/hapus_action') ?>',
+                    url: '<?php echo base_url('tu/kerja_sama/hapus_action') ?>',
                     data: {
                         id_kerjasama: id
                     },

@@ -171,7 +171,7 @@ class Kerja_sama_model extends CI_Model
 
     public function get_tb_kerjasama_dll_by_id($id_kerjasama = "")
     {
-        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.periode,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
+        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.periode,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama,a.perbaharui');
         $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
         $this->db->select("DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as 'tgl_peringatan'");
         $this->db->from('tb_kerjasama as a');
