@@ -69,6 +69,12 @@ class Kerja_sama extends CI_Controller
             $no++;
             $row = array();
 
+            $button = '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>';
+            $tanggal_sekarang = date("Y-m-d");
+            if ($tanggal_sekarang > $kerja_sama->akhir_kerjasama) {
+                $button .= '<a class="btn btn-success btn-sm" title="PERBAHARUI" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-file-o"></i> </a>';
+            }
+
             //row pertama akan kita gunakan untuk btn edit dan delete
             $row[] = $no;
             $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>
@@ -76,6 +82,7 @@ class Kerja_sama extends CI_Controller
                         <a class="btn btn-danger btn-sm" onclick="btn_delete(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-trash"></i> </a>';
             $row[] = $kerja_sama->jenis_kerjasama;
             $row[] = $kerja_sama->lembaga_mitra;
+            $row[] = $kerja_sama->periode;
             $row[] = $kerja_sama->alamat_mitra;
             $row[] = $kerja_sama->nama_negara;
             $row[] = $kerja_sama->durasi_kerjasama . " Tahun";

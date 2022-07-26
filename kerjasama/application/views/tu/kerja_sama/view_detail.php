@@ -43,10 +43,17 @@
                 <td>Kelurahan</td>
                 <td><?php echo $kelurahan_nama; ?></td>
             </tr>
-            <tr>
-                <td>Durasi Kerjasama</td>
-                <td><?php echo $durasi_kerjasama." Tahun"; ?></td>
-            </tr>
+            <?php
+            // tanggal sekarang
+            $tgl_sekarang = date("Y-m-d");
+            if ($tgl_sekarang <= $akhir_kerjasama) { ?>
+                <tr>
+                    <td>Durasi Kerjasama</td>
+                    <td><?php echo $durasi_kerjasama . " Tahun"; ?></td>
+                </tr>
+            <?php }  ?>
+
+
             <?php
 
             if ($jenis_kerjasama == "MOA") {
@@ -59,11 +66,18 @@
                 $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan                
             }
 
-            if (strtotime(date("Y-m-d")) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
-                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) ." (Segera berakhir)";
+
+            if ($tgl_sekarang > $akhir_kerjasama) {
+                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) ".'<button type="button" onclick="btn_perbaharui()" class="btn btn-success"><i class="fa fa-file-o"></i> Perbaharui</button>';
             } else {
-                $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
+                if (strtotime(date("Y-m-d")) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
+                    $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)";
+                } else {
+                    $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
+                }
             }
+
+
             ?>
             <tr>
                 <td>Akhir Kerjasama</td>
@@ -71,7 +85,7 @@
             </tr>
             <tr>
                 <td>Dokumen Kerjasama</td>
-                <td><a href="<?php echo base_url('kerjasama/assets/file_dok/'.$dokumen_kerjasama) ?>" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a></td>
+                <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_kerjasama) ?>" class="btn btn-default btn-sm" download><i class="fa fa-cloud-download"></i> Download</a></td>
             </tr>
         </table>
     </div>
@@ -80,3 +94,9 @@
     </div>
 </div>
 <?php echo form_close() ?>
+
+<script>
+    function btn_perbaharui() {
+       alert("Perbaharui");
+    }
+</script>

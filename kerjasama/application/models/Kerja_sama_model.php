@@ -12,7 +12,7 @@ class Kerja_sama_model extends CI_Model
     }
 
     //set kolom order, kolom pertama saya null untuk kolom edit dan hapus
-    var $column_order = array(null, 'jenis_kerjasama', 'lembaga_mitra', null, 'nama_negara', null, 'tgl_kerjasama', 'akhir_kerjasama', null);
+    var $column_order = array(null, 'jenis_kerjasama','periode', 'lembaga_mitra', null, 'nama_negara', null, 'tgl_kerjasama', 'akhir_kerjasama', null);
 
     var $column_search = array('lembaga_mitra', 'negara_id');
     // default order 
@@ -21,7 +21,7 @@ class Kerja_sama_model extends CI_Model
 
     private function _get_datatables_query($jenis_kerjasama, $tahun_kerja_sama)
     {
-        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
+        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.periode,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
         $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
         $this->db->select("DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as 'tgl_peringatan'");
         $this->db->from('tb_kerjasama as a');
@@ -33,8 +33,14 @@ class Kerja_sama_model extends CI_Model
         if ($jenis_kerjasama != "") {
             $this->db->where('jenis_kerjasama', $jenis_kerjasama);
         }
-        if ($tahun_kerja_sama != "") {
+        if ($tahun_kerja_sama == "5") {
+            $this->db->where("YEAR(tgl_kerjasama) < '".date('Y',strtotime('-5 year'))."'");
+        }elseif ($tahun_kerja_sama != "") {
             $this->db->where('YEAR(tgl_kerjasama)', $tahun_kerja_sama);
+        }
+        else{
+            // untuk tanggal lebih kurang 5 tahun
+            $this->db->where("YEAR(tgl_kerjasama) > '".date('Y',strtotime('-5 year'))."'");
         }
 
         $i = 0;
@@ -91,13 +97,14 @@ class Kerja_sama_model extends CI_Model
         $this->db->distinct();
         $this->db->select("YEAR(a.tgl_kerjasama) as tgl_kerjasama");
         $this->db->from("tb_kerjasama as a");
+        $this->db->where("YEAR(tgl_kerjasama) > '".date('Y',strtotime('-5 year'))."'");
         $this->db->order_by('tgl_kerjasama');
         return  $this->db->get();
     }
 
     public function get_kerja_sama($jenis_kerjasama = "", $tahun_kerja_sama = "")
     {
-        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
+        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.periode,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
         $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
         $this->db->select("DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as 'tgl_peringatan'");
         $this->db->from('tb_kerjasama as a');
@@ -164,7 +171,7 @@ class Kerja_sama_model extends CI_Model
 
     public function get_tb_kerjasama_dll_by_id($id_kerjasama = "")
     {
-        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
+        $this->db->select('a.id_kerjasama,a.jenis_kerjasama,a.periode,a.tgl_kerjasama,a.lembaga_mitra,a.alamat_mitra,a.negara_id,a.provinsi_id,a.kabupaten_kota_id,a.kecamatan_id,a.kelurahan_id,a.durasi_kerjasama,a.akhir_kerjasama,a.dokumen_kerjasama');
         $this->db->select('b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama');
         $this->db->select("DATE(DATE_SUB(a.akhir_kerjasama, INTERVAL 90 DAY)) as 'tgl_peringatan'");
         $this->db->from('tb_kerjasama as a');

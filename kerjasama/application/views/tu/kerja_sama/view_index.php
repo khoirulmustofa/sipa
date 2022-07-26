@@ -26,6 +26,7 @@
                                     <?php foreach ($tahun_kerja_sama_result as $key => $value) {
                                         echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
                                     } ?>
+                                    <option value="5">> 5 Tahun</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -42,6 +43,7 @@
                                     <th><b>AKSI</b></th>
                                     <th><b>JENIS KERJASAMA</b></th>
                                     <th><b>LEMBAGA MITRA</b></th>
+                                    <th><b>PERIODE</b></th>
                                     <th><b>ALAMAT MITRA</b></th>
                                     <th><b>NEGARA</b></th>
                                     <th><b>DURASI KERJASAMA (TAHUN)</b></th>
@@ -57,6 +59,7 @@
                                     <th><b>AKSI</b></th>
                                     <th><b>JENIS KERJASAMA</b></th>
                                     <th><b>LEMBAGA MITRA</b></th>
+                                    <th><b>PERIODE</b></th>
                                     <th><b>ALAMAT MITRA</b></th>
                                     <th><b>NEGARA</b></th>
                                     <th><b>DURASI KERJASAMA (TAHUN)</b></th>
