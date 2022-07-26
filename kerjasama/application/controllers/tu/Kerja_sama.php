@@ -120,7 +120,7 @@ class Kerja_sama extends CI_Controller
 
         $data = array(
             'title' => "Tambah Kerja Sama",
-            'action' => "kerja_sama/buat_kerja_sama_action",
+            'action' => "tu/kerja_sama/buat_kerja_sama_action",
             'id_kerjasama' => set_value('id_kerjasama'),
             'jenis_kerjasama' => set_value('jenis_kerjasama'),
             'tgl_kerjasama' => set_value('tgl_kerjasama'),
@@ -248,7 +248,7 @@ class Kerja_sama extends CI_Controller
         // ambil data tb_kerjasama dan relasinya by Id
         $data = array(
             'title' => "Edit Kerja Sama",
-            'action' => "kerja_sama/edit_kerja_sama_action",
+            'action' => "tu/kerja_sama/edit_kerja_sama_action",
             'id_kerjasama' => set_value('id_kerjasama', $kerja_sama_row->id_kerjasama),
             'jenis_kerjasama' => set_value('jenis_kerjasama', $kerja_sama_row->jenis_kerjasama),
             'tgl_kerjasama' => set_value('tgl_kerjasama', $kerja_sama_row->tgl_kerjasama),
@@ -389,7 +389,7 @@ class Kerja_sama extends CI_Controller
 
         $data = array(
             'title' => "Detail Kerja Sama",
-            'action' => "kerja_sama/edit_kerja_sama_action",
+            'action' => "tu/kerja_sama/edit_kerja_sama_action",
             'id_kerjasama' => $kerja_sama_row->id_kerjasama,
             'jenis_kerjasama' => $kerja_sama_row->jenis_kerjasama,
             'tgl_kerjasama' => $kerja_sama_row->tgl_kerjasama,
@@ -523,7 +523,7 @@ class Kerja_sama extends CI_Controller
         // ambil data tb_kerjasama dan relasinya by Id
         $data = array(
             'title' => "Perbaharui Kerja Sama",
-            'action' => "kerja_sama/perbaharui_action",
+            'action' => "tu/kerja_sama/perbaharui_action",
             'id_kerjasama' => set_value('id_kerjasama', $kerja_sama_row->id_kerjasama),
             'jenis_kerjasama' => set_value('jenis_kerjasama', $kerja_sama_row->jenis_kerjasama),
             'tgl_kerjasama' => set_value('tgl_kerjasama'),
