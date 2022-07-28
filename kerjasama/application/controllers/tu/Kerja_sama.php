@@ -8,7 +8,7 @@ class Kerja_sama extends CI_Controller
     {
         parent::__construct();
         // cek login dari app_helper
-        is_login();
+        //is_login();
     }
 
     public function index()
@@ -394,7 +394,7 @@ class Kerja_sama extends CI_Controller
             'jenis_kerjasama' => $kerja_sama_row->jenis_kerjasama,
             'tgl_kerjasama' => $kerja_sama_row->tgl_kerjasama,
             'lembaga_mitra' => $kerja_sama_row->lembaga_mitra,
-            'periode'=> $kerja_sama_row->periode,
+            'periode' => $kerja_sama_row->periode,
             'alamat_mitra' => $kerja_sama_row->alamat_mitra,
             'negara_id' => $kerja_sama_row->negara_id,
             'provinsi_id' => $kerja_sama_row->provinsi_id,
@@ -631,7 +631,7 @@ class Kerja_sama extends CI_Controller
                     echo json_encode($data_response);
                 } else {
                     $data_upload = $this->upload->data();
-                    
+
                     $data_insert = array(
                         'jenis_kerjasama' => $this->input->post('jenis_kerjasama', TRUE),
                         'periode' => $kerja_sama_row->periode + 1,
@@ -649,7 +649,7 @@ class Kerja_sama extends CI_Controller
                     );
 
                     // insert ke table tb_kerjasama
-                $this->Kerja_sama_model->insert_tb_kerjasama($data_insert);
+                    $this->Kerja_sama_model->insert_tb_kerjasama($data_insert);
 
                     $data_response =  array(
                         'status' => true,
