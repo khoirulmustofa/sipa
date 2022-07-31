@@ -6,12 +6,12 @@ function is_login()
     if ((!isset($_SESSION['login_smpu']))) {
         redirect(str_replace("kerjasama/", "", base_url()));
     }
-    if (strcmp($_SESSION["status_login"], 'Tata Usaha') !== 0) {
-        redirect('');
-    }
-    if (strcmp($_SESSION["status_login"], 'Prodi') !== 0) {
-        redirect('');
-    }
+    // if (strcmp($_SESSION["status_login"], 'Tata Usaha') !== 0) {
+    //     redirect('');
+    // }
+    // if (strcmp($_SESSION["status_login"], 'Prodi') !== 0) {
+    //     redirect('');
+    // }
 }
 
 function format_tgl_dMY($date)

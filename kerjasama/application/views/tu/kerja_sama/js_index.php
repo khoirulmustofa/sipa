@@ -1,20 +1,3 @@
-<!-- Datatables -->
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/jszip/dist/jszip.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="<?php echo base_url('templates/gentelella') ?>/vendors/pdfmake/build/vfs_fonts.js"></script>
-
 <script type="text/javascript">
     setInterval(function() {
         $(".berkedip").toggle();
@@ -29,16 +12,105 @@
             "processing": true,
             "serverSide": true,
             "bDestroy": true,
-            "order": [],
             "ajax": {
                 //panggil method ajax list dengan ajax
-                "url": '<?php echo base_url('tu/Kerja_sama/get_kerja_sama_json') ?>',
+                "url": '<?php echo base_url('tu/Kerja_sama/get_datatable_kerja_sama') ?>',
                 "data": {
                     jenis_kerjasama: $("[name='jenis_kerjasama']").val(),
                     tahun_kerja_sama: $("[name='tahun_kerja_sama']").val()
                 },
                 "type": "POST"
             },
+            columns: [{
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "id_kerjasama",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        let button = `<div class="btn-group" role="group" aria-label="Basic example">                                      
+                                        <button type="button" title="Detail" onclick="btn_detail('${data}')" class="btn btn-info btn-xs"><i class="fas fa-info-circle"></i></button>
+                                        <button type="button" title="Edit" onclick="btn_edit('${data}')" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>
+                                        <button type="button" title="Delete" onclick="btn_delete('${data}')" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
+                                    </div>`;
+                        return button;
+                    }
+                }, {
+                    data: "jenis_kerjasama",
+                },
+                {
+                    data: "lembaga_mitra",
+                }, {
+                    data: "periode",
+                    searchable: false
+                }, {
+                    data: "alamat_mitra",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "nama_negara",
+                }, {
+                    data: "durasi_kerjasama",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "tgl_kerjasama",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        let date = new Date(data);
+                        return getFormattedDate(date);
+                    }
+                }, {
+                    data: "akhir_kerjasama",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        let result = '';
+                        if (data != null || data != '') {
+                            let date_now = new Date();
+                            let date_actual = new Date(data);
+                            if (row['jenis_kerjasama'] == 'MOU') {
+                                date_actual.setDate(date_actual.getMonth() - 6);
+                                if (date_now >= date_actual) {
+                                    result = '<span class="badge badge-danger berkedip">' + getFormattedDate(data) + '</span>';
+                                } else {
+                                    result = '<span class="badge badge-success">' + getFormattedDate(data) + '</span>';
+                                }
+                            } else {
+                                date_actual.setDate(date_actual.getMonth() - 3);
+                                if (date_now >= date_actual) {
+                                    result = '<span class="badge badge-danger berkedip">' + getFormattedDate(data) + '</span>';
+                                } else {
+                                    result = '<span class="badge badge-success">' + getFormattedDate(data) + '</span>';
+                                }
+                            }
+
+                        } else {
+                            result = "-"
+                        }
+
+                        return result;
+                    }
+                }, {
+                    data: "dokumen_kerjasama",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        let button = `<button class="btn btn-info btn-xs" onclick="btn_preview('${data}')"><i class="far fa-eye"></i> Preview</button>`;
+                        return button;
+                    }
+                }
+            ],
+            order: [
+                [8, 'asc'],
+            ],
         });
     }
 
@@ -213,5 +285,34 @@
                 });
             }
         });
+    }
+
+    function btn_preview(file) {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        Swal.close();
+        if (file != null || file != '') {
+            let html = `<embed src="<?php echo base_url('assets/file_dok') ?>/${file}" width=100% height="720"></embed>`;
+            let button = `<a class="btn btn-info btn-block" href="<?php echo base_url('assets/file_dok') ?>/${file}" download><i class="fas fa-cloud-download-alt"></i> Dowload</a>`;
+            $('#view_modal_preview').html(html);
+            $('#view_modal_button').html(button);
+            $('#modal_preview').modal('show');
+        } else {
+            Swal.fire({
+                title: "Ooops..",
+                icon: 'warning',
+                html: 'File tidak ditemukan',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+            });
+        }
+
     }
 </script>

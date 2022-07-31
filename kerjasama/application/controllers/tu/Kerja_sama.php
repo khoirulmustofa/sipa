@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Ozdemir\Datatables\Datatables;
+use Ozdemir\Datatables\DB\CodeigniterAdapter;
+
 class Kerja_sama extends CI_Controller
 {
 
@@ -8,7 +11,7 @@ class Kerja_sama extends CI_Controller
     {
         parent::__construct();
         // cek login dari app_helper
-        is_login();
+        // is_login();
     }
 
     public function index()
@@ -27,78 +30,32 @@ class Kerja_sama extends CI_Controller
         $this->template->load('_template/main_template', 'tu/kerja_sama/view_index', $data);
     }
 
-    public function get_kerja_sama_json()
+    public function get_datatable_kerja_sama()
     {
-        $this->load->model('Kerja_sama_model');
         $jenis_kerjasama = $this->input->post('jenis_kerjasama', TRUE);
         $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
-
-        header('Content-Type: application/json');
-        // ambil data dari model Kerja_sama_model
-        $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama, $tahun_kerja_sama);
-        $data = array();
-        $no = $this->input->post('start');
-
-        $date_now = date("Y-m-d"); // this format is string comparable
-
-        //looping data mahasiswa
-        foreach ($list as $kerja_sama) {
-            $btn_peringatan = '';
-            $akhir_kerjasama = $kerja_sama->akhir_kerjasama;
-            // cek jenis kerja sama
-            if ($kerja_sama->jenis_kerjasama == "MOA") {
-                // peringatan 3 bulan
-                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
-                $tanggal_dikurangi->sub(new DateInterval('P3M')); // 3 bulan
-                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
-                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                } else {
-                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                }
+        $where = "";
+        if ($jenis_kerjasama != '' && $tahun_kerja_sama != '') {
+            $where = " WHERE jenis_kerjasama = '$jenis_kerjasama' AND YEAR(tgl_kerjasama) = '$tahun_kerja_sama'";
+        } elseif ($jenis_kerjasama != '') {
+            $where = " WHERE jenis_kerjasama = '$jenis_kerjasama'";
+        } elseif ($tahun_kerja_sama != '') {
+            if ($tahun_kerja_sama == '5') {
+                $where = " WHERE YEAR(tgl_kerjasama) < YEAR(DATE_SUB(NOW(), INTERVAL 5 YEAR))";
             } else {
-                // peringatan 6 bulan
-                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
-                $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan
-                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
-                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                } else {
-                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                }
+                $where = " WHERE YEAR(tgl_kerjasama) = '$tahun_kerja_sama'";
             }
-
-            $no++;
-            $row = array();
-
-            $button = '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>';
-            $tanggal_sekarang = date("Y-m-d");
-            if ($tanggal_sekarang > $kerja_sama->akhir_kerjasama) {
-                $button .= '<a class="btn btn-success btn-sm" title="PERBAHARUI" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-file-o"></i> </a>';
-            }
-
-            //row pertama akan kita gunakan untuk btn edit dan delete
-            $row[] = $no;
-            $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>
-                        <a class="btn btn-warning btn-sm" onclick="btn_edit(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-edit"></i> </a>
-                        <a class="btn btn-danger btn-sm" onclick="btn_delete(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-trash"></i> </a>';
-            $row[] = $kerja_sama->jenis_kerjasama;
-            $row[] = $kerja_sama->lembaga_mitra;
-            $row[] = $kerja_sama->periode;
-            $row[] = $kerja_sama->alamat_mitra;
-            $row[] = $kerja_sama->nama_negara;
-            $row[] = $kerja_sama->durasi_kerjasama . " Tahun";
-            $row[] = format_tgl_dMY($kerja_sama->tgl_kerjasama);
-            $row[] = $btn_peringatan;
-            $row[] = '<a href="' . base_url('kerjasama/assets/file_dok/' . $kerja_sama->dokumen_kerjasama) . '" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>';
-            $data[] = $row;
+        } else {
+            $where = " WHERE YEAR(tgl_kerjasama) > YEAR(DATE_SUB(NOW(), INTERVAL 5 YEAR))";
         }
-        $output = array(
-            "draw" => $this->input->post('draw'),
-            "recordsTotal" => $this->Kerja_sama_model->count_all(),
-            "recordsFiltered" => $this->Kerja_sama_model->count_filtered($jenis_kerjasama, $tahun_kerja_sama),
-            "data" => $data,
-        );
-        //output to json format
-        $this->output->set_output(json_encode($output));
+        $datatables = new Datatables(new CodeigniterAdapter);
+
+        $datatables->query("SELECT id_kerjasama,id_kerjasama as id_action,jenis_kerjasama,lembaga_mitra,periode,alamat_mitra,nama_negara,durasi_kerjasama,tgl_kerjasama,akhir_kerjasama,dokumen_kerjasama FROM tb_kerjasama JOIN master_negara ON master_negara.id = tb_kerjasama.negara_id " . $where);
+        $datatables->add('id_action', function ($data) {
+            return '<a href="#edit' . $data['id_action'] . '">#edit </a> ' . '/ <a href="#del' . $data['id_action'] . '">#delete </a> ';
+        });
+
+        echo $datatables->generate();
     }
 
     public function buat_kerja_sama()
@@ -123,6 +80,7 @@ class Kerja_sama extends CI_Controller
             'action' => "tu/kerja_sama/buat_kerja_sama_action",
             'id_kerjasama' => set_value('id_kerjasama'),
             'jenis_kerjasama' => set_value('jenis_kerjasama'),
+            'ketegori_moa' => set_value('ketegori_moa'),
             'tgl_kerjasama' => set_value('tgl_kerjasama'),
             'lembaga_mitra' => set_value('lembaga_mitra'),
             'alamat_mitra' => set_value('alamat_mitra'),
@@ -160,6 +118,9 @@ class Kerja_sama extends CI_Controller
             $this->form_validation->set_rules('kecamatan_id', 'kecamatan id', 'trim|required');
             $this->form_validation->set_rules('kelurahan_id', 'kelurahan id', 'trim|required');
         }
+        if ($this->input->post('jenis_kerjasama', TRUE) == "MOA") {
+            $this->form_validation->set_rules('ketegori_moa', 'Kategori', 'trim|required');
+        }
         $this->form_validation->set_rules('durasi_kerjasama', 'durasi kerjasama', 'trim|required');
         if (empty($_FILES['dokumen_kerjasama']['name'])) {
             $this->form_validation->set_rules('dokumen_kerjasama', 'Document', 'required');
@@ -174,8 +135,8 @@ class Kerja_sama extends CI_Controller
         } else {
 
             $config['upload_path'] = './assets/file_dok/';
-            $config['encrypt_name'] = TRUE;
-            $config['allowed_types']        = '*';
+            $config['file_name'] = 'Kerjasama-' . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+            $config['allowed_types']        = 'jpg|png|jpeg|pdf|PDF';
             // $config['max_size']             = 100;
             // $config['max_width']            = 1024;
             // $config['max_height']           = 768;
@@ -192,20 +153,21 @@ class Kerja_sama extends CI_Controller
                 echo json_encode($data_response);
             } else {
                 $data_upload = $this->upload->data();
-                $data_insert = array(
-                    'jenis_kerjasama' => $this->input->post('jenis_kerjasama', TRUE),
-                    'tgl_kerjasama' => $this->input->post('tgl_kerjasama', TRUE),
-                    'lembaga_mitra' => $this->input->post('lembaga_mitra', TRUE),
-                    'alamat_mitra' => $this->input->post('alamat_mitra', TRUE),
-                    'negara_id' => $this->input->post('negara_id', TRUE),
-                    'provinsi_id' => $this->input->post('provinsi_id', TRUE),
-                    'kabupaten_kota_id' => $this->input->post('kabupaten_kota_id', TRUE),
-                    'kecamatan_id' => $this->input->post('kecamatan_id', TRUE),
-                    'kelurahan_id' => $this->input->post('kelurahan_id', TRUE),
-                    'durasi_kerjasama' => $this->input->post('durasi_kerjasama', TRUE),
-                    'akhir_kerjasama' => date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE)))),
-                    'dokumen_kerjasama' => $data_upload['file_name'],
-                );
+
+                $data_insert['jenis_kerjasama'] = $this->input->post('jenis_kerjasama', TRUE);
+                $data_insert['ketegori_moa'] = $this->input->post('ketegori_moa', TRUE);
+                $data_insert['tgl_kerjasama'] = $this->input->post('tgl_kerjasama', TRUE);
+                $data_insert['lembaga_mitra'] = $this->input->post('lembaga_mitra', TRUE);
+                $data_insert['alamat_mitra'] = $this->input->post('alamat_mitra', TRUE);
+                $data_insert['negara_id'] = $this->input->post('negara_id', TRUE);
+                $data_insert['provinsi_id'] = $this->input->post('provinsi_id', TRUE);
+                $data_insert['kabupaten_kota_id'] = $this->input->post('kabupaten_kota_id', TRUE);
+                $data_insert['kecamatan_id'] = $this->input->post('kecamatan_id', TRUE);
+                $data_insert['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
+                $data_insert['durasi_kerjasama'] = $this->input->post('durasi_kerjasama', TRUE);
+                $data_insert['akhir_kerjasama'] = date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE))));
+                $data_insert['dokumen_kerjasama'] = $data_upload['file_name'];
+
 
                 // load model
                 $query =  $this->load->model('Kerja_sama_model');
@@ -333,8 +295,8 @@ class Kerja_sama extends CI_Controller
 
 
                 $config['upload_path'] = './assets/file_dok/';
-                $config['encrypt_name'] = TRUE;
-                $config['allowed_types']        = '*';
+                $config['file_name']  = 'Kerjasama-' . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+                $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
 
                 $this->upload->initialize($config);
                 $this->load->library('upload', $config);
@@ -394,7 +356,7 @@ class Kerja_sama extends CI_Controller
             'jenis_kerjasama' => $kerja_sama_row->jenis_kerjasama,
             'tgl_kerjasama' => $kerja_sama_row->tgl_kerjasama,
             'lembaga_mitra' => $kerja_sama_row->lembaga_mitra,
-            'periode'=> $kerja_sama_row->periode,
+            'periode' => $kerja_sama_row->periode,
             'alamat_mitra' => $kerja_sama_row->alamat_mitra,
             'negara_id' => $kerja_sama_row->negara_id,
             'provinsi_id' => $kerja_sama_row->provinsi_id,
@@ -617,7 +579,7 @@ class Kerja_sama extends CI_Controller
 
 
                 $config['upload_path'] = './assets/file_dok/';
-                $config['encrypt_name'] = TRUE;
+                $config['file_name'] = 'Kerjasama-' . date('dmYhis');
                 $config['allowed_types']        = '*';
 
                 // $this->upload->initialize($config);
@@ -631,7 +593,7 @@ class Kerja_sama extends CI_Controller
                     echo json_encode($data_response);
                 } else {
                     $data_upload = $this->upload->data();
-                    
+
                     $data_insert = array(
                         'jenis_kerjasama' => $this->input->post('jenis_kerjasama', TRUE),
                         'periode' => $kerja_sama_row->periode + 1,
@@ -649,7 +611,7 @@ class Kerja_sama extends CI_Controller
                     );
 
                     // insert ke table tb_kerjasama
-                $this->Kerja_sama_model->insert_tb_kerjasama($data_insert);
+                    $this->Kerja_sama_model->insert_tb_kerjasama($data_insert);
 
                     $data_response =  array(
                         'status' => true,

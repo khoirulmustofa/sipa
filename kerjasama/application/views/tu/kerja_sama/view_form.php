@@ -4,9 +4,10 @@ echo form_open_multipart($action, $attribute);
 ?>
 <div class="modal-content">
     <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-file-alt"></i> <?php echo $title ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?php echo $title ?></h4>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <div class="form-group">
@@ -15,6 +16,15 @@ echo form_open_multipart($action, $attribute);
                 <option value="">Pilih Jenis Kerjasama</option>
                 <option value="MOU" <?php echo $jenis_kerjasama == "MOU" ? "selected" : "" ?>>MOU</option>
                 <option value="MOA" <?php echo $jenis_kerjasama == "MOA" ? "selected" : "" ?>>MOA</option>
+            </select>
+        </div>
+        <div class="form-group" id="ketegori_moa_group">
+            <label for="varchar">Kategori </label>
+            <select class="form-control" name="ketegori_moa" id="ketegori_moa">
+                <option value="">Pilih Jenis Kerjasama</option>
+                <option value="MOU" <?php echo $ketegori_moa == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
+                <option value="MOA" <?php echo $ketegori_moa == "Penelitian" ? "selected" : "" ?>>Penelitian</option>
+                <option value="MOA" <?php echo $ketegori_moa == "Pengabdian Masyarakat" ? "selected" : "" ?>>Pengabdian Masyarakat</option>
             </select>
         </div>
         <div class="form-group">
@@ -36,7 +46,7 @@ echo form_open_multipart($action, $attribute);
             </select>
         </div>
 
-        <div id="is_indo">
+        <div id="provinsi_desa_group">
             <div class="form-group">
                 <label for="varchar">Provinsi</label>
                 <select class="form-control" name="provinsi_id" id="provinsi_id">
@@ -88,40 +98,69 @@ echo form_open_multipart($action, $attribute);
 
         <div class="form-group">
             <label for="varchar">Dokumen Kerjasama</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama">
+            <input type="file" class="form-control" name="dokumen_kerjasama" accept="image/jpeg,image/png,application/pdf">
         </div>
-
+        <div class="form-group" id="dok_pendukung_group">
+            <label for="varchar">Dokumen Pendukukung</label>
+            <input type="file" class="form-control" name="dokumen_pendukung_1" accept="image/jpeg,image/png,application/pdf">
+            <input type="file" class="form-control" name="dokumen_pendukung_2" accept="image/jpeg,image/png,application/pdf">
+            <input type="file" class="form-control" name="dokumen_pendukung_3" accept="image/jpeg,image/png,application/pdf">
+            <input type="file" class="form-control" name="dokumen_pendukung_4" accept="image/jpeg,image/png,application/pdf">
+        </div>
     </div>
-    <div class="modal-footer">
-        <input type="hidden" name="id_kerjasama" value="<?php echo $id_kerjasama ?>">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-fw fa-close"></i> Tutup</button>
-        <button type="submit" id="submit" class="btn btn-success"><i class="fa fa-fw fa-send-o"></i> Simpan</button>
+    <div class="card-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
+        <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
 </div>
 <?php echo form_close() ?>
 
 <script>
-    var load_negara_id = '<?php echo $negara_id ?>';
     $(document).ready(function() {
-        if (load_negara_id == "") {
-            $('#is_indo').hide();
-        }
-        if (load_negara_id != "102") {
-            $('#is_indo').hide();
+        // pertama kali load hidden ketegori_moa_group
+        let ketegori_moa = '<?php echo $ketegori_moa ?>';
+        if (ketegori_moa == "MOA") {
+            $('#ketegori_moa_group').show();
+            $('#dok_pendukung_group').show();
         } else {
-            $('#is_indo').show();
+            $('#ketegori_moa_group').hide();
+            $('#dok_pendukung_group').hide();
+        }
+
+        // pertama kali load hidden provinsi_desa_group
+        let load_negara_id = '<?php echo $negara_id ?>';
+        if (load_negara_id == "") {
+            $('#provinsi_desa_group').hide();
+        }
+
+        // petama kali load hidden provinsi_desa_group jika negara_id = Indonesia
+        if (load_negara_id != "102") {
+            $('#provinsi_desa_group').hide();
+        } else {
+            $('#provinsi_desa_group').show();
         }
 
     })
     $(function() {
 
+        $("#jenis_kerjasama").change(function() {
+            let jenis_kerjasama = $('#jenis_kerjasama').val();
+            if (jenis_kerjasama == "MOA") {
+                $('#ketegori_moa_group').show();
+                $('#dok_pendukung_group').show();
+            } else {
+                $('#ketegori_moa_group').hide();
+                $('#dok_pendukung_group').hide();
+            }
+        });
+
         // Setting negara indo
         $("#negara_id").change(function() {
             let negara_id = $('#negara_id').val();
             if (negara_id == "102") {
-                $('#is_indo').show();
+                $('#provinsi_desa_group').show();
             } else {
-                $('#is_indo').hide();
+                $('#provinsi_desa_group').hide();
             }
             $.ajax({
                 url: '<?php echo base_url('tu/kerja_sama/get_kota_kabupaten') ?>',

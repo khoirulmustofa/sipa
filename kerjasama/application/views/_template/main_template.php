@@ -1,246 +1,240 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title><?= $title ?> - FT Universitas Islam Riau</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="<?= str_replace('kerjasama', '', base_url()) ?>templates/img/logo/logo.png" type="image/x-icon" />
+    <!-- Fonts and icons -->
+    <script src="<?= base_url('templates') ?>/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Lato:300,400,700,900"]
+            },
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+                urls: ['<?= base_url('templates') ?>/assets/css/fonts.min.css']
+            },
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
 
-    <title><?php echo $title ?> | Fakultas Teknik Universitas Islam Riau</title>
-
-    <!-- Bootstrap -->
-    <link href="<?php echo base_url('templates/gentelella') ?>/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="<?php echo base_url('templates/gentelella') ?>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="<?php echo base_url('templates/gentelella') ?>/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- jQuery custom content scroller -->
-    <link href="<?php echo base_url('templates/gentelella') ?>/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
-
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- load css tambahan -->
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/atlantis.min.css">
     <?php if ($load_css != '') {
         $this->load->view($load_css);
     }
     ?>
-    <!-- Custom Theme Style -->
-    <link href="<?php echo base_url('templates/gentelella') ?>/build/css/custom.min.css" rel="stylesheet">
 </head>
 
-<body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-            <div class="col-md-3 left_col menu_fixed">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <center><a href="#" class="site_title"><img style="width: 50px;" src="<?php echo base_url('templates') ?>/img/logo/logo.png" alt="logo"></a></center>
-                    </div>
+<body>
+    <div class="wrapper">
+        <div class="main-header">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="blue">
 
-                    <div class="clearfix"></div>
-
-                    <!-- menu profile quick info -->
-                    <div class="profile clearfix">
-                        <div class="profile_pic">
-                            <img src="<?php echo base_url('assets/images/Avatar.jpg') ?>" class="img-circle profile_img">
-                        </div>
-                        <div class="profile_info">
-                            <span>Welcome,</span>
-                            <h2><?php echo $_SESSION['nama']; ?></h2>
-                            <?php
-                            if (isset($_SESSION['status_jabatan'])) {
-                                if ($_SESSION['status_jabatan'] == 'Pegawai') {
-                                    echo $_SESSION['status_jabatan'];
-                                } else {
-                                    echo $_SESSION['status_login'];
-                                }
-                            } else {
-                                echo $_SESSION['status_login'];
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <!-- /menu profile quick info -->
-
-                    <br />
-
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <h3>General</h3>
-                            <ul class="nav side-menu">
-                                <li <?php echo $menu == "menu_dashboard" ? 'class="active"' : "" ?>><a href="<?php echo base_url('dashboard') ?>"><i class="fa fa-dashboard"></i> Dashboard</a>
-                                    <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
-                                <li <?php echo $menu == "menu_kerja_sama" ? 'class="active"' : "" ?>><a href="<?php echo base_url('tu/kerja_sama') ?>"><i class="fa fa-connectdevelop"></i> Kerja Sama</a>
-                                <?php } ?>
-                                <?php if ($_SESSION['status_login'] == "Prodi") { ?>
-                                <li <?php echo $menu == "menu_kegiatan" ? 'class="active"' : "" ?>><a href="<?php echo base_url('prodi/kegiatan') ?>"><i class="fa fa-tasks"></i> Kegiatan</a>
-                                <?php } ?>
-
-                                </li>
-                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url()) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-send-o"></i> Kembali Ke SiPA </a></li>
-                                <li><a href="<?php echo str_replace("kerjasama/", "", base_url('logout')) ?>" onclick="javasciprt: return confirm('Are You Sure ?')"><i class="fa  fa-sign-out"></i> Keluar </a></li>
-                            </ul>
-                        </div>
-
-
-                    </div>
-                    <!-- /sidebar menu -->
-
-                    <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <!-- /menu footer buttons -->
+                <a href="<?= base_url() ?>" class="logo">
+                    <img src="<?= str_replace('kerjasama', '', base_url()) . 'templates/img/logo/logo.png' ?>" style="width: 40px;" alt="Logoo" class="navbar-brand">
+                </a>
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="icon-menu"></i>
+                    </span>
+                </button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+                <div class="nav-toggle">
+                    <button class="btn btn-toggle toggle-sidebar">
+                        <i class="icon-menu"></i>
+                    </button>
                 </div>
             </div>
+            <!-- End Logo Header -->
 
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <nav>
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            <!-- Navbar Header -->
+            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+
+                <div class="container-fluid">
+                    <h2 class="text-light text-center"><b><i>SISTEM PELAPORAN AKADEMIK FAKULTAS TEKNIK (SiPA-FT)</i></b></h2>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        </div>
+        <!-- Sidebar -->
+        <div class="sidebar sidebar-style-2">
+
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <div class="user">
+                        <div class="avatar-sm float-left mr-2">
+                            <img src="<?= base_url('templates') ?>/assets/img/avatar.png" alt="avatar" class="avatar-img rounded-circle">
                         </div>
+                        <div class="info">
+                            <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                <span>
+                                    <?php echo $_SESSION['nama']; ?>
+                                    <br>
+                                    <?php
+                                    if (isset($_SESSION['status_jabatan'])) {
+                                        if ($_SESSION['status_jabatan'] == 'Pegawai') {
+                                            echo $_SESSION['status_jabatan'];
+                                        } else {
+                                            echo $_SESSION['status_login'];
+                                        }
+                                    } else {
+                                        echo $_SESSION['status_login'];
+                                    }
+                                    ?>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">John Doe
-                                    <span class=" fa fa-angle-down"></span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Profile</a></li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                                </ul>
-                            </li>
+                                </span>
 
-                            <li role="presentation" class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
-                                </a>
-                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+                            </a>
+                            <div class="clearfix"></div>
+
+                            <div class="collapse in" id="collapseExample">
+                                <ul class="nav">
                                     <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where<?php echo base_url('templates/gentelella') ?>.
-                                            </span>
+                                        <a href="#profile">
+                                            <span class="link-collapse">My Profile</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where<?php echo base_url('templates/gentelella') ?>.
-                                            </span>
+                                        <a href="#edit">
+                                            <span class="link-collapse">Edit Profile</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where<?php echo base_url('templates/gentelella') ?>.
-                                            </span>
+                                        <a href="#settings">
+                                            <span class="link-collapse">Settings</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where<?php echo base_url('templates/gentelella') ?>.
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="text-center">
-                                            <a>
-                                                <strong>See All Alerts</strong>
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </div>
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="nav nav-primary">
+                        <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
+                            <a href="<?php echo base_url('dashboard') ?>">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
+                            <li class="nav-item<?php echo $menu == "menu_kerja_sama" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('tu/kerja_sama') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Kerja Sama</p>
+                                </a>
                             </li>
-                        </ul>
-                    </nav>
+                        <?php } ?>
+                    </ul>
                 </div>
             </div>
-            <!-- /top navigation -->
-
-            <!-- page content -->
+        </div>
+        <div class="main-panel">
             <?php echo $contents ?>
 
-            <!-- /page content -->
-
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    <?php echo $_SESSION['status_login'] ?>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="copyright ml-auto">
+                        ©<?= date('Y') ?>, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Fakultas Teknik Universitas Islam Riau</a>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
             </footer>
-            <!-- /footer content -->
         </div>
-    </div>
 
-    <!-- jQuery -->
-    <script src="<?php echo base_url('templates/gentelella') ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="<?php echo base_url('templates/gentelella') ?>/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="<?php echo base_url('templates/gentelella') ?>/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="<?php echo base_url('templates/gentelella') ?>/vendors/nprogress/nprogress.js"></script>
-    <!-- jQuery custom content scroller -->
-    <script src="<?php echo base_url('templates/gentelella') ?>/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-    <!-- load css tambahan -->
+        <div class="custom-template">
+            <div class="title">Settings</div>
+            <div class="custom-content">
+                <div class="switcher">
+                    <div class="switch-block">
+                        <h4>Logo Header</h4>
+                        <div class="btnSwitch">
+                            <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
+                            <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
+                            <br />
+                            <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
+                            <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
+                        </div>
+                    </div>
+                    <div class="switch-block">
+                        <h4>Navbar Header</h4>
+                        <div class="btnSwitch">
+                            <button type="button" class="changeTopBarColor" data-color="dark"></button>
+                            <button type="button" class="changeTopBarColor" data-color="blue"></button>
+                            <button type="button" class="changeTopBarColor" data-color="purple"></button>
+                            <button type="button" class="changeTopBarColor" data-color="light-blue"></button>
+                            <button type="button" class="changeTopBarColor" data-color="green"></button>
+                            <button type="button" class="changeTopBarColor" data-color="orange"></button>
+                            <button type="button" class="changeTopBarColor" data-color="red"></button>
+                            <button type="button" class="changeTopBarColor" data-color="white"></button>
+                            <br />
+                            <button type="button" class="changeTopBarColor" data-color="dark2"></button>
+                            <button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
+                            <button type="button" class="changeTopBarColor" data-color="purple2"></button>
+                            <button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
+                            <button type="button" class="changeTopBarColor" data-color="green2"></button>
+                            <button type="button" class="changeTopBarColor" data-color="orange2"></button>
+                            <button type="button" class="changeTopBarColor" data-color="red2"></button>
+                        </div>
+                    </div>
+                    <div class="switch-block">
+                        <h4>Sidebar</h4>
+                        <div class="btnSwitch">
+                            <button type="button" class="selected changeSideBarColor" data-color="white"></button>
+                            <button type="button" class="changeSideBarColor" data-color="dark"></button>
+                            <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                        </div>
+                    </div>
+                    <div class="switch-block">
+                        <h4>Background</h4>
+                        <div class="btnSwitch">
+                            <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+                            <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+                            <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+                            <button type="button" class="changeBackgroundColor" data-color="dark"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End Custom template -->
+    </div>
+    <!--   Core JS Files   -->
+    <script src="<?= base_url('templates') ?>/assets/js/core/jquery.3.2.1.min.js"></script>
+    <script src="<?= base_url('templates') ?>/assets/js/core/popper.min.js"></script>
+    <script src="<?= base_url('templates') ?>/assets/js/core/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="<?= base_url('templates') ?>/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="<?= base_url('templates') ?>/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="<?= base_url('templates') ?>/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="<?= base_url('templates') ?>/assets/js/sweetalert2.all.min.js"></script>
+    <!-- Datatables -->
+    <script src="<?= base_url('templates') ?>/assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Atlantis JS -->
+    <script src="<?= base_url('templates') ?>/assets/js/atlantis.min.js"></script>
     <?php if ($load_js != '') {
         $this->load->view($load_js);
     }
     ?>
-
-    <!-- Custom Theme Scripts -->
-    <script src="<?php echo base_url('templates/gentelella/build/js/custom.js') ?>"></script>
 </body>
 
 </html>
