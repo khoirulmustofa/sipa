@@ -9,10 +9,11 @@
 
     function load_data_kerja_sama() {
         $('#dt_kerja_sama').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "bDestroy": true,
-            "ajax": {
+            processing: true,
+            serverSide: true,
+            bDestroy: true,
+            scrollX: true,
+            ajax: {
                 //panggil method ajax list dengan ajax
                 "url": '<?php echo base_url('tu/Kerja_sama/get_datatable_kerja_sama') ?>',
                 "data": {

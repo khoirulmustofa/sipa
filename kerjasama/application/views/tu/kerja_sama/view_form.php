@@ -118,8 +118,8 @@ echo form_open_multipart($action, $attribute);
 <script>
     $(document).ready(function() {
         // pertama kali load hidden ketegori_moa_group
-        let ketegori_moa = '<?php echo $ketegori_moa ?>';
-        if (ketegori_moa == "MOA") {
+        let jenis_kerjasama = '<?php echo $jenis_kerjasama ?>';
+        if (jenis_kerjasama == "MOA") {
             $('#ketegori_moa_group').show();
             $('#dok_pendukung_group').show();
         } else {

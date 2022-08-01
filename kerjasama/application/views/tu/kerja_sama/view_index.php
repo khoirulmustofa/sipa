@@ -29,23 +29,23 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tahun Kerja Sama :</label>
-                                    <select class="form-control" name="tahun_kerja_sama">
-                                        <option value="">--Pilih Tahun--</option>
-                                        <?php foreach ($tahun_kerja_sama_result as $key => $value) {
-                                            echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
-                                        } ?>
-                                        <option value="5">> 5 Tahun</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <select class="form-control" name="tahun_kerja_sama">
+                                            <option value="">--Pilih Tahun--</option>
+                                            <?php foreach ($tahun_kerja_sama_result as $key => $value) {
+                                                echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
+                                            } ?>
+                                            <option value="5">> 5 Tahun</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="button" onclick="load_data_kerja_sama()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <button type="button" onclick="load_data_kerja_sama()" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
 
                     </div>

@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Ozdemir\Datatables\Datatables;
+use Ozdemir\Datatables\DB\CodeigniterAdapter;
+
 class Kegiatan extends CI_Controller
 {
 
@@ -24,71 +27,19 @@ class Kegiatan extends CI_Controller
         $this->template->load('_template/main_template', 'prodi/kegiatan/view_index', $data);
     }
 
-    public function get_kegiatan_json()
+    public function get_datatable_kegiatan()
     {
-        $this->load->model('Kerja_sama_model');
         $jenis_kerjasama = $this->input->post('jenis_kerjasama', TRUE);
-        $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
 
-        header('Content-Type: application/json');
-        // ambil data dari model Kerja_sama_model
-        $list = $this->Kerja_sama_model->get_datatables($jenis_kerjasama, $tahun_kerja_sama);
-        $data = array();
-        $no = $this->input->post('start');
+        $where = "";
+        if ($jenis_kerjasama != '') {
+            $where = " WHERE jenis_kegiatan = '$jenis_kerjasama'";
+        } 
+        $datatables = new Datatables(new CodeigniterAdapter);
 
-        $date_now = date("Y-m-d"); // this format is string comparable
+        $datatables->query("SELECT id_kegiatan,jenis_kegiatan,awal_kegiatan,akhir_kegiatan,judul_kegiatan,manfaat_kegiatan,doc_undangan,doc_absensi,doc_foto,doc_1,doc_2,doc_3,doc_4,doc_5,doc_6, DATEDIFF(akhir_kegiatan, awal_kegiatan) as selisih_hari FROM tb_kegiatan " . $where);        
 
-        //looping data mahasiswa
-        foreach ($list as $kerja_sama) {
-            $btn_peringatan = '';
-            $akhir_kerjasama = $kerja_sama->akhir_kerjasama;
-            // cek jenis kerja sama
-            if ($kerja_sama->jenis_kerjasama == "MOA") {
-                // peringatan 3 bulan
-                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
-                $tanggal_dikurangi->sub(new DateInterval('P3M')); // 3 bulan
-                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
-                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                } else {
-                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                }
-            } else {
-                // peringatan 6 bulan
-                $tanggal_dikurangi = new DateTime($akhir_kerjasama);
-                $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan
-                if ($date_now < format_tgl_Ymd($tanggal_dikurangi)) {
-                    $btn_peringatan =  '<button type="button" class="btn btn-success btn-sm">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                } else {
-                    $btn_peringatan =  '<button type="button" class="btn btn-danger btn-sm berkedip">' . format_tgl_dMY($kerja_sama->akhir_kerjasama) . '</button>';
-                }
-            }
-
-            $no++;
-            $row = array();
-
-            //row pertama akan kita gunakan untuk btn edit dan delete
-            $row[] = $no;
-            $row[] =  '<a class="btn btn-info btn-sm" onclick="btn_detail(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-eye"></i> </a>
-                        <a class="btn btn-warning btn-sm" onclick="btn_edit(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-edit"></i> </a>
-                        <a class="btn btn-danger btn-sm" onclick="btn_delete(' . "'" . $kerja_sama->id_kerjasama . "'" . ')"><i class="fa fa-trash"></i> </a>';
-            $row[] = $kerja_sama->jenis_kerjasama;
-            $row[] = $kerja_sama->lembaga_mitra;
-            $row[] = $kerja_sama->alamat_mitra;
-            $row[] = $kerja_sama->nama_negara;
-            $row[] = $kerja_sama->durasi_kerjasama . " Tahun";
-            $row[] = format_tgl_dMY($kerja_sama->tgl_kerjasama);
-            $row[] = $btn_peringatan;
-            $row[] = '<a href="' . base_url('kerjasama/assets/file_dok/' . $kerja_sama->dokumen_kerjasama) . '" class="btn btn-default btn-sm" download ><i class="fa fa-cloud-download"></i> Download</a>';
-            $data[] = $row;
-        }
-        $output = array(
-            "draw" => $this->input->post('draw'),
-            "recordsTotal" => $this->Kerja_sama_model->count_all(),
-            "recordsFiltered" => $this->Kerja_sama_model->count_filtered($jenis_kerjasama, $tahun_kerja_sama),
-            "data" => $data,
-        );
-        //output to json format
-        $this->output->set_output(json_encode($output));
+        echo $datatables->generate();
     }
 
     public function create()

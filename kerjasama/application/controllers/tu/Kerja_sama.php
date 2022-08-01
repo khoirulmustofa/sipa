@@ -50,10 +50,7 @@ class Kerja_sama extends CI_Controller
         }
         $datatables = new Datatables(new CodeigniterAdapter);
 
-        $datatables->query("SELECT id_kerjasama,id_kerjasama as id_action,jenis_kerjasama,lembaga_mitra,periode,alamat_mitra,nama_negara,durasi_kerjasama,tgl_kerjasama,akhir_kerjasama,dokumen_kerjasama FROM tb_kerjasama JOIN master_negara ON master_negara.id = tb_kerjasama.negara_id " . $where);
-        $datatables->add('id_action', function ($data) {
-            return '<a href="#edit' . $data['id_action'] . '">#edit </a> ' . '/ <a href="#del' . $data['id_action'] . '">#delete </a> ';
-        });
+        $datatables->query("SELECT id_kerjasama,id_kerjasama as id_action,jenis_kerjasama,lembaga_mitra,periode,alamat_mitra,nama_negara,durasi_kerjasama,tgl_kerjasama,akhir_kerjasama,dokumen_kerjasama FROM tb_kerjasama JOIN master_negara ON master_negara.id = tb_kerjasama.negara_id " . $where);       
 
         echo $datatables->generate();
     }
@@ -137,7 +134,7 @@ class Kerja_sama extends CI_Controller
 
             $config['upload_path'] = './assets/file_dok/';
             $config['file_name'] = 'Kerjasama-' . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-            $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+            $config['allowed_types'] = '*';
             // $config['max_size']             = 100;
             // $config['max_width']            = 1024;
             // $config['max_height']           = 768;
@@ -204,7 +201,7 @@ class Kerja_sama extends CI_Controller
     {
         $config1['upload_path'] = './assets/file_dok/';
         $config1['file_name'] = "Dok1-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config1['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config1['allowed_types'] = '*';
 
         $this->load->library('upload', $config1);
         $this->upload->do_upload('dokumen_pendukung_1');
@@ -217,7 +214,7 @@ class Kerja_sama extends CI_Controller
     {
         $config2['upload_path'] = './assets/file_dok/';
         $config2['file_name'] = "Dok2-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config2['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config2['allowed_types'] = '*';
 
         $this->load->library('upload', $config2);
         $this->upload->do_upload('dokumen_pendukung_2');
@@ -230,7 +227,7 @@ class Kerja_sama extends CI_Controller
     {
         $config3['upload_path'] = './assets/file_dok/';
         $config3['file_name'] = "Dok3-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config3['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config3['allowed_types'] = '*';
 
         $this->load->library('upload', $config3);
         $this->upload->do_upload('dokumen_pendukung_3');
@@ -243,7 +240,7 @@ class Kerja_sama extends CI_Controller
     {
         $config4['upload_path'] = './assets/file_dok/';
         $config4['file_name'] = "Dok4-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config4['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config4['allowed_types'] = '*';
 
         $this->load->library('upload', $config4);
         $this->upload->do_upload('dokumen_pendukung_4');
@@ -282,6 +279,7 @@ class Kerja_sama extends CI_Controller
             'action' => "tu/kerja_sama/edit_kerja_sama_action",
             'id_kerjasama' => set_value('id_kerjasama', $kerja_sama_row->id_kerjasama),
             'jenis_kerjasama' => set_value('jenis_kerjasama', $kerja_sama_row->jenis_kerjasama),
+            'ketegori_moa' => set_value('ketegori_moa', $kerja_sama_row->ketegori_moa),
             'tgl_kerjasama' => set_value('tgl_kerjasama', $kerja_sama_row->tgl_kerjasama),
             'lembaga_mitra' => set_value('lembaga_mitra', $kerja_sama_row->lembaga_mitra),
             'alamat_mitra' => set_value('alamat_mitra', $kerja_sama_row->alamat_mitra),
@@ -334,40 +332,12 @@ class Kerja_sama extends CI_Controller
             echo json_encode($data_response);
         } else {
 
-            if (empty($_FILES['dokumen_kerjasama']['name'])) {
-
-                $data_update = array(
-                    'jenis_kerjasama' => $this->input->post('jenis_kerjasama', TRUE),
-                    'tgl_kerjasama' => $this->input->post('tgl_kerjasama', TRUE),
-                    'lembaga_mitra' => $this->input->post('lembaga_mitra', TRUE),
-                    'alamat_mitra' => $this->input->post('alamat_mitra', TRUE),
-                    'negara_id' => $this->input->post('negara_id', TRUE),
-                    'provinsi_id' => $this->input->post('provinsi_id', TRUE),
-                    'kabupaten_kota_id' => $this->input->post('kabupaten_kota_id', TRUE),
-                    'kecamatan_id' => $this->input->post('kecamatan_id', TRUE),
-                    'kelurahan_id' => $this->input->post('kelurahan_id', TRUE),
-                    'durasi_kerjasama' => $this->input->post('durasi_kerjasama', TRUE),
-                    'akhir_kerjasama' => date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE)))),
-                );
-
-                // load model
-                $query =  $this->load->model('Kerja_sama_model');
-                // insert ke table tb_kerjasama
-                $this->Kerja_sama_model->update_tb_kerjasama_by_id($data_update, $id_kerjasama);
-
-                $data_response =  array(
-                    'status' => true,
-                    'messege' => '<p>Kerja Sama Berhasil Diubah</p>',
-                );
-                echo json_encode($data_response);
-            } else {
-
-
+            if (!empty($_FILES['dokumen_kerjasama']['name'])) {
                 $config['upload_path'] = './assets/file_dok/';
                 $config['file_name']  = 'Kerjasama-' . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-                $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+                $config['allowed_types'] = '*';
 
-                $this->upload->initialize($config);
+                // $this->upload->initialize($config);
                 $this->load->library('upload', $config);
 
                 if (!$this->upload->do_upload('dokumen_kerjasama')) {
@@ -376,35 +346,51 @@ class Kerja_sama extends CI_Controller
                         'messege' => $this->upload->display_errors()
                     );
                     echo json_encode($data_response);
-                } else {
-                    $data_upload = $this->upload->data();
-                    $data_update = array(
-                        'jenis_kerjasama' => $this->input->post('jenis_kerjasama', TRUE),
-                        'tgl_kerjasama' => $this->input->post('tgl_kerjasama', TRUE),
-                        'lembaga_mitra' => $this->input->post('lembaga_mitra', TRUE),
-                        'alamat_mitra' => $this->input->post('alamat_mitra', TRUE),
-                        'negara_id' => $this->input->post('negara_id', TRUE),
-                        'provinsi_id' => $this->input->post('provinsi_id', TRUE),
-                        'kabupaten_kota_id' => $this->input->post('kabupaten_kota_id', TRUE),
-                        'kecamatan_id' => $this->input->post('kecamatan_id', TRUE),
-                        'kelurahan_id' => $this->input->post('kelurahan_id', TRUE),
-                        'durasi_kerjasama' => $this->input->post('durasi_kerjasama', TRUE),
-                        'akhir_kerjasama' => date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE)))),
-                        'dokumen_kerjasama' => $data_upload['file_name'],
-                    );
-
-                    // load model
-                    $query =  $this->load->model('Kerja_sama_model');
-                    // insert ke table tb_kerjasama
-                    $this->Kerja_sama_model->update_tb_kerjasama_by_id($data_update, $id_kerjasama);
-
-                    $data_response =  array(
-                        'status' => true,
-                        'messege' => '<p>Tambah Kerja Sama Berhasil Diubah</p>',
-                    );
-                    echo json_encode($data_response);
+                    die();
                 }
+                $data_upload = $this->upload->data();
+                $data_update['dokumen_kerjasama'] = $data_upload['file_name'];
             }
+
+            $data_update['jenis_kerjasama'] = $this->input->post('jenis_kerjasama', TRUE);
+            $data_update['tgl_kerjasama'] = $this->input->post('tgl_kerjasama', TRUE);
+            $data_update['lembaga_mitra'] = $this->input->post('lembaga_mitra', TRUE);
+            $data_update['alamat_mitra'] = $this->input->post('alamat_mitra', TRUE);
+            $data_update['negara_id'] = $this->input->post('negara_id', TRUE);
+            $data_update['provinsi_id'] = $this->input->post('provinsi_id', TRUE);
+            $data_update['kabupaten_kota_id'] = $this->input->post('kabupaten_kota_id', TRUE);
+            $data_update['kecamatan_id'] = $this->input->post('kecamatan_id', TRUE);
+            $data_update['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
+            $data_update['durasi_kerjasama'] = $this->input->post('durasi_kerjasama', TRUE);
+            $data_update['akhir_kerjasama'] = date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE))));
+
+            // upload file dokumen_pendukung
+            if (!empty($_FILES['dokumen_pendukung_1']['name'])) {
+                $data_insert['dokumen_pendukung_1'] = $this->do_upload_dokumen_1();
+            }
+
+            if (!empty($_FILES['dokumen_pendukung_2']['name'])) {
+                $data_insert['dokumen_pendukung_2'] = $this->do_upload_dokumen_2();
+            }
+
+            if (!empty($_FILES['dokumen_pendukung_3']['name'])) {
+                $data_insert['dokumen_pendukung_3'] = $this->do_upload_dokumen_3();
+            }
+
+            if (!empty($_FILES['dokumen_pendukung_4']['name'])) {
+                $data_insert['dokumen_pendukung_4'] = $this->do_upload_dokumen_4();
+            }
+
+            // load model
+            $query =  $this->load->model('Kerja_sama_model');
+            // insert ke table tb_kerjasama
+            $this->Kerja_sama_model->update_tb_kerjasama_by_id($id_kerjasama, $data_update);
+
+            $data_response =  array(
+                'status' => true,
+                'messege' => '<p>Kerja Sama Berhasil Diubah</p>',
+            );
+            echo json_encode($data_response);
         }
     }
 
@@ -437,10 +423,10 @@ class Kerja_sama extends CI_Controller
             'tgl_peringatan' => $kerja_sama_row->tgl_peringatan,
             'dokumen_kerjasama' => $kerja_sama_row->dokumen_kerjasama,
             'perbaharui' => $kerja_sama_row->perbaharui,
-            'dokumen_pendukung_1'=> $kerja_sama_row->dokumen_pendukung_1,
-            'dokumen_pendukung_2'=> $kerja_sama_row->dokumen_pendukung_2,
-            'dokumen_pendukung_3'=> $kerja_sama_row->dokumen_pendukung_3,
-            'dokumen_pendukung_4'=> $kerja_sama_row->dokumen_pendukung_4,
+            'dokumen_pendukung_1' => $kerja_sama_row->dokumen_pendukung_1,
+            'dokumen_pendukung_2' => $kerja_sama_row->dokumen_pendukung_2,
+            'dokumen_pendukung_3' => $kerja_sama_row->dokumen_pendukung_3,
+            'dokumen_pendukung_4' => $kerja_sama_row->dokumen_pendukung_4,
             'nama_negara' => $kerja_sama_row->nama_negara,
             'province_name' =>  $kerja_sama_row->province_name,
             'kota_kabupaten_nama' =>  $kerja_sama_row->kota_kabupaten_nama,
@@ -620,7 +606,7 @@ class Kerja_sama extends CI_Controller
             $data_update = array(
                 'perbaharui' => '1'
             );
-            $this->Kerja_sama_model->update_tb_kerjasama_by_id($data_update, $id_kerjasama);
+            $this->Kerja_sama_model->update_tb_kerjasama_by_id($id_kerjasama, $data_update);
 
 
             if (empty($_FILES['dokumen_kerjasama']['name'])) {

@@ -19,6 +19,34 @@
                 <div class="card full-height">
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label>Tahun Kerja Sama :</label>
+                                    <div class="input-group">
+                                        <select class="form-control" name="tahun_kerja_sama">
+                                            <option value="">--Pilih Tahun--</option>
+                                            <?php foreach ($tahun_kerja_sama_result as $key => $value) {
+                                                echo '<option value="' . $value->tgl_kerjasama . '">' . $value->tgl_kerjasama . '</option>';
+                                            } ?>
+                                            <option value="5">> 5 Tahun</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="button" onclick="load_data_kerja_sama()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-sm-6 col-md-3">
                                 <div class="card card-stats card-primary card-round">
                                     <div class="card-body">
@@ -60,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
-        </div>        
+            </div>
+        </div>
     </div>
 </div>

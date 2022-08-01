@@ -132,6 +132,13 @@
                                 </a>
                             </li>
                         <?php } ?>
+
+                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('prodi/kegiatan') ?>">
+                                <i class="fas fa-book-open"></i>
+                                    <p>Kegiatan</p>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>

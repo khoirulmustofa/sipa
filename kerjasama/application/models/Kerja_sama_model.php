@@ -51,7 +51,7 @@ class Kerja_sama_model extends CI_Model
         return $query;
     }
 
-    public function update_tb_kerjasama_by_id($data = array(), $id_kerjasama = "")
+    public function update_tb_kerjasama_by_id( $id_kerjasama = "",$data = array())
     {
         $this->db->where('id_kerjasama', $id_kerjasama);
         $this->db->update('tb_kerjasama', $data);

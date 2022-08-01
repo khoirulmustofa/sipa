@@ -1,59 +1,65 @@
 <script>
-    function btn_add_kegiatan(){
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
-        $.ajax({
-            url: '<?php echo base_url('prodi/kegiatan/create') ?>',
-            type: "GET",
-            dataType: "JSON",
-            success: function(respon) {
-                Swal.close();
-                if (respon.status) {
-                    $('#view_modal_form').html(respon.view_modal_form);
-                    $('#modal_form').modal('show');
-                } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.close();
-                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
-            }
-        });
-    }
-
-    $(document).ready(function() {
-        load_data_kegiatan();
+     $(document).ready(function() {
+        load_data_keiatan();
     });
 
-    function load_data_kegiatan() {
+    function load_data_keiatan() {
         $('#dt_kegiatan').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "bDestroy": true,
-            "order": [],
-            "ajax": {
+            processing: true,
+            serverSide: true,
+            bDestroy: true,
+            scrollX: true,
+            ajax: {
                 //panggil method ajax list dengan ajax
-                "url": '<?php echo base_url('prodi/kegiatan/get_kerja_sama_json') ?>',
+                "url": '<?php echo base_url('prodi/kegiatan/get_datatable_kegiatan') ?>',
                 "data": {
-                    jenis_kerjasama: $("[name='jenis_kerjasama']").val(),
-                    tahun_kerja_sama: $("[name='tahun_kerja_sama']").val()
+                    jenis_kegiatan: $("[name='jenis_kegiatan']").val(),
                 },
                 "type": "POST"
             },
+            columns: [{
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: "id_kerjasama",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        let button = `<div class="btn-group" role="group" aria-label="Basic example">                                      
+                                        <button type="button" title="Detail" onclick="btn_detail('${data}')" class="btn btn-info btn-xs"><i class="fas fa-info-circle"></i></button>
+                                        <button type="button" title="Edit" onclick="btn_edit('${data}')" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>
+                                        <button type="button" title="Delete" onclick="btn_delete('${data}')" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
+                                    </div>`;
+                        return button;
+                    }
+                }, {
+                    data: "jenis_kegiatan",
+                },
+                {
+                    data: "judul_kegiatan",
+                }, {
+                    data: "manfaat_kegiatan",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "awal_kegiatan",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "akhir_kegiatan",
+                }, {
+                    data: "selisih_hari",
+                    searchable: false
+                }
+            ],
+            order: [
+                [3, 'asc'],
+            ],
         });
     }
 </script>
