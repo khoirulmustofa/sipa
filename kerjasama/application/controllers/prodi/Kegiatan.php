@@ -8,7 +8,7 @@ class Kegiatan extends CI_Controller
     {
         parent::__construct();
         // cek login dari app_helper
-        is_login();
+        //is_login();
     }
 
     public function index()
@@ -136,14 +136,14 @@ class Kegiatan extends CI_Controller
             echo json_encode($data_response);
         } else {
 
-           
+
 
             $data_insert['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
             $data_insert['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
             $data_insert['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
             $data_insert['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
             $data_insert['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
-            
+
             if (!empty($_FILES['doc_undangan']['name'])) {
                 $data_insert['doc_undangan'] = $this->_upload_doc_undangan();
             }

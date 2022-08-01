@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         // cek login dari app_helper
-        is_login();
+        //is_login();
     }
 
     public function index()
@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller
         $this->load->model('Kerja_sama_model');
         $tahun_kerja_sama =  $this->input->get('tahun_kerja_sama', TRUE);
         // ambil query jumlah kerja sama MOA dan MOU
-        
+
         $tahun_kerja_sama_result = $this->Kerja_sama_model->get_tahun_kerja_sama()->result();
 
         $data['menu'] = 'menu_dashboard';
