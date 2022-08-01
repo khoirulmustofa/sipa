@@ -122,6 +122,7 @@ class Kerja_sama extends CI_Controller
             $this->form_validation->set_rules('ketegori_moa', 'Kategori', 'trim|required');
         }
         $this->form_validation->set_rules('durasi_kerjasama', 'durasi kerjasama', 'trim|required');
+
         if (empty($_FILES['dokumen_kerjasama']['name'])) {
             $this->form_validation->set_rules('dokumen_kerjasama', 'Document', 'required');
         }
@@ -136,7 +137,7 @@ class Kerja_sama extends CI_Controller
 
             $config['upload_path'] = './assets/file_dok/';
             $config['file_name'] = 'Kerjasama-' . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-            $config['allowed_types']        = 'jpg|png|jpeg|pdf|PDF';
+            $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
             // $config['max_size']             = 100;
             // $config['max_width']            = 1024;
             // $config['max_height']           = 768;
@@ -167,6 +168,22 @@ class Kerja_sama extends CI_Controller
                 $data_insert['durasi_kerjasama'] = $this->input->post('durasi_kerjasama', TRUE);
                 $data_insert['akhir_kerjasama'] = date('Y-m-d', strtotime('+' . $this->input->post('durasi_kerjasama', TRUE) . ' year', strtotime($this->input->post('tgl_kerjasama', TRUE))));
                 $data_insert['dokumen_kerjasama'] = $data_upload['file_name'];
+                // upload file dokumen_pendukung
+                if (!empty($_FILES['dokumen_pendukung_1']['name'])) {
+                    $data_insert['dokumen_pendukung_1'] = $this->do_upload_dokumen_1();
+                }
+
+                if (!empty($_FILES['dokumen_pendukung_2']['name'])) {
+                    $data_insert['dokumen_pendukung_2'] = $this->do_upload_dokumen_2();
+                }
+
+                if (!empty($_FILES['dokumen_pendukung_3']['name'])) {
+                    $data_insert['dokumen_pendukung_3'] = $this->do_upload_dokumen_3();
+                }
+
+                if (!empty($_FILES['dokumen_pendukung_4']['name'])) {
+                    $data_insert['dokumen_pendukung_4'] = $this->do_upload_dokumen_4();
+                }
 
 
                 // load model
@@ -181,6 +198,58 @@ class Kerja_sama extends CI_Controller
                 echo json_encode($data_response);
             }
         }
+    }
+
+    public function do_upload_dokumen_1()
+    {
+        $config['upload_path'] = './assets/file_dok/';
+        $config['file_name'] = "Dok1-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('dokumen_pendukung_1');
+
+        $data_upload = $this->upload->data();
+        return $data_upload['file_name'];
+    }
+
+    public function do_upload_dokumen_2()
+    {
+        $config['upload_path'] = './assets/file_dok/';
+        $config['file_name'] = "Dok2-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('dokumen_pendukung_2');
+
+        $data_upload = $this->upload->data();
+        return $data_upload['file_name'];
+    }
+
+    public function do_upload_dokumen_3()
+    {
+        $config['upload_path'] = './assets/file_dok/';
+        $config['file_name'] = "Dok3-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('dokumen_pendukung_3');
+
+        $data_upload = $this->upload->data();
+        return $data_upload['file_name'];
+    }
+
+    public function do_upload_dokumen_4()
+    {
+        $config['upload_path'] = './assets/file_dok/';
+        $config['file_name'] = "Dok4-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('dokumen_pendukung_4');
+
+        $data_upload = $this->upload->data();
+        return $data_upload['file_name'];
     }
 
     public function edit_kerja_sama()

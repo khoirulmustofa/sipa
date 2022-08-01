@@ -22,9 +22,9 @@ echo form_open_multipart($action, $attribute);
             <label for="varchar">Kategori </label>
             <select class="form-control" name="ketegori_moa" id="ketegori_moa">
                 <option value="">Pilih Jenis Kerjasama</option>
-                <option value="MOU" <?php echo $ketegori_moa == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
-                <option value="MOA" <?php echo $ketegori_moa == "Penelitian" ? "selected" : "" ?>>Penelitian</option>
-                <option value="MOA" <?php echo $ketegori_moa == "Pengabdian Masyarakat" ? "selected" : "" ?>>Pengabdian Masyarakat</option>
+                <option value="Pendidikan/Pengajaran" <?php echo $ketegori_moa == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
+                <option value="Penelitian" <?php echo $ketegori_moa == "Penelitian" ? "selected" : "" ?>>Penelitian</option>
+                <option value="Pengabdian Masyarakat" <?php echo $ketegori_moa == "Pengabdian Masyarakat" ? "selected" : "" ?>>Pengabdian Masyarakat</option>
             </select>
         </div>
         <div class="form-group">
