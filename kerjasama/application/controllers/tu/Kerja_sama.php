@@ -202,11 +202,11 @@ class Kerja_sama extends CI_Controller
 
     public function do_upload_dokumen_1()
     {
-        $config['upload_path'] = './assets/file_dok/';
-        $config['file_name'] = "Dok1-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config1['upload_path'] = './assets/file_dok/';
+        $config1['file_name'] = "Dok1-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config1['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
 
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config1);
         $this->upload->do_upload('dokumen_pendukung_1');
 
         $data_upload = $this->upload->data();
@@ -215,11 +215,11 @@ class Kerja_sama extends CI_Controller
 
     public function do_upload_dokumen_2()
     {
-        $config['upload_path'] = './assets/file_dok/';
-        $config['file_name'] = "Dok2-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config2['upload_path'] = './assets/file_dok/';
+        $config2['file_name'] = "Dok2-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config2['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
 
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config2);
         $this->upload->do_upload('dokumen_pendukung_2');
 
         $data_upload = $this->upload->data();
@@ -228,11 +228,11 @@ class Kerja_sama extends CI_Controller
 
     public function do_upload_dokumen_3()
     {
-        $config['upload_path'] = './assets/file_dok/';
-        $config['file_name'] = "Dok3-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config3['upload_path'] = './assets/file_dok/';
+        $config3['file_name'] = "Dok3-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config3['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
 
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config3);
         $this->upload->do_upload('dokumen_pendukung_3');
 
         $data_upload = $this->upload->data();
@@ -241,11 +241,11 @@ class Kerja_sama extends CI_Controller
 
     public function do_upload_dokumen_4()
     {
-        $config['upload_path'] = './assets/file_dok/';
-        $config['file_name'] = "Dok4-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
-        $config['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
+        $config4['upload_path'] = './assets/file_dok/';
+        $config4['file_name'] = "Dok4-" . str_replace(" ", "_", $this->input->post('lembaga_mitra', TRUE)) . "-" . date('dmYhis');
+        $config4['allowed_types'] = 'jpg|png|jpeg|pdf|PDF';
 
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config4);
         $this->upload->do_upload('dokumen_pendukung_4');
 
         $data_upload = $this->upload->data();
