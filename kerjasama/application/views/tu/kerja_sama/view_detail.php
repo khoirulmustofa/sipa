@@ -28,27 +28,30 @@
                     <td>Alamat Mitra</td>
                     <td><?php echo $alamat_mitra; ?></td>
                 </tr>
-                <tr>
-                    <td>Negara</td>
-                    <td><?php echo $nama_negara; ?></td>
-                </tr>
-                <tr>
-                    <td>Provinsi</td>
-                    <td><?php echo $province_name; ?></td>
-                </tr>
-                <tr>
-                    <td>Kabupaten Kota</td>
-                    <td><?php echo $kota_kabupaten_nama; ?></td>
-                </tr>
-                <tr>
-                    <td>Kecamatan</td>
-                    <td><?php echo $kecamatan_nama; ?></td>
-                </tr>
 
-                <tr>
-                    <td>Kelurahan</td>
-                    <td><?php echo $kelurahan_nama; ?></td>
-                </tr>
+                <!-- jika nama negara bukan indonesia -->
+                <?php if ($negara_id == "102") { ?>
+                    <tr>
+                        <td>Negara</td>
+                        <td><?php echo $nama_negara; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Provinsi</td>
+                        <td><?php echo $province_name; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Kabupaten Kota</td>
+                        <td><?php echo $kota_kabupaten_nama; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Kecamatan</td>
+                        <td><?php echo $kecamatan_nama; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Kelurahan</td>
+                        <td><?php echo $kelurahan_nama; ?></td>
+                    </tr>
+                <?php } ?>
                 <?php
                 // tanggal sekarang
                 $tgl_sekarang = date("Y-m-d");
@@ -95,6 +98,33 @@
                     <td>Dokumen Kerjasama</td>
                     <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_kerjasama) ?>" class="btn btn-info btn-sm" download><i class="fas fa-cloud-download-alt"></i> Download</a></td>
                 </tr>
+                <?php if ($dokumen_pendukung_1 != "") { ?>
+                    <tr>
+                        <td>Dokumen Pendukung 1</td>
+                        <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_pendukung_1) ?>" class="btn btn-info btn-sm" download><i class="fas fa-cloud-download-alt"></i> Download</a></td>
+                    </tr>
+                <?php } ?>
+
+                <?php if ($dokumen_pendukung_2 != "") { ?>
+                    <tr>
+                        <td>Dokumen Pendukung 2</td>
+                        <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_pendukung_2) ?>" class="btn btn-info btn-sm" download><i class="fas fa-cloud-download-alt"></i> Download</a></td>
+                    </tr>
+                <?php } ?>
+
+                <?php if ($dokumen_pendukung_3 != "") { ?>
+                    <tr>
+                        <td>Dokumen Pendukung 3</td>
+                        <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_pendukung_3) ?>" class="btn btn-info btn-sm" download><i class="fas fa-cloud-download-alt"></i> Download</a></td>
+                    </tr>
+                <?php } ?>
+
+                <?php if ($dokumen_pendukung_4 != "") { ?>
+                    <tr>
+                        <td>Dokumen Pendukung 4</td>
+                        <td><a href="<?php echo base_url('kerjasama/assets/file_dok/' . $dokumen_pendukung_4) ?>" class="btn btn-info btn-sm" download><i class="fas fa-cloud-download-alt"></i> Download</a></td>
+                    </tr>
+                <?php } ?>
             </table>
         </div>
         <div class="card-footer">
