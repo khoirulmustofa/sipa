@@ -1,5 +1,5 @@
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         load_data_keiatan();
     });
 
@@ -26,7 +26,7 @@
                     }
                 },
                 {
-                    data: "id_kerjasama",
+                    data: "id_kegiatan",
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row, meta) {
@@ -48,10 +48,16 @@
                     searchable: false
                 }, {
                     data: "awal_kegiatan",
-                    orderable: false,
-                    searchable: false
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return getFormattedDate(data);
+                    }
                 }, {
                     data: "akhir_kegiatan",
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        return getFormattedDate(data);
+                    }
                 }, {
                     data: "selisih_hari",
                     searchable: false
@@ -60,6 +66,88 @@
             order: [
                 [3, 'asc'],
             ],
+        });
+    }
+
+    function btn_detail(id) {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url('prodi/kegiatan/detail') ?>',
+            data: {
+                id_kegiatan: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    Swal.fire({
+                        title: "Ooops..",
+                        icon: 'warning',
+                        html: respon.messege,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
+    }
+
+    function getFormattedDate(date) {
+        var dt = new Date(date);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var mmddyyyy = dt.getDate() + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
+        return mmddyyyy;
+    }
+
+    function btn_tambah_kegiatan() {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url('prodi/kegiatan/create') ?>',
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    Swal.fire({
+                        title: "Ooops..",
+                        icon: 'warning',
+                        html: respon.messege,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
         });
     }
 </script>

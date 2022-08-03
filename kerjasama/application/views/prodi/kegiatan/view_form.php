@@ -4,9 +4,10 @@ echo form_open_multipart($action, $attribute);
 ?>
 <div class="modal-content">
     <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-file-alt"></i> <?php echo $title ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?php echo $title ?></h4>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <div class="form-group">
@@ -53,45 +54,40 @@ echo form_open_multipart($action, $attribute);
         <div id="doc_tambahan">
             <hr>
             <div class="form-group">
-                <label id="doc_1">P1</label>
+                <label id="doc_1">Dokumen Pendukung 1</label>
                 <input type="file" class="form-control" name="doc_1">
             </div>
             <div class="form-group">
-                <label id="doc_2">P2</label>
+                <label id="doc_2">Dokumen Pendukung 2</label>
                 <input type="file" class="form-control" name="doc_2">
             </div>
             <div class="form-group">
-                <label id="doc_3">P3</label>
+                <label id="doc_3">Dokumen Pendukung 3</label>
                 <input type="file" class="form-control" name="doc_3">
             </div>
             <div class="form-group">
-                <label id="doc_4">P4</label>
+                <label id="doc_4">Dokumen Pendukung 4</label>
                 <input type="file" class="form-control" name="doc_4">
             </div>
             <div class="form-group">
-                <label id="doc_5">P5</label>
+                <label id="doc_5">Dokumen Pendukung 5</label>
                 <input type="file" class="form-control" name="doc_5">
             </div>
             <div class="form-group">
-                <label id="doc_6">P6</label>
+                <label id="doc_6">Dokumen Pendukung 6</label>
                 <input type="file" class="form-control" name="doc_6">
             </div>
         </div>
-
-
     </div>
-    <div class="modal-footer">
-        <input type="hidden" name="id_kegiatan" value="<?php echo $id_kegiatan ?>">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-fw fa-close"></i> Tutup</button>
-        <button type="submit" id="submit" class="btn btn-success"><i class="fa fa-fw fa-send-o"></i> Simpan</button>
+    <div class="card-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
+        <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
 </div>
 <?php echo form_close() ?>
 
 <script>
-    $(document).ready(function() {
-        $('#doc_tambahan').hide();
-
+    $(document).ready(function() {        
         // Simpan Form
         $('form#form_kegiatan').on('submit', function(e) {
             e.preventDefault();
@@ -137,31 +133,5 @@ echo form_open_multipart($action, $attribute);
                 }
             });
         });
-    });
-    $("#jenis_kegiatan").change(function() {
-        let jenis_kegiatan = $('#jenis_kegiatan').val();
-        $('#doc_tambahan').show();
-        if (jenis_kegiatan == "Pendidikan/Pengajaran") {
-            $('#doc_1').text("P 1");
-            $('#doc_2').text("P 2");
-            $('#doc_3').text("P 3");
-            $('#doc_4').text("P 4");
-            $('#doc_5').text("P 5");
-            $('#doc_6').text("P 6");
-        } else if (jenis_kegiatan == "Penelitian") {
-            $('#doc_1').text("PN 1");
-            $('#doc_2').text("PN 2");
-            $('#doc_3').text("PN 3");
-            $('#doc_4').text("PN 4");
-            $('#doc_5').text("PN 5");
-            $('#doc_6').text("PN 6");
-        } else {
-            $('#doc_1').text("PM 1");
-            $('#doc_2').text("PM 2");
-            $('#doc_3').text("PM 3");
-            $('#doc_4').text("PM 4");
-            $('#doc_5').text("PM 5");
-            $('#doc_6').text("PM 6");
-        }
     });
 </script>

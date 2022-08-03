@@ -8,7 +8,7 @@
                         Fakultas Teknik Universitas Islam Riau</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <button type="button" class="btn btn-success" onclick="btn_tambah_kegiatan()"><i class="far fa-plus-square"></i> Tambah Kerja Sama</button>
+                    <button type="button" class="btn btn-success" onclick="btn_tambah_kegiatan()"><i class="far fa-plus-square"></i> Tambah Kegiatan</button>
                 </div>
             </div>
         </div>
