@@ -29,7 +29,8 @@ class Kegiatan extends CI_Controller
 
     public function get_datatable_kegiatan()
     {
-        $kode_prodi = $_SESSION['kode_prodi'];
+        // $kode_prodi = $_SESSION['kode_prodi'];
+        $kode_prodi = '2';
         $jenis_kerjasama = $this->input->post('jenis_kegiatan', TRUE);
 
         $where = "";
@@ -92,7 +93,8 @@ class Kegiatan extends CI_Controller
             echo json_encode($data_response);
         } else {
 
-            $data_insert['kode_prodi'] = $_SESSION['kode_prodi'];
+            // $data_insert['kode_prodi'] = $_SESSION['kode_prodi'];
+            $data_insert['kode_prodi'] = '2';
             $data_insert['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
             $data_insert['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
             $data_insert['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
