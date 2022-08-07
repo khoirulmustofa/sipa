@@ -26,4 +26,16 @@ class Kegiatan_model extends CI_Model
         $this->db->where('id_kegiatan', $id_kegiatan);
         return $this->db->get();
     }
+
+    public function update_tb_kegiatan_by_id($id_kegiatan, $data)
+    {
+        $this->db->where('id_kegiatan', $id_kegiatan);
+        $this->db->update('tb_kegiatan', $data);
+    }
+
+    public function delete_tb_kegiatan_by_id($id_kerjasama)
+    {
+        $this->db->where('id_kegiatan', $id_kerjasama);
+        $this->db->delete('tb_kegiatan');
+    }
 }

@@ -8,7 +8,7 @@
                         Fakultas Teknik Universitas Islam Riau</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <button type="button" class="btn btn-success" onclick="btn_tambah_kegiatan()"><i class="far fa-plus-square"></i> Tambah Kegiatan</button>
+                    <button type="button" class="btn btn-success" onclick="btn_create()"><i class="far fa-plus-square"></i> Tambah Kegiatan</button>
                 </div>
             </div>
         </div>
@@ -79,7 +79,6 @@
             </div>
             <div class="modal-body">
                 <div id="view_modal_preview" style="width: 100%; "></div>
-                <div id="view_modal_button"></div>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>

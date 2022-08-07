@@ -15,8 +15,8 @@ echo form_open_multipart($action, $attribute);
             <select class="form-control" name="jenis_kegiatan" id="jenis_kegiatan">
                 <option value="">--Pilih Kegiatan--</option>
                 <option value="Pendidikan/Pengajaran" <?php echo $jenis_kegiatan == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
-                <option value="Penelitian">Penelitian</option>
-                <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
+                <option value="Penelitian" <?php echo $jenis_kegiatan == "Penelitian" ? "selected" : "" ?>>Penelitian</option>
+                <option value="Pengabdian Masyarakat" <?php echo $jenis_kegiatan == "Pengabdian Masyarakat" ? "selected" : "" ?>>Pengabdian Masyarakat</option>
             </select>
         </div>
         <div class="form-group">
@@ -80,7 +80,8 @@ echo form_open_multipart($action, $attribute);
         </div>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
+        <input type="hidden" name="id_kegiatan" value="<?= $id_kegiatan ?>">
+        <button type="button"  class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
         <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
 </div>

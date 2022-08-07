@@ -115,7 +115,7 @@
         return mmddyyyy;
     }
 
-    function btn_tambah_kegiatan() {
+    function btn_create() {
         Swal.fire({
             title: 'Processing ...',
             html: 'Please wait...',
@@ -147,6 +147,97 @@
             error: function(xhr, ajaxOptions, thrownError) {
                 Swal.close();
                 alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
+    }
+
+    function btn_edit(id) {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url('prodi/kegiatan/edit') ?>',
+            data: {
+                id_kegiatan: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    Swal.fire({
+                        title: "Ooops..",
+                        icon: 'warning',
+                        html: respon.messege,
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
+    }
+
+    function btn_delete(id) {
+        Swal.fire({
+            title: 'Question?',
+            text: "Apakah anda ingin menghapus data ini?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#00a65a',
+            cancelButtonColor: '#dd4b39',
+            confirmButtonText: 'Ya, Yakin!',
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '<?php echo base_url('prodi/kegiatan/delete_action') ?>',
+                    data: {
+                        id_kerjasama: id
+                    },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function(respon) {
+                        if (respon.status) {
+                            Swal.fire({
+                                title: "Berhasil",
+                                icon: 'success',
+                                html: respon.messege,
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                showConfirmButton: false,
+                                timer: 1000,
+                            }).then((result) => {
+                                $("#dt_kegiatan").DataTable().ajax.reload(null, false);
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Ooops..",
+                                icon: 'warning',
+                                html: respon.messege,
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        Swal.close();
+                        alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+                    }
+                });
             }
         });
     }

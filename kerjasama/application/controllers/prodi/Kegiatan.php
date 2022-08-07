@@ -57,7 +57,7 @@ class Kegiatan extends CI_Controller
             'manfaat_kegiatan' => set_value('manfaat_kegiatan'),
             'doc_undangan' => set_value('doc_undangan'),
             'doc_absensi' => set_value('doc_absensi'),
-            'doc_material' => set_value('doc_material'),
+            'doc_materi' => set_value('doc_materi'),
             'doc_foto' => set_value('doc_foto'),
             'doc_1' => set_value('doc_1'),
             'doc_2' => set_value('doc_2'),
@@ -93,56 +93,56 @@ class Kegiatan extends CI_Controller
             echo json_encode($data_response);
         } else {
 
-            // $data_insert['kode_prodi'] = $_SESSION['kode_prodi'];
-            $data_insert['kode_prodi'] = '2';
-            $data_insert['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
-            $data_insert['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
-            $data_insert['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
-            $data_insert['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
-            $data_insert['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
+            // $data['kode_prodi'] = $_SESSION['kode_prodi'];
+            $data['kode_prodi'] = '2';
+            $data['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
+            $data['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
+            $data['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
+            $data['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
+            $data['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
 
             if (!empty($_FILES['doc_undangan']['name'])) {
-                $data_insert['doc_undangan'] = $this->_upload_doc_undangan();
+                $data['doc_undangan'] = $this->_upload_doc_undangan();
             }
 
             if (!empty($_FILES['doc_absensi']['name'])) {
-                $data_insert['doc_absensi'] = $this->_upload_doc_absensi();
+                $data['doc_absensi'] = $this->_upload_doc_absensi();
             }
 
             if (!empty($_FILES['doc_materi']['name'])) {
-                $data_insert['doc_materi'] = $this->_upload_doc_materi();
+                $data['doc_materi'] = $this->_upload_doc_materi();
             }
 
             if (!empty($_FILES['doc_foto']['name'])) {
-                $data_insert['doc_foto'] = $this->_upload_doc_foto();
+                $data['doc_foto'] = $this->_upload_doc_foto();
             }
 
             if (!empty($_FILES['doc_1']['name'])) {
-                $data_insert['doc_1'] = $this->_upload_doc_1();
+                $data['doc_1'] = $this->_upload_doc_1();
             }
 
             if (!empty($_FILES['doc_2']['name'])) {
-                $data_insert['doc_2'] = $this->_upload_doc_2();
+                $data['doc_2'] = $this->_upload_doc_2();
             }
 
             if (!empty($_FILES['doc_3']['name'])) {
-                $data_insert['doc_3'] = $this->_upload_doc_3();
+                $data['doc_3'] = $this->_upload_doc_3();
             }
 
             if (!empty($_FILES['doc_4']['name'])) {
-                $data_insert['doc_4'] = $this->_upload_doc_4();
+                $data['doc_4'] = $this->_upload_doc_4();
             }
 
             if (!empty($_FILES['doc_5']['name'])) {
-                $data_insert['doc_5'] = $this->_upload_doc_5();
+                $data['doc_5'] = $this->_upload_doc_5();
             }
 
             if (!empty($_FILES['doc_6']['name'])) {
-                $data_insert['doc_6'] = $this->_upload_doc_6();
+                $data['doc_6'] = $this->_upload_doc_6();
             }
 
             // insert ke table tb_kerjasama
-            $this->Kegiatan_model->insert_tb_kegiatan($data_insert);
+            $this->Kegiatan_model->insert_tb_kegiatan($data);
 
             $data_response['status'] = true;
             $data_response['messege'] = '<p>Tambah Kegiatan Berhasil Disimpan</p>';
@@ -181,6 +181,135 @@ class Kegiatan extends CI_Controller
         $response['status'] = true;
         $response['view_modal_form'] = $this->load->view('prodi/kegiatan/view_detail', $data, true);
         echo json_encode($response);
+    }
+
+    public function edit()
+    {
+        // load model kegiatan
+        $this->load->model('Kegiatan_model');
+
+        $kegiatan_row = $this->Kegiatan_model->get_tb_kegiatan_by_id($this->input->get('id_kegiatan', TRUE))->row();
+
+        $data = array(
+            'title' => "Edit Kegiatan",
+            'action' => "prodi/kegiatan/edit_action",
+            'id_kegiatan' => set_value('id_kegiatan', $kegiatan_row->id_kegiatan),
+            'jenis_kegiatan' => set_value('jenis_kegiatan', $kegiatan_row->jenis_kegiatan),
+            'awal_kegiatan' => set_value('awal_kegiatan', $kegiatan_row->awal_kegiatan),
+            'akhir_kegiatan' => set_value('akhir_kegiatan', $kegiatan_row->akhir_kegiatan),
+            'judul_kegiatan' => set_value('judul_kegiatan', $kegiatan_row->judul_kegiatan),
+            'manfaat_kegiatan' => set_value('manfaat_kegiatan', $kegiatan_row->manfaat_kegiatan),
+            'doc_undangan' => set_value('doc_undangan', $kegiatan_row->doc_undangan),
+            'doc_absensi' => set_value('doc_absensi', $kegiatan_row->doc_absensi),
+            'doc_materi' => set_value('doc_materi', $kegiatan_row->doc_materi),
+            'doc_foto' => set_value('doc_foto', $kegiatan_row->doc_foto),
+            'doc_1' => set_value('doc_1', $kegiatan_row->doc_1),
+            'doc_2' => set_value('doc_2', $kegiatan_row->doc_2),
+            'doc_3' => set_value('doc_3', $kegiatan_row->doc_3),
+            'doc_4' => set_value('doc_4', $kegiatan_row->doc_4),
+            'doc_5' => set_value('doc_5', $kegiatan_row->doc_5),
+            'doc_6' => set_value('doc_6', $kegiatan_row->doc_6),
+        );
+
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('prodi/kegiatan/view_form', $data, true)
+        );
+        echo json_encode($data_response);
+    }
+
+    public function edit_action()
+    {
+        // load model
+        $this->load->model('Kegiatan_model');
+
+        // validation Form
+        $this->form_validation->set_rules('jenis_kegiatan', 'Jenis Kegiatan', 'trim|required');
+        $this->form_validation->set_rules('awal_kegiatan', 'Awal Pelaksanaan', 'trim|required');
+        $this->form_validation->set_rules('akhir_kegiatan', 'Akhir Pelaksanaan', 'trim|required');
+        $this->form_validation->set_rules('judul_kegiatan', 'Judul Kegiatan', 'trim|required');
+        $this->form_validation->set_rules('manfaat_kegiatan', 'Manfaat Kegiatan', 'trim|required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data_response =  array(
+                'status' => false,
+                'messege' => validation_errors(),
+            );
+            echo json_encode($data_response);
+        } else {
+
+            $id_kegiatan = $this->input->post('id_kegiatan', TRUE);
+            // $data['kode_prodi'] = $_SESSION['kode_prodi'];
+            $data['kode_prodi'] = '2';
+            $data['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
+            $data['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
+            $data['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
+            $data['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
+            $data['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
+
+            if (!empty($_FILES['doc_undangan']['name'])) {
+                $data['doc_undangan'] = $this->_upload_doc_undangan();
+            }
+
+            if (!empty($_FILES['doc_absensi']['name'])) {
+                $data['doc_absensi'] = $this->_upload_doc_absensi();
+            }
+
+            if (!empty($_FILES['doc_materi']['name'])) {
+                $data['doc_materi'] = $this->_upload_doc_materi();
+            }
+
+            if (!empty($_FILES['doc_foto']['name'])) {
+                $data['doc_foto'] = $this->_upload_doc_foto();
+            }
+
+            if (!empty($_FILES['doc_1']['name'])) {
+                $data['doc_1'] = $this->_upload_doc_1();
+            }
+
+            if (!empty($_FILES['doc_2']['name'])) {
+                $data['doc_2'] = $this->_upload_doc_2();
+            }
+
+            if (!empty($_FILES['doc_3']['name'])) {
+                $data['doc_3'] = $this->_upload_doc_3();
+            }
+
+            if (!empty($_FILES['doc_4']['name'])) {
+                $data['doc_4'] = $this->_upload_doc_4();
+            }
+
+            if (!empty($_FILES['doc_5']['name'])) {
+                $data['doc_5'] = $this->_upload_doc_5();
+            }
+
+            if (!empty($_FILES['doc_6']['name'])) {
+                $data['doc_6'] = $this->_upload_doc_6();
+            }
+
+            // update ke table tb_kerjasama
+            $this->Kegiatan_model->update_tb_kegiatan_by_id($id_kegiatan,$data);
+
+            $data_response['status'] = true;
+            $data_response['messege'] = '<p>Update Kegiatan Berhasil Disimpan</p>';
+            echo json_encode($data_response);
+        }
+    }
+
+    public function delete_action()
+    {
+        
+        // load model
+        $this->load->model('Kegiatan_model');
+
+        $id_kerjasama = $this->input->post('id_kerjasama', TRUE);
+
+        $query = $this->Kegiatan_model->delete_tb_kegiatan_by_id($id_kerjasama);
+        $data_response =  array(
+            'status' => true,
+            'messege' => '<p>Berhasil hapus data Kerja Sama</p>',
+        );
+        echo json_encode($data_response);
     }
 
     private function _upload_doc_undangan()
