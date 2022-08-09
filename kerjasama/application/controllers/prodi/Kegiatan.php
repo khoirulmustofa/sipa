@@ -23,7 +23,7 @@ class Kegiatan extends CI_Controller
         $data['title'] = "Kegiatan";
         $data['load_css'] = '';
         $data['load_js'] = 'prodi/kegiatan/js_index';
-        $data['semester_result']=$this->Kegiatan_model->get_semester()->result(); // ambil data semester dari model
+        $data['semester_result'] = $this->Kegiatan_model->get_semester()->result(); // ambil data semester dari model
 
         $this->template->load('_template/main_template', 'prodi/kegiatan/view_index', $data);
     }
@@ -102,6 +102,18 @@ class Kegiatan extends CI_Controller
             $data['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);
             $data['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
             $data['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
+
+            $semester_ganjil_array = array('9', '10', '11', '12', '1', '2');
+            $semester_genap_array = array('3', '4', '5', '6', '7', '8');
+            $month = $this->input->post('awal_kegiatan', TRUE);
+            $bulan = substr($month, 5, 2);
+
+            if (in_array($bulan, $semester_ganjil_array)) {
+                $data['semester'] = '1';
+            } else if (in_array($bulan, $semester_genap_array)) {
+                $data['semester'] = '2';
+            }
+
 
             if (!empty($_FILES['doc_undangan']['name'])) {
                 $data['doc_undangan'] = $this->_upload_doc_undangan();
@@ -249,6 +261,17 @@ class Kegiatan extends CI_Controller
             $data['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
             $data['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
 
+            $semester_ganjil_array = array('9', '10', '11', '12', '1', '2');
+            $semester_genap_array = array('3', '4', '5', '6', '7', '8');
+            $month = $this->input->post('awal_kegiatan', TRUE);
+            $bulan = substr($month, 5, 2);
+
+            if (in_array($bulan, $semester_ganjil_array)) {
+                $data['semester'] = '1';
+            } else if (in_array($bulan, $semester_genap_array)) {
+                $data['semester'] = '2';
+            }
+
             if (!empty($_FILES['doc_undangan']['name'])) {
                 $data['doc_undangan'] = $this->_upload_doc_undangan();
             }
@@ -290,7 +313,7 @@ class Kegiatan extends CI_Controller
             }
 
             // update ke table tb_kerjasama
-            $this->Kegiatan_model->update_tb_kegiatan_by_id($id_kegiatan,$data);
+            $this->Kegiatan_model->update_tb_kegiatan_by_id($id_kegiatan, $data);
 
             $data_response['status'] = true;
             $data_response['messege'] = '<p>Update Kegiatan Berhasil Disimpan</p>';
@@ -300,7 +323,7 @@ class Kegiatan extends CI_Controller
 
     public function delete_action()
     {
-        
+
         // load model
         $this->load->model('Kegiatan_model');
 

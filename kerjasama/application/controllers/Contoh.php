@@ -21,6 +21,15 @@ class Contoh extends CI_Controller
      */
     public function index()
     {
-        echo "<h1>Hello World</h1>";
+        $semester_ganjil_array = array('9', '10', '11', '12', '1', '2');
+        $semester_genap_array = array('3', '4', '5', '6', '7', '8');
+        $month = "2022-12-02";
+        $bulan = substr($month, 5, 2);
+
+        if (in_array($bulan, $semester_ganjil_array)) {
+           echo "Semester Ganjil";
+        } else if (in_array($bulan, $semester_genap_array)) {
+            echo "semester Genap";
+        }
     }
 }
