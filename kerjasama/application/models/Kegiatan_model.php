@@ -38,4 +38,13 @@ class Kegiatan_model extends CI_Model
         $this->db->where('id_kegiatan', $id_kerjasama);
         $this->db->delete('tb_kegiatan');
     }
+
+    public function get_semester()
+    {
+        $this->db->select("YEAR(awal_kegiatan) as tahun,semester");
+        $this->db->from("tb_kegiatan");
+        $this->db->group_by("tahun,semester");
+        $this->db->order_by("tahun");
+        return $this->db->get();
+    }
 }

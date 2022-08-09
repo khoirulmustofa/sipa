@@ -13,7 +13,7 @@
                 //panggil method ajax list dengan ajax
                 "url": '<?php echo base_url('prodi/kegiatan/get_datatable_kegiatan') ?>',
                 "data": {
-                    jenis_kegiatan: $("[name='jenis_kegiatan']").val(),
+                    tahun_semester: $("[name='tahun_semester']").val(),
                 },
                 "type": "POST"
             },
