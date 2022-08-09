@@ -75,16 +75,16 @@
                     $tanggal_dikurangi->sub(new DateInterval('P6M'));  // 6 bulan                
                 }
 
-
+                // cek tanggal sekarang lebih besar dari tanggal akhir_kerjasama
                 if ($tgl_sekarang > $akhir_kerjasama) {
                     if ($perbaharui == "0") {
-                        $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) " . '<button type="button" onclick="btn_perbaharui(\'' . $id_kerjasama . '\')" class="btn btn-success btn-block btn-sm"><i class="far fa-file"></i> Perbaharui</button>';
+                        $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir)";
                     } else {
                         $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Telah Berakhir) ";
                     }
                 } else {
-                    if (strtotime(date("Y-m-d")) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
-                        $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)";
+                    if (strtotime($tgl_sekarang) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
+                        $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)" . '<button type="button" onclick="btn_perbaharui(\'' . $id_kerjasama . '\')" class="btn btn-success btn-block btn-sm"><i class="far fa-file"></i> Perbaharui</button>';
                     } else {
                         $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
                     }
