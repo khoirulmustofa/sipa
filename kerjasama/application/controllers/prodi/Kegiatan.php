@@ -23,6 +23,7 @@ class Kegiatan extends CI_Controller
         $data['title'] = "Kegiatan";
         $data['load_css'] = '';
         $data['load_js'] = 'prodi/kegiatan/js_index';
+        $data['semester_result']=$this->Kegiatan_model->get_semester()->result(); // ambil data semester dari model
 
         $this->template->load('_template/main_template', 'prodi/kegiatan/view_index', $data);
     }
@@ -31,11 +32,12 @@ class Kegiatan extends CI_Controller
     {
         // $kode_prodi = $_SESSION['kode_prodi'];
         $kode_prodi = '2';
-        $jenis_kerjasama = $this->input->post('jenis_kegiatan', TRUE);
+        $tahun_semester = $this->input->post('tahun_semester', TRUE);
+        $tahun_semester_array = explode('#', $tahun_semester);
 
         $where = "";
-        if ($jenis_kerjasama != '') {
-            $where = " AND jenis_kegiatan = '$jenis_kerjasama'";
+        if ($tahun_semester != '') {
+            $where = " AND YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
         }
         $datatables = new Datatables(new CodeigniterAdapter);
 

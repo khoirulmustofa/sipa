@@ -21,13 +21,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Pilih Kerja Sama:</label>
+                                    <label>Pilih Semester:</label>
                                     <div class="input-group">
-                                        <select class="form-control" name="jenis_kegiatan">
-                                            <option value="">--Pilih Kerja Sama--</option>
-                                            <option value="Pendidikan/Pengajaran">Pendidikan/Pengajaran</option>
-                                            <option value="Penelitian">Penelitian</option>
-                                            <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
+                                        <select class="form-control" name="tahun_semester">
+                                            <option value="">--Pilih Semester--</option>
+                                            <?php foreach ($semester_result as $key => $value) { ?>
+                                                <option value="<?php echo $value->tahun."#".$value->semester ?>"><?php echo $value->tahun . "-" . $value->semester . " (" . $value->tahun . " " . ($value->semester == "1" ? "GANJIL" : "GENAP" . ")" )?></option>
+                                            <?php } ?>
                                         </select>
                                         <div class="input-group-append">
                                             <button type="button" onclick="load_data_keiatan()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
