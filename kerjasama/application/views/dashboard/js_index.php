@@ -17,6 +17,7 @@
                 if (respon.status) {
                     $('#moa').text(respon.jumlah_kerja_sama_row.MOA);
                     $('#mou').text(respon.jumlah_kerja_sama_row.MOU);
+                    load_kegiatan(respon.jumlah_kegiatan_per_prodi_result);
                 } else {
                     Swal.fire({
                         title: "Ooops..",
@@ -32,5 +33,13 @@
                 alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
             }
         });
+    }
+
+    function load_kegiatan(jumlah_kegiatan_per_prodi) {
+        let i;
+        for (i = 0; i < jumlah_kegiatan_per_prodi.length; i++) {
+            $('#kode_prodi_' + jumlah_kegiatan_per_prodi[i].kode_prodi).text(jumlah_kegiatan_per_prodi[i].jumlah)
+        }
+
     }
 </script>

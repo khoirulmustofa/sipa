@@ -37,7 +37,7 @@
                                     </div>
 
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,46 +45,49 @@
 
             <div class="col-md-12">
                 <div class="card full-height">
+                    <div class="card-header">
+                        <h4 class="card-title"><i class="fas fa-bars"></i> Kerja Sama</h4>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-primary card-round">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="fas fa-address-book"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">MOU</p>
-                                                    <h4 class="card-title" id="mou">0</h4>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="card card-dark bg-primary-gradient">
+                                    <div class="card-body bubble-shadow">
+                                        <h2 class="py-4 mb-0">MOU</h2>
+                                        <h3 class="fw-bold mb-1" id="mou">0</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-secondary card-round">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="far fa-address-book"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">MOA</p>
-                                                    <h4 class="card-title" id="moa">0</h4>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="card card-dark bg-info-gradient">
+                                    <div class="card-body bubble-shadow">
+                                        <h2 class="py-4 mb-0">MOA</h2>
+                                        <h3 class="fw-bold mb-1" id="moa">0</h3>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-header">
+                        <h4 class="card-title"><i class="fas fa-bars"></i> Kegiatan</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <?php foreach ($prodi_result as $key => $value) { ?>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="card card-dark bg-dark-gradient">
+                                        <div class="card-body bubble-shadow">
+                                            <h2 class="py-4 mb-0"><?php echo $value->nama_prodi ?></h2>
+                                            <h3 class="fw-bold mb-1" id="kode_prodi_<?php echo $value->kode_prodi ?>">0</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

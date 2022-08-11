@@ -102,4 +102,6 @@ class Kerja_sama_model extends CI_Model
         $this->db->where('id_kerjasama', $id_kerjasama);
         return  $this->db->get();
     }
+
+    
 }

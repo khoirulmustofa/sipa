@@ -6,9 +6,12 @@ if (!defined('BASEPATH'))
 class Kegiatan_model extends CI_Model
 {
 
-    function __construct()
+    public function get_count_kegiatan_per_prodi()
     {
-        parent::__construct();
+        $this->db->select("kode_prodi,COUNT(kode_prodi) as jumlah");
+        $this->db->from("tb_kegiatan");
+        $this->db->group_by("kode_prodi");
+        return $this->db->get();
     }
 
     public function insert_tb_kegiatan($data = array())
