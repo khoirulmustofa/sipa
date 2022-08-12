@@ -24,7 +24,7 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/atlantis.min.css">
     <?php if ($load_css != '') {
         $this->load->view($load_css);
@@ -118,13 +118,37 @@
                         </div>
                     </div>
                     <ul class="nav nav-primary">
-                        <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
-                            <a href="<?php echo base_url('dashboard') ?>">
-                                <i class="fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
+
+                        <?php if ($_SESSION['status_login'] == "Fakultas") { ?>
+                            <!-- untuk Fakultas -->
+                            <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('dashboard') ?>">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_kerja_sama" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('tu/kerja_sama') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Kerja Sama</p>
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('prodi/kegiatan') ?>">
+                                    <i class="fas fa-book-open"></i>
+                                    <p>Kegiatan</p>
+                                </a>
+                            </li>
+                        <?php  } ?>
+
                         <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
+                            <!-- untuk Tata Usaha -->
+                            <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('dashboard') ?>">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
                             <li class="nav-item<?php echo $menu == "menu_kerja_sama" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('tu/kerja_sama') ?>">
                                     <i class="fas fa-link"></i>
@@ -133,12 +157,23 @@
                             </li>
                         <?php } ?>
 
-                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                        <?php if ($_SESSION['status_login'] == "Prodi") { ?>
+                            <!-- untuk Prodi -->
+                            <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('dashboard') ?>">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('prodi/kegiatan') ?>">
-                                <i class="fas fa-book-open"></i>
+                                    <i class="fas fa-book-open"></i>
                                     <p>Kegiatan</p>
                                 </a>
                             </li>
+                        <?php } ?>
+
+
                     </ul>
                 </div>
             </div>
