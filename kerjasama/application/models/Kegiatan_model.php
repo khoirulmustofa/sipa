@@ -6,10 +6,20 @@ if (!defined('BASEPATH'))
 class Kegiatan_model extends CI_Model
 {
 
-    public function get_count_kegiatan_per_prodi()
+    public function get_count_kegiatan_per_prodi($kode_prodi = "", $tahun_semester = "")
     {
         $this->db->select("kode_prodi,COUNT(kode_prodi) as jumlah");
         $this->db->from("tb_kegiatan");
+        
+        if ($kode_prodi != "") {
+            $this->db->where('kode_prodi', $kode_prodi);
+        }
+
+        if ($tahun_semester != "") {
+            $tahun_semester_array = explode('#', $tahun_semester);
+            $this->db->where('YEAR(awal_kegiatan)', $tahun_semester_array['0']);
+            $this->db->where('semester', $tahun_semester_array['1']);
+        }
         $this->db->group_by("kode_prodi");
         return $this->db->get();
     }

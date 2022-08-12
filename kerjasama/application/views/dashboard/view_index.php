@@ -17,10 +17,10 @@
         <div class="row mt--2">
             <div class="col-md-12">
                 <div class="card full-height">
-                    <div class="card-body">
+                    <div class="card-header">
+                        <h4 class="card-title"><i class="fas fa-bars"></i> Kerja Sama</h4>
                         <div class="row">
                             <div class="col-md-6">
-
                                 <div class="form-group">
                                     <label>Tahun Kerja Sama :</label>
                                     <div class="input-group">
@@ -32,21 +32,13 @@
                                             <option value="5">> 5 Tahun</option>
                                         </select>
                                         <div class="input-group-append">
-                                            <button type="button" onclick="load_data_kerja_sama()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
+                                            <button type="button" onclick="btn_load_kerja_sama()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="card full-height">
-                    <div class="card-header">
-                        <h4 class="card-title"><i class="fas fa-bars"></i> Kerja Sama</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -75,6 +67,24 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <h4 class="card-title"><i class="fas fa-bars"></i> Kegiatan</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pilih Semester:</label>
+                                    <div class="input-group">
+                                        <select class="form-control" name="tahun_semester">
+                                            <option value="">--Pilih Semester--</option>
+                                            <?php foreach ($semester_result as $key => $value) { ?>
+                                                <option value="<?php echo $value->tahun . "#" . $value->semester ?>"><?php echo $value->tahun . "-" . $value->semester . " (" . $value->tahun . " " . ($value->semester == "1" ? "GANJIL" : "GENAP" . ")") ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="button" onclick="btn_load_kegiatan()" class="btn btn-primary rounded ml-3"><i class="fas fa-filter"></i> Filter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
