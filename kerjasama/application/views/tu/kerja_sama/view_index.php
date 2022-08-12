@@ -8,7 +8,9 @@
                         Fakultas Teknik Universitas Islam Riau</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <button type="button" class="btn btn-success" onclick="btn_tambah_kerja_sama()"><i class="far fa-plus-square"></i> Tambah Kerja Sama</button>
+                    <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
+                        <button type="button" class="btn btn-success" onclick="btn_tambah_kerja_sama()"><i class="far fa-plus-square"></i> Tambah Kerja Sama</button>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
 
                     </div>
