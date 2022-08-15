@@ -22,8 +22,7 @@ class Dashboard extends CI_Controller
         if ($_SESSION['status_login'] == "Fakultas") {
             $kode_prodi = '';
         } else {
-            // $kode_prodi = $_SESSION['kode_prodi'];
-            $kode_prodi = '2';
+            $kode_prodi = $_SESSION['kode_prodi'];
         }
 
 
@@ -56,8 +55,7 @@ class Dashboard extends CI_Controller
         if ($_SESSION['status_login'] == "Fakultas") {
             $kode_prodi = '';
         } else {
-            // $kode_prodi = $_SESSION['kode_prodi'];
-            $kode_prodi = '2';
+            $kode_prodi = $_SESSION['kode_prodi'];
         }
 
         $jumlah_kegiatan_per_prodi_result = $this->Kegiatan_model->get_count_kegiatan_per_prodi($kode_prodi,$tahun_semester)->result();

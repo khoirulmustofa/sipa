@@ -33,13 +33,19 @@
                     searchable: false,
                     render: function(data, type, row, meta) {
                         let button = ``;
-                        if (status_login == "Tata Usaha") {
+                        // untuk cek sesion prodi
+                        if (status_login == "Prodi") {
                             button = `<div class="btn-group" role="group" aria-label="Basic example">                                      
                                         <button type="button" title="Detail" onclick="btn_detail('${data}')" class="btn btn-info btn-xs"><i class="fas fa-info-circle"></i></button>
                                         <button type="button" title="Edit" onclick="btn_edit('${data}')" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>
                                         <button type="button" title="Delete" onclick="btn_delete('${data}')" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
                                     </div>`;
-                        } else {
+                        } else if(status_login == "Fakultas"){
+                            button = `<div class="btn-group" role="group" aria-label="Basic example">                                      
+                                        <button type="button" title="Detail" onclick="btn_detail('${data}')" class="btn btn-info btn-xs"><i class="fas fa-info-circle"></i></button>                                        
+                                    </div>`;
+                        }
+                        else {
                             button = ``;
                         }
 

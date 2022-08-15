@@ -30,8 +30,7 @@ class Kegiatan extends CI_Controller
 
     public function get_datatable_kegiatan()
     {
-        // $kode_prodi = $_SESSION['kode_prodi'];
-        $kode_prodi = '2';
+        $kode_prodi = $_SESSION['kode_prodi'];
         $tahun_semester = $this->input->post('tahun_semester', TRUE);
         $tahun_semester_array = explode('#', $tahun_semester);
 
