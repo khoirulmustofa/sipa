@@ -22,7 +22,13 @@ class Dashboard extends CI_Controller
         if ($_SESSION['status_login'] == "Fakultas") {
             $kode_prodi = '';
         } else {
-            $kode_prodi = $_SESSION['kode_prodi'];
+            // cek kode stutus login adalah prodi
+            if ($_SESSION['status_login'] == "Prodi") {
+                $kode_prodi = $_SESSION['kode_prodi'];
+            } else {
+                // jika tidak prodi
+                $kode_prodi = '';
+            }
         }
 
 
@@ -50,15 +56,21 @@ class Dashboard extends CI_Controller
         $this->load->model('Kegiatan_model');
 
         $tahun_semester = $this->input->get('tahun_semester', TRUE);
-        
+
         $kode_prodi = '';
         if ($_SESSION['status_login'] == "Fakultas") {
             $kode_prodi = '';
         } else {
-            $kode_prodi = $_SESSION['kode_prodi'];
+            // cek kode stutus login adalah prodi
+            if ($_SESSION['status_login'] == "Prodi") {
+                $kode_prodi = $_SESSION['kode_prodi'];
+            } else {
+                // jika tidak prodi
+                $kode_prodi = '';
+            }
         }
 
-        $jumlah_kegiatan_per_prodi_result = $this->Kegiatan_model->get_count_kegiatan_per_prodi($kode_prodi,$tahun_semester)->result();
+        $jumlah_kegiatan_per_prodi_result = $this->Kegiatan_model->get_count_kegiatan_per_prodi($kode_prodi, $tahun_semester)->result();
 
         $data_response['status'] = true;
         $data_response['jumlah_kegiatan_per_prodi_result'] = $jumlah_kegiatan_per_prodi_result;
@@ -70,8 +82,8 @@ class Dashboard extends CI_Controller
     {
         $this->load->model('Kerja_sama_model');
         $this->load->model('Kegiatan_model');
-        
-        
+
+
 
         $tahun_kerja_sama =  $this->input->get('tahun_kerja_sama', TRUE);
         $jumlah_kerja_sama_row = $this->Kerja_sama_model->get_count_kerja_sama($tahun_kerja_sama)->row();
