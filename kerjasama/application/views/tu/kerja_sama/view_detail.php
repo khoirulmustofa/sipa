@@ -84,7 +84,12 @@
                     }
                 } else {
                     if (strtotime($tgl_sekarang) >= strtotime(format_tgl_Ymd($tanggal_dikurangi))) {
-                        $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)" . '<button type="button" onclick="btn_perbaharui(\'' . $id_kerjasama . '\')" class="btn btn-success btn-block btn-sm"><i class="far fa-file"></i> Perbaharui</button>';
+                        if ($_SESSION['status_login']=="Tata Usaha") {
+                            $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)" . '<button type="button" onclick="btn_perbaharui(\'' . $id_kerjasama . '\')" class="btn btn-success btn-block btn-sm"><i class="far fa-file"></i> Perbaharui</button>';
+                        } else {
+                            $tgl_peringtan = format_tgl_dMY($akhir_kerjasama) . " (Segera berakhir)";
+                        }                       
+                        
                     } else {
                         $tgl_peringtan = format_tgl_dMY($akhir_kerjasama);
                     }
