@@ -4,7 +4,7 @@
         $(".berkedip").toggle();
     }, 300);
 
-    $(document).ready(function() {
+    $(document).ready(function() {       
         load_data_kerja_sama();
     });
 
@@ -44,7 +44,7 @@
                                         <button type="button" title="Edit" onclick="btn_edit('${data}')" class="btn btn-warning btn-xs"><i class="far fa-edit"></i></button>
                                         <button type="button" title="Delete" onclick="btn_delete('${data}')" class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i></button>
                                     </div>`;
-                        } else if(status_login == "Fakultas"){
+                        } else if (status_login == "Fakultas") {
                             button = `<div class="btn-group" role="group" aria-label="Basic example">                                      
                                         <button type="button" title="Detail" onclick="btn_detail('${data}')" class="btn btn-info btn-xs"><i class="fas fa-info-circle"></i></button>                                        
                                     </div>`;
@@ -88,21 +88,14 @@
                         let result = '';
                         if (data != null || data != '') {
                             let date_now = new Date();
+                            let date_warning = new Date(row['tgl_warning']);
                             let date_actual = new Date(data);
-                            if (row['jenis_kerjasama'] == 'MOU') {
-                                date_actual.setDate(date_actual.getMonth() - 6);
-                                if (date_now >= date_actual) {
-                                    result = '<span class="badge badge-danger berkedip">' + getFormattedDate(data) + '</span>';
-                                } else {
-                                    result = '<span class="badge badge-success">' + getFormattedDate(data) + '</span>';
-                                }
-                            } else {
-                                date_actual.setDate(date_actual.getMonth() - 3);
-                                if (date_now >= date_actual) {
-                                    result = '<span class="badge badge-danger berkedip">' + getFormattedDate(data) + '</span>';
-                                } else {
-                                    result = '<span class="badge badge-success">' + getFormattedDate(data) + '</span>';
-                                }
+                            if (date_now > date_actual) {
+                                result = '<span class="badge badge-danger">' +getFormattedDate(data) + '</span>';
+                            }else if(date_warning > date_now && date_warning < date_actual){
+                                result = '<span class="badge badge-success">' +getFormattedDate(data) + '</span>';
+                            }else{
+                                result = '<span class="badge badge-danger berkedip">' + getFormattedDate(data) + '</span>';
                             }
 
                         } else {

@@ -49,8 +49,11 @@ class Kerja_sama extends CI_Controller
             $where = " WHERE YEAR(tgl_kerjasama) > YEAR(DATE_SUB(NOW(), INTERVAL 5 YEAR))";
         }
         $datatables = new Datatables(new CodeigniterAdapter);
+        $query = "SELECT id_kerjasama,id_kerjasama AS id_action,jenis_kerjasama,lembaga_mitra,periode,alamat_mitra,nama_negara,durasi_kerjasama,tgl_kerjasama,akhir_kerjasama,dokumen_kerjasama,
+        IF(jenis_kerjasama = 'MOU', DATE_SUB(akhir_kerjasama, INTERVAL 6 MONTH), DATE_SUB(akhir_kerjasama, INTERVAL 3 MONTH)) AS tgl_warning
+        FROM tb_kerjasama JOIN master_negara ON master_negara.id = tb_kerjasama.negara_id";
 
-        $datatables->query("SELECT id_kerjasama,id_kerjasama as id_action,jenis_kerjasama,lembaga_mitra,periode,alamat_mitra,nama_negara,durasi_kerjasama,tgl_kerjasama,akhir_kerjasama,dokumen_kerjasama FROM tb_kerjasama JOIN master_negara ON master_negara.id = tb_kerjasama.negara_id " . $where);       
+        $datatables->query($query . $where);
 
         echo $datatables->generate();
     }
