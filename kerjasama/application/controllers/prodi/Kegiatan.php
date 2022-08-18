@@ -30,17 +30,22 @@ class Kegiatan extends CI_Controller
 
     public function get_datatable_kegiatan()
     {
-        $kode_prodi = $_SESSION['kode_prodi'];
+        $kode_prodi = isset($_SESSION['kode_prodi']) ? $_SESSION['kode_prodi'] : null;
         $tahun_semester = $this->input->post('tahun_semester', TRUE);
         $tahun_semester_array = explode('#', $tahun_semester);
 
         $where = "";
         if ($tahun_semester != '') {
-            $where = " AND YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
+            if ($kode_prodi == null) {
+                $where = " WHERE kode_prodi = '$kode_prodi' AND YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
+            }else{
+                $where = " WHERE YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
+            }
+            
         }
         $datatables = new Datatables(new CodeigniterAdapter);
 
-        $datatables->query("SELECT id_kegiatan,jenis_kegiatan,awal_kegiatan,akhir_kegiatan,judul_kegiatan,manfaat_kegiatan,doc_undangan,doc_absensi,doc_foto,doc_1,doc_2,doc_3,doc_4,doc_5,doc_6, DATEDIFF(akhir_kegiatan, awal_kegiatan) as selisih_hari FROM tb_kegiatan WHERE kode_prodi = '$kode_prodi'" . $where);
+        $datatables->query("SELECT id_kegiatan,jenis_kegiatan,awal_kegiatan,akhir_kegiatan,judul_kegiatan,manfaat_kegiatan,doc_undangan,doc_absensi,doc_foto,doc_1,doc_2,doc_3,doc_4,doc_5,doc_6, DATEDIFF(akhir_kegiatan, awal_kegiatan) as selisih_hari FROM tb_kegiatan " . $where);
 
         echo $datatables->generate();
     }
