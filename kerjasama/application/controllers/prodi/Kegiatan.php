@@ -36,7 +36,7 @@ class Kegiatan extends CI_Controller
 
         $where = "";
         if ($tahun_semester != '') {
-            if ($kode_prodi == null) {
+            if ($kode_prodi != null) {
                 $where = " WHERE kode_prodi = '$kode_prodi' AND YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
             }else{
                 $where = " WHERE YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";

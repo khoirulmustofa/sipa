@@ -79,6 +79,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modal_form" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div id="view_modal_form"></div>

@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         // cek login dari app_helper
-        //is_login();
+        is_login();
     }
 
     public function index()
