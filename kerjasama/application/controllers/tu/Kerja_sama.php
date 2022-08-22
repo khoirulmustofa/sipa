@@ -309,6 +309,7 @@ class Kerja_sama extends CI_Controller
 
     public function edit_kerja_sama_action()
     {
+        // ini untuk validasi
         $this->form_validation->set_rules('jenis_kerjasama', 'jenis kerjasama', 'trim|required');
         $this->form_validation->set_rules('tgl_kerjasama', 'tgl kerjasama', 'trim|required');
         $this->form_validation->set_rules('lembaga_mitra', 'lembaga mitra', 'trim|required');
@@ -385,9 +386,11 @@ class Kerja_sama extends CI_Controller
             }
 
             // load model
-            $query =  $this->load->model('Kerja_sama_model');
+            $this->load->model('Kerja_sama_model');
             // insert ke table tb_kerjasama
-            $this->Kerja_sama_model->update_tb_kerjasama_by_id($id_kerjasama, $data_update);
+            $query =  $this->Kerja_sama_model->update_tb_kerjasama_by_id($id_kerjasama, $data_update);
+            // print_r($query);
+            // exit();
 
             $data_response =  array(
                 'status' => true,

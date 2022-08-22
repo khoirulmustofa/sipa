@@ -109,6 +109,7 @@ echo form_open_multipart($action, $attribute);
         </div>
     </div>
     <div class="card-footer">
+        <input type="hidden" name="id_kerjasama" value="<?php echo $id_kerjasama?>">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
         <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
