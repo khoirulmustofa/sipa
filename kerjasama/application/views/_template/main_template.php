@@ -172,7 +172,18 @@
                                 </a>
                             </li>
                         <?php } ?>
-
+                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                            <a href="<?php echo str_replace('kerjasama/', '', base_url()) ?>">
+                                <i class="far fa-arrow-alt-circle-left"></i>
+                                <p>Kembali ke SIPA</p>
+                            </a>
+                        </li>
+                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                            <a data-toggle="modal" data-target="#modalKeluarSIPA">
+                                <i class="far fa-arrow-alt-circle-left"></i>
+                                <p>Logout</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -190,74 +201,25 @@
             </footer>
         </div>
 
-        <div class="custom-template">
-            <div class="title">Settings</div>
-            <div class="custom-content">
-                <div class="switcher">
-                    <div class="switch-block">
-                        <h4>Logo Header</h4>
-                        <div class="btnSwitch">
-                            <button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
-                            <button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="purple"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="green"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="red"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="white"></button>
-                            <br />
-                            <button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
-                            <button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
-                        </div>
+        <div class="modal fade" id="modalKeluarSIPA" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="myModalLabel">Konfirmasi Logout</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                     </div>
-                    <div class="switch-block">
-                        <h4>Navbar Header</h4>
-                        <div class="btnSwitch">
-                            <button type="button" class="changeTopBarColor" data-color="dark"></button>
-                            <button type="button" class="changeTopBarColor" data-color="blue"></button>
-                            <button type="button" class="changeTopBarColor" data-color="purple"></button>
-                            <button type="button" class="changeTopBarColor" data-color="light-blue"></button>
-                            <button type="button" class="changeTopBarColor" data-color="green"></button>
-                            <button type="button" class="changeTopBarColor" data-color="orange"></button>
-                            <button type="button" class="changeTopBarColor" data-color="red"></button>
-                            <button type="button" class="changeTopBarColor" data-color="white"></button>
-                            <br />
-                            <button type="button" class="changeTopBarColor" data-color="dark2"></button>
-                            <button type="button" class="selected changeTopBarColor" data-color="blue2"></button>
-                            <button type="button" class="changeTopBarColor" data-color="purple2"></button>
-                            <button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
-                            <button type="button" class="changeTopBarColor" data-color="green2"></button>
-                            <button type="button" class="changeTopBarColor" data-color="orange2"></button>
-                            <button type="button" class="changeTopBarColor" data-color="red2"></button>
+                    <form class="form-horizontal" method="post" action="<?php echo str_replace('kerjasama/', '', base_url()).'logout' ?>">
+                        <div class="modal-body">
+                            <p>Anda yakin logout?</b></p>
                         </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Sidebar</h4>
-                        <div class="btnSwitch">
-                            <button type="button" class="selected changeSideBarColor" data-color="white"></button>
-                            <button type="button" class="changeSideBarColor" data-color="dark"></button>
-                            <button type="button" class="changeSideBarColor" data-color="dark2"></button>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
+                            <button class="btn btn-danger">Ya</button>
                         </div>
-                    </div>
-                    <div class="switch-block">
-                        <h4>Background</h4>
-                        <div class="btnSwitch">
-                            <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-                            <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-                            <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-                            <button type="button" class="changeBackgroundColor" data-color="dark"></button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-
         </div>
-        <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="<?= base_url('templates') ?>/assets/js/core/jquery.3.2.1.min.js"></script>
