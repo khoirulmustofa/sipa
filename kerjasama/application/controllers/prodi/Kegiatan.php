@@ -31,17 +31,25 @@ class Kegiatan extends CI_Controller
     public function get_datatable_kegiatan()
     {
         $kode_prodi = isset($_SESSION['kode_prodi']) ? $_SESSION['kode_prodi'] : null;
+
         $tahun_semester = $this->input->post('tahun_semester', TRUE);
-        $tahun_semester_array = explode('#', $tahun_semester);
+
 
         $where = "";
+        // cek ada filter tahun semester
         if ($tahun_semester != '') {
+            // jika ada
+            $tahun_semester_array = explode('#', $tahun_semester);
             if ($kode_prodi != null) {
                 $where = " WHERE kode_prodi = '$kode_prodi' AND YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
-            }else{
+            } else {
                 $where = " WHERE YEAR(awal_kegiatan) = '$tahun_semester_array[0]' AND semester = '$tahun_semester_array[1]'";
             }
-            
+        } else {
+            // jika tidak ada
+            if ($kode_prodi != null) {
+                $where = " WHERE kode_prodi = '$kode_prodi'";
+            }
         }
         $datatables = new Datatables(new CodeigniterAdapter);
 
@@ -99,8 +107,8 @@ class Kegiatan extends CI_Controller
             echo json_encode($data_response);
         } else {
 
-            // $data['kode_prodi'] = $_SESSION['kode_prodi'];
-            $data['kode_prodi'] = '2';
+            $data['kode_prodi'] = $_SESSION['kode_prodi'];
+            //$data['kode_prodi'] = '2';
             $data['jenis_kegiatan'] = $this->input->post('jenis_kegiatan', TRUE);
             $data['awal_kegiatan'] = $this->input->post('awal_kegiatan', TRUE);
             $data['akhir_kegiatan'] = $this->input->post('akhir_kegiatan', TRUE);

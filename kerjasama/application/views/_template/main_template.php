@@ -59,7 +59,7 @@
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 
                 <div class="container-fluid">
-                    <h2 class="text-light text-center"><b><i>SISTEM PELAPORAN AKADEMIK FAKULTAS TEKNIK (SiPA-FT)</i></b></h2>
+                    <h2 class="text-light text-center"><b><i>SISTEM INFORMASI KERJASAMA FAKULTAS TEKNIK (SIsKA-FT)</i></b></h2>
                 </div>
             </nav>
             <!-- End Navbar -->
@@ -172,13 +172,13 @@
                                 </a>
                             </li>
                         <?php } ?>
-                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' ' : "" ?>">
                             <a href="<?php echo str_replace('kerjasama/', '', base_url()) ?>">
                                 <i class="far fa-arrow-alt-circle-left"></i>
                                 <p>Kembali ke SIPA</p>
                             </a>
                         </li>
-                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
+                        <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' ' : "" ?>">
                             <a data-toggle="modal" data-target="#modalKeluarSIPA">
                                 <i class="far fa-arrow-alt-circle-left"></i>
                                 <p>Logout</p>
@@ -208,7 +208,7 @@
                         <h3 class="modal-title" id="myModalLabel">Konfirmasi Logout</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                     </div>
-                    <form class="form-horizontal" method="post" action="<?php echo str_replace('kerjasama/', '', base_url()).'logout' ?>">
+                    <form class="form-horizontal" method="post" action="<?php echo str_replace('kerjasama/', '', base_url()) . 'logout' ?>">
                         <div class="modal-body">
                             <p>Anda yakin logout?</b></p>
                         </div>
