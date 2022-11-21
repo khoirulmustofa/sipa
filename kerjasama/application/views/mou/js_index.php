@@ -109,9 +109,9 @@
                     searchable: false,
                     render: function(data, type, row, meta) {
                         let date_sekarang = new Date();
-                        let tanggal_akhir_kerja_sama = new Date(row['tanggal_akhir_kerja_sama']);
+                        let tanggal_akhir = new Date(row['tanggal_akhir']);
                         let btnPerpanjang = ``;
-                        if (tanggal_akhir_kerja_sama < date_sekarang) {
+                        if (tanggal_akhir < date_sekarang) {
                             btnPerpanjang = `<button type="button" onclick="btnPerpanjang('${data}')" title="Perpanjang" class="btn btn-success btn-sm">
                                                     <i class="fas fa-calendar-plus"></i>
                                                 </button>`;
@@ -131,7 +131,7 @@
                     }
                 },
                 {
-                    data: "tanggal_kerja_sama",
+                    data: "tanggal",
                     searchable: false,
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
@@ -161,10 +161,10 @@
                     data: "alamat",
                 },
                 {
-                    data: "durasi_kerja_sama",
+                    data: "durasi",
                 },
                 {
-                    data: "tanggal_akhir_kerja_sama",
+                    data: "tanggal_akhir",
                     searchable: false,
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
@@ -175,13 +175,13 @@
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let date_sekarang = new Date();
-                        let tanggal_akhir_kerja_sama = new Date(row['tanggal_akhir_kerja_sama']);
+                        let tanggal_akhir = new Date(row['tanggal_akhir']);
                         var taggal_6_bulan = addMonths(date_sekarang, 6)
                         let result = ``;
-                        if (tanggal_akhir_kerja_sama > date_sekarang && tanggal_akhir_kerja_sama <
+                        if (tanggal_akhir > date_sekarang && tanggal_akhir <
                             new Date(taggal_6_bulan)) {
                             result = "<div class='berkedip'>Akan Berakhir</div>";
-                        } else if (tanggal_akhir_kerja_sama < date_sekarang) {
+                        } else if (tanggal_akhir < date_sekarang) {
                             result = "Berakhir";
                         } else {
                             result = "Aktif";
@@ -265,9 +265,29 @@
         });
     }
 
+   
     function btnAdd() {
-       alert('Belum dibuat');
+        swalLoading();
+        $.ajax({
+            url: '<?php echo base_url('mou/create') ?>',
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    messegeWarning(respon.messege);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
     }
+
 
     function btn_edit(id) {
         Swal.fire({

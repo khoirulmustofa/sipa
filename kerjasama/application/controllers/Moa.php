@@ -69,7 +69,6 @@ class Moa extends CI_Controller
         $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id("")->result();
         $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
 
-
         $data_response =  array(
             'status' => true,
             // 'token_csrf' => $this->security->get_csrf_hash(),

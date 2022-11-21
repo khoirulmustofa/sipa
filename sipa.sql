@@ -53,26 +53,26 @@ DROP TABLE IF EXISTS `tbl_mou`;
 CREATE TABLE `tbl_mou` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `periode` int(11) DEFAULT NULL,
-  `tanggal_kerja_sama` date DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
   `nama_lembaga_mitra` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `negara_id` int(11) DEFAULT NULL,
   `provinsi_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kota_kabupaten_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kecamata_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kecamatan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kelurahan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `durasi_kerja_sama` int(11) DEFAULT NULL,
-  `tanggal_akhir_kerja_sama` date DEFAULT NULL,
+  `durasi` int(11) DEFAULT NULL,
+  `tanggal_akhir` date DEFAULT NULL,
   `dokumen` varchar(350) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT 1,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_mou` */
 
-insert  into `tbl_mou`(`id`,`periode`,`tanggal_kerja_sama`,`nama_lembaga_mitra`,`negara_id`,`provinsi_id`,`kota_kabupaten_id`,`kecamata_id`,`kelurahan_id`,`alamat`,`durasi_kerja_sama`,`tanggal_akhir_kerja_sama`,`dokumen`,`status`,`created_at`,`updated_at`) values (1,1,'2022-11-11','Nama Lembaga Mitra',2,NULL,NULL,NULL,NULL,'Nama Lembaga MitraNama Lembaga Mitra',1,'2023-11-11','Doc_MOU_1668465875.pdf',1,'2022-11-11 18:52:04','2022-11-15 05:44:35'),(2,1,'2019-11-11','Nama Lembaga Mitra tt',3,NULL,NULL,NULL,NULL,'rftyrtyrty',1,'2020-11-11',NULL,0,'2022-11-11 18:55:10','2022-11-11 18:58:29'),(3,2,'2022-11-11','Nama Lembaga Mitra tt',3,NULL,NULL,NULL,NULL,'rftyrtyrty',1,'2023-11-11',NULL,1,'2022-11-11 18:58:29','2022-11-11 18:58:29');
+insert  into `tbl_mou`(`id`,`periode`,`tanggal`,`nama_lembaga_mitra`,`negara_id`,`provinsi_id`,`kota_kabupaten_id`,`kecamatan_id`,`kelurahan_id`,`alamat`,`durasi`,`tanggal_akhir`,`dokumen`,`status`,`created_at`,`updated_at`) values (1,1,'2022-11-11','Nama Lembaga Mitra',2,NULL,NULL,NULL,NULL,'Nama Lembaga MitraNama Lembaga Mitra',1,'2023-11-11','Doc_MOU_1668465875.pdf',1,'2022-11-11 18:52:04','2022-11-15 05:44:35'),(2,1,'2019-11-11','Nama Lembaga Mitra tt',3,NULL,NULL,NULL,NULL,'rftyrtyrty',1,'2020-11-11',NULL,0,'2022-11-11 18:55:10','2022-11-11 18:58:29'),(3,2,'2022-11-11','Nama Lembaga Mitra tt',3,NULL,NULL,NULL,NULL,'rftyrtyrty',1,'2023-11-11',NULL,1,'2022-11-11 18:58:29','2022-11-11 18:58:29'),(4,NULL,'2022-11-22','Test 1',1,'','','','','AlamatAlamatAlamatAlamat',4,'2026-11-22','doc__mou_20221122061947.pdf',1,'2022-11-22 06:19:47','2022-11-22 06:19:47');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
