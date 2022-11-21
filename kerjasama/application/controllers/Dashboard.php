@@ -6,7 +6,8 @@ class Dashboard extends CI_Controller
 
     function __construct()
     {
-        parent::__construct();
+        parent::__construct();        
+        $this->load->library('template');
         // cek login dari app_helper
         is_login();
     }
@@ -42,12 +43,11 @@ class Dashboard extends CI_Controller
 
         $data['menu'] = 'menu_dashboard';
         $data['title'] = "Dashboard";
-        $data['load_css'] = '';
         $data['load_js'] = 'dashboard/js_index';
         $data['tahun_kerja_sama_result'] = $tahun_kerja_sama_result;
         $data['prodi_result'] = $prodi_result;
         $data['semester_result'] = $this->Kegiatan_model->get_semester()->result();
-
+        
         $this->template->load('_template/main_template', 'dashboard/view_index', $data);
     }
 

@@ -22,11 +22,11 @@
             }
         });
     </script>
-
+    <script src="<?= base_url('assets/js/cuctom.js') ?>"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url('templates') ?>/assets/css/atlantis.min.css">
-    <?php if ($load_css != '') {
+    <?php if (isset($load_css)) {
         $this->load->view($load_css);
     }
     ?>
@@ -127,10 +127,10 @@
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item<?php echo $menu == "menu_kerja_sama" ? ' active' : "" ?>">
+                            <li class="nav-item<?php echo $menu == "menu_mou" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('tu/kerja_sama') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Kerja Sama</p>
+                                    <p>Memorandum of Understanding (MOU)</p>
                                 </a>
                             </li>
                             <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
@@ -149,10 +149,16 @@
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item<?php echo $menu == "menu_kerja_sama" ? ' active' : "" ?>">
-                                <a href="<?php echo base_url('tu/kerja_sama') ?>">
+                            <li class="nav-item<?php echo $menu == "menu_mou" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('mou') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Kerja Sama</p>
+                                    <p>Memorandum of Understanding (MOU)</p>
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_moa" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('moa') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Memorandum of Agreement (MOA)</p>
                                 </a>
                             </li>
                         <?php } ?>
@@ -235,7 +241,7 @@
     <script src="<?= base_url('templates') ?>/assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Atlantis JS -->
     <script src="<?= base_url('templates') ?>/assets/js/atlantis.min.js"></script>
-    <?php if ($load_js != '') {
+    <?php if (isset($load_js)) {
         $this->load->view($load_js);
     }
     ?>

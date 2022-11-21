@@ -14,4 +14,11 @@ class Prodi_model extends CI_Model
         }
         return $this->db->get();
     }
+
+    public function get_prodi()
+    {
+        $this->db->from("tb_prodi");
+        $this->db->order_by("nama_prodi");
+        return $this->db->get();
+    }
 }

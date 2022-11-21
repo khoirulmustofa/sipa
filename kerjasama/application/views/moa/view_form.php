@@ -1,5 +1,5 @@
 <?php
-$attribute = array('role' => 'form', 'id' => 'form_kerja_sama');
+$attribute = array('role' => 'form', 'id' => 'my_form');
 echo form_open_multipart($action, $attribute);
 ?>
 <div class="modal-content">
@@ -11,42 +11,57 @@ echo form_open_multipart($action, $attribute);
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label for="varchar">Jenis Kerjasama </label>
-            <select class="form-control" name="jenis_kerjasama" id="jenis_kerjasama">
-                <option value="">Pilih Jenis Kerjasama</option>
-                <option value="MOU" <?php echo $jenis_kerjasama == "MOU" ? "selected" : "" ?>>MOU</option>
-                <option value="MOA" <?php echo $jenis_kerjasama == "MOA" ? "selected" : "" ?>>MOA</option>
-            </select>
-        </div>
-        <div class="form-group" id="ketegori_moa_group">
-            <label for="varchar">Kategori </label>
-            <select class="form-control" name="ketegori_moa" id="ketegori_moa">
-                <option value="">Pilih Jenis Kerjasama</option>
-                <option value="Pendidikan/Pengajaran" <?php echo $ketegori_moa == "Pendidikan/Pengajaran" ? "selected" : "" ?>>Pendidikan/Pengajaran</option>
-                <option value="Penelitian" <?php echo $ketegori_moa == "Penelitian" ? "selected" : "" ?>>Penelitian</option>
-                <option value="Pengabdian Masyarakat" <?php echo $ketegori_moa == "Pengabdian Masyarakat" ? "selected" : "" ?>>Pengabdian Masyarakat</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="date">Tanggal Kerjasama </label>
-            <input type="Date" class="form-control" name="tgl_kerjasama" id="tgl_kerjasama" placeholder="Tgl Kerjasama" value="<?php echo $tgl_kerjasama; ?>" />
-        </div>
-        <div class="form-group">
-            <label for="varchar">Lembaga Mitra </label>
-            <input type="text" class="form-control" name="lembaga_mitra" id="lembaga_mitra" placeholder="Lembaga Mitra" value="<?php echo $lembaga_mitra; ?>" />
-        </div>
-
-        <div class="form-group">
-            <label for="varchar">Negara </label>
-            <select class="form-control" name="negara_id" id="negara_id">
-                <option value="">Pilih Negara</option>
-                <?php foreach ($negara_result as $key => $value) { ?>
-                    <option value="<?php echo $value->id ?>" <?php echo $value->id == $negara_id ? "selected" : "" ?>><?php echo $value->nama_negara ?></option>
+            <label for="mou_id">Pilih MOU</label>
+            <select class="form-control" id="mou_id" name="mou_id">
+                <option value="">--Pilih MOU--</option>
+                <?php foreach ($mou_result as $key => $value) { ?>
+                    <option value="<?php echo $value->id ?>" <?php echo $value->id == $mou_id ? "selected" : "" ?>>
+                        <?php echo $value->nama_lembaga_mitra ?>
+                    </option>
                 <?php } ?>
             </select>
         </div>
-
-        <div id="provinsi_desa_group">
+        <div class="form-group">
+            <label>Kategori</label>
+            <select class="form-control" name="kategori_moa" id="kategori_moa">
+                <option value="">--Pilih kategori--</option>
+                <option value="Pendidikan/Pengajaran" <?php echo $kategori_moa == 'Pendidikan/Pengajaran' ? 'selected' : ''; ?>>Pendidikan/Pengajaran</option>
+                <option value="Penelitian" <?php echo $kategori_moa == 'Penelitian' ? 'selected' : ''; ?>>Penelitian</option>
+                <option value="Pengabdian Masyarakat" <?php echo $kategori_moa == 'Pengabdian Masyarakat' ? 'selected' : ''; ?>>Pengabdian Masyarakat</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tingkatan</label>
+            <select class="form-control" name="tingkat_moa" id="tingkat_moa">
+                <option value="">--Pilih Tingkatan--</option>
+                <option value="Wilayah" <?php echo $tingkat_moa == 'Wilayah' ? 'selected' : ''; ?>>Wilayah</option>
+                <option value="Nasional" <?php echo $tingkat_moa == 'Nasional' ? 'selected' : ''; ?>>Nasional</option>
+                <option value="Internasional" <?php echo $tingkat_moa == 'Internasional' ? 'selected' : ''; ?>>Internasional</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tanggal">Tanggal</label>
+            <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" placeholder="Masukan Tanggal ...">
+        </div>
+        <div class="form-group">
+            <label for="nama_lembaga_mitra">Nama Lembaga Mitra</label>
+            <div class="tambah_mitra_wrap">
+                <button class="btn btn-success tambah_mitra">Tambah</button>
+                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra[]" class="form-control"  placeholder="Nama Lembaga Mitra ..."></div>
+            </div>           
+        </div>
+        <div class="form-group">
+            <label for="negara_id">Negara</label>
+            <select class="form-control" id="negara_id" name="negara_id">
+                <option value="">--Pilih Negara--</option>
+                <?php foreach ($negara_result as $key => $value) { ?>
+                    <option value="<?php echo $value->id ?>" <?php echo $value->id == $negara_id ? "selected" : "" ?>>
+                        <?php echo $value->nama_negara ?>
+                    </option>
+                <?php } ?>
+            </select>
+        </div>
+        <div id="indonesia">
             <div class="form-group">
                 <label for="varchar">Provinsi</label>
                 <select class="form-control" name="provinsi_id" id="provinsi_id">
@@ -58,11 +73,11 @@ echo form_open_multipart($action, $attribute);
             </div>
             <div class="form-group">
                 <label for="varchar">Kota Kabupaten</label>
-                <select class="form-control" name="kabupaten_kota_id" id="kabupaten_kota_id">
+                <select class="form-control" name="kota_kabupaten_id" id="kota_kabupaten_id">
                     <option value="">Pilih Kota Kabupaten</option>
                     <?php if (count($kota_kabupaten_result) > 0) {
                         foreach ($kota_kabupaten_result as $key2 => $value2) { ?>
-                            <option value="<?php echo $value2->master_kota_kabupaten_id ?>" <?php echo $value2->master_kota_kabupaten_id == $kabupaten_kota_id ? "selected" : "" ?>><?php echo $value2->kota_kabupaten_nama ?></option>
+                            <option value="<?php echo $value2->master_kota_kabupaten_id ?>" <?php echo $value2->master_kota_kabupaten_id == $kota_kabupaten_id ? "selected" : "" ?>><?php echo $value2->kota_kabupaten_nama ?></option>
                     <?php }
                     } ?>
                 </select>
@@ -86,112 +101,87 @@ echo form_open_multipart($action, $attribute);
                 </select>
             </div>
         </div>
-
         <div class="form-group">
-            <label for="alamat_mitra">Alamat Mitra </label>
-            <textarea class="form-control" rows="3" name="alamat_mitra" id="alamat_mitra" placeholder="Alamat Mitra"><?php echo $alamat_mitra; ?></textarea>
+            <label for="alamat">Alamat</label>
+            <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5" placeholder="Masukan Alamat ..."><?= $alamat ?></textarea>
         </div>
         <div class="form-group">
-            <label for="int">Durasi Kerjasama (Dalam Tahun)</label>
-            <input type="number" class="form-control" name="durasi_kerjasama" id="durasi_kerjasama" placeholder="Durasi Kerjasama (Dalam Tahun) contoh : 2" value="<?php echo $durasi_kerjasama; ?>" />
+            <label for="durasi">Durasi</label>
+            <input type="number" class="form-control" id="durasi" name="durasi" value="<?= $durasi ?>" placeholder="Masukan Durasi ...">
         </div>
-
         <div class="form-group">
-            <label for="varchar">Dokumen Kerjasama</label>
-            <input type="file" class="form-control" name="dokumen_kerjasama" accept="image/jpeg,image/png,application/pdf">
+            <label for="dokumen1">Dokumen 1</label>
+            <input type="file" class="form-control" id="dokumen1" name="dokumen1">
         </div>
-        <div class="form-group" id="dok_pendukung_group">
-            <label for="varchar">Dokumen Pendukukung</label>
-            <input type="file" class="form-control" name="dokumen_pendukung_1" accept="image/jpeg,image/png,application/pdf">
-            <input type="file" class="form-control" name="dokumen_pendukung_2" accept="image/jpeg,image/png,application/pdf">
-            <input type="file" class="form-control" name="dokumen_pendukung_3" accept="image/jpeg,image/png,application/pdf">
-            <input type="file" class="form-control" name="dokumen_pendukung_4" accept="image/jpeg,image/png,application/pdf">
+        <div class="form-group">
+            <label for="dokumen2">Dokumen 2</label>
+            <input type="file" class="form-control" id="dokumen2" name="dokumen2">
+        </div>
+        <div class="form-group">
+            <label for="dokumen3">Dokumen 3</label>
+            <input type="file" class="form-control" id="dokumen3" name="dokumen3">
+        </div>
+        <div class="form-group">
+            <label for="kode_prodi">Pilih Prodi</label>
+            <div class="form-check">
+                <?php foreach ($prodi_result as $key => $value) { ?>
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="kode_prodi[]" value="<?php echo $value->kode_prodi ?>">
+                        <span class="form-check-sign"><?php echo $value->nama_prodi ?></span>
+                    </label>
+                <?php } ?>
+            </div>
         </div>
     </div>
     <div class="card-footer">
-        <input type="hidden" name="id_kerjasama" value="<?php echo $id_kerjasama?>">
+        <input type="hidden" name="id" value="<?= $id ?>">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
         <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
 </div>
 <?php echo form_close() ?>
 
+
+
 <script>
     $(document).ready(function() {
-        // pertama kali load hidden ketegori_moa_group
-        let jenis_kerjasama = '<?php echo $jenis_kerjasama ?>';
-        if (jenis_kerjasama == "MOA") {
-            $('#ketegori_moa_group').show();
-            $('#dok_pendukung_group').show();
-        } else {
-            $('#ketegori_moa_group').hide();
-            $('#dok_pendukung_group').hide();
-        }
 
         // pertama kali load hidden provinsi_desa_group
         let load_negara_id = '<?php echo $negara_id ?>';
         if (load_negara_id == "") {
-            $('#provinsi_desa_group').hide();
+            $('#indonesia').hide();
         }
 
-        // petama kali load hidden provinsi_desa_group jika negara_id = Indonesia
+        // petama kali load hidden indonesia jika negara_id = Indonesia
         if (load_negara_id != "102") {
-            $('#provinsi_desa_group').hide();
+            $('#indonesia').hide();
         } else {
-            $('#provinsi_desa_group').show();
+            $('#indonesia').show();
         }
 
-    })
+    });
+
     $(function() {
 
-        $("#jenis_kerjasama").change(function() {
-            let jenis_kerjasama = $('#jenis_kerjasama').val();
-            if (jenis_kerjasama == "MOA") {
-                $('#ketegori_moa_group').show();
-                $('#dok_pendukung_group').show();
-            } else {
-                $('#ketegori_moa_group').hide();
-                $('#dok_pendukung_group').hide();
-            }
+        $(".tambah_mitra").click(function(e) {
+            e.preventDefault();
+            $(".tambah_mitra_wrap").append('<div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra[]" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>');
         });
+
+        $(".tambah_mitra_wrap").on("click", ".btn_hapus_mitra", function(e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        })
 
         // Setting negara indo
         $("#negara_id").change(function() {
             let negara_id = $('#negara_id').val();
             if (negara_id == "102") {
-                $('#provinsi_desa_group').show();
+                $('#indonesia').show();
             } else {
-                $('#provinsi_desa_group').hide();
+                $('#indonesia').hide();
             }
-            $.ajax({
-                url: '<?php echo base_url('tu/kerja_sama/get_kota_kabupaten') ?>',
-                data: {
-                    provinsi_id: provinsi_id
-                },
-                type: "GET",
-                dataType: "JSON",
-                success: function(respon) {
-                    Swal.close();
-                    if (respon.status) {
-                        $('#kabupaten_kota_id').html(respon.kota_kabupaten_html);
-                        if (provinsi_id == "") {
-                            $('#kabupaten_kota_id').html('<option value="">Pilih Kota Kabupaten</option>');
-                        }
-                    } else {
-                        Swal.fire({
-                            title: "Ooops..",
-                            icon: 'warning',
-                            html: respon.messege,
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                        });
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    Swal.close();
-                    alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
-                }
-            });
         });
 
         // Load Kabupaten
@@ -296,11 +286,12 @@ echo form_open_multipart($action, $attribute);
             });
         });
 
-        // Simpan Form
-        $('form#form_kerja_sama').on('submit', function(e) {
+        // simpan from 
+
+        $('form#my_form').on('submit', function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            $('#submit').prop('disabled', true);
+            swalLoading();
             $.ajax({
                 url: $(this).attr('action'),
                 data: new FormData(this),
@@ -311,28 +302,13 @@ echo form_open_multipart($action, $attribute);
                 type: 'POST',
                 dataType: "JSON",
                 success: function(respon) {
-                    $('#submit').prop('disabled', false);
+                    Swal.close();
                     if (respon.status) {
-                        Swal.fire({
-                            title: "Success",
-                            icon: "success",
-                            html: respon.messege,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            showConfirmButton: false,
-                            timer: 1000,
-                        }).then((result) => {
-                            $("#dt_kerja_sama").DataTable().ajax.reload(null, false);
-                            $('#modal_form').modal('hide');
-                        });
+                        messegeSuccess(respon.messege);
+                        $("#myDatatables").DataTable().ajax.reload(null, false);
+                        $('#modal_form').modal('hide');
                     } else {
-                        Swal.fire({
-                            title: "Ooops..",
-                            icon: "warning",
-                            html: respon.messege,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        })
+                        messegeWarning(respon.messege);
                     }
                 },
                 error: function(xhr, ajaxOptions, thrownError) {

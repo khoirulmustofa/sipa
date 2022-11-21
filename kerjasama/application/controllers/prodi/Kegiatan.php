@@ -360,6 +360,8 @@ class Kegiatan extends CI_Controller
 
         $data_upload = $this->upload->data();
         return $data_upload['file_name'];
+
+        $this->form_validation->set_message('rule', 'Error Message');
     }
 
     private function _upload_doc_absensi()
