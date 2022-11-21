@@ -178,8 +178,15 @@ class Moa extends CI_Controller
         }
     }
 
-    public function validate_upload()
+    public function detail()
     {
-        $this->form_validation->set_message('validate_upload', 'Gagal Upload');
+        $this->load->model('Moa_model');
+
+        $moa_id = $this->input->get('moa_id', TRUE);
+        $data['menu'] = 'menu_moa';
+        $data['title'] = "Detail Memorandum of Agreement (MOA)";
+        $data['moa_row'] = $this->Moa_model->getMoaDetailById($moa_id)->row();     
+       
+        $this->template->load('_template/main_template', 'moa/view_detail', $data);
     }
 }

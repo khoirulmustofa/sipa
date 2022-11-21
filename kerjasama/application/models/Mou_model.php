@@ -39,5 +39,11 @@ class Mou_model extends CI_Model
         return  $this->db->get();
     }
 
-    
+    public function getMouById($id = "")
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_mou");
+        $this->db->where("id", $id);
+        return  $this->db->get();
+    }
 }

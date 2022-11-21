@@ -21,4 +21,11 @@ class Prodi_model extends CI_Model
         $this->db->order_by("nama_prodi");
         return $this->db->get();
     }
+
+    public function getProdiByIdArr($idArr = array())
+    {
+        $this->db->from("tb_prodi");
+        $this->db->where_in("kode_prodi", $idArr);
+        return $this->db->get();
+    }
 }

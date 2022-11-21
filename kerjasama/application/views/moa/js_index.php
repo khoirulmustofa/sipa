@@ -118,9 +118,9 @@
                         }
                         return `<div class="btn-group" role="group" aria-label="Basic example">
                                         ${btnPerpanjang}
-                                        <button type="button" onclick="btnDetail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                        <a href="<?= base_url('moa/detail?moa_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>
+                                        </a>
                                         <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
@@ -131,7 +131,7 @@
                     }
                 },
                 {
-                    data: "nama_lembaga_mitra",
+                    data: "nama_lembaga_mitra_moa",
                     render: function(data, type, row, meta) {
                         return explodeLembagaMitra(data);
                     }
@@ -230,20 +230,12 @@
         });
     }
 
-    function btn_detail(id) {
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
+    function btnDetail(id) {
+        swalLoading();
         $.ajax({
-            url: '<?php echo base_url('tu/kerja_sama/detail_kerja_sama') ?>',
+            url: '<?php echo base_url('moa/detail') ?>',
             data: {
-                id_kerjasama: id
+                moa_id: id
             },
             type: "GET",
             dataType: "JSON",
@@ -253,13 +245,7 @@
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
+                    messegeWarning(respon.messege);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
