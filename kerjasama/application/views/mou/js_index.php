@@ -9,17 +9,17 @@
     });
 
     $(function() {
-            // fungsi untuk cek negara indonesia atau tidak
-            $("#tahun_kerja_sama").change(function() {
-                let tahunKerjaSama = $("#tahun_kerja_sama").val();
-                if (tahunKerjaSama == "") {
-                    messegeWarning("Pilih Tahun Kerja Sama");
-                    $("#tahun_kerja_sama").focus();
-                    return false;
-                }
-                dataTablesMOU(tahunKerjaSama);
-            });
+        // fungsi untuk cek negara indonesia atau tidak
+        $("#tahun_kerja_sama").change(function() {
+            let tahunKerjaSama = $("#tahun_kerja_sama").val();
+            if (tahunKerjaSama == "") {
+                messegeWarning("Pilih Tahun Kerja Sama");
+                $("#tahun_kerja_sama").focus();
+                return false;
+            }
+            dataTablesMOU(tahunKerjaSama);
         });
+    });
 
     // fungsi untuk load data MOU
     function dataTablesMOU(tahunKerjaSama = "") {
@@ -108,17 +108,9 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row, meta) {
-                        let date_sekarang = new Date();
-                        let tanggal_akhir = new Date(row['tanggal_akhir']);
-                        let btnPerpanjang = ``;
-                        if (tanggal_akhir < date_sekarang) {
-                            btnPerpanjang = `<button type="button" onclick="btnPerpanjang('${data}')" title="Perpanjang" class="btn btn-success btn-sm">
-                                                    <i class="fas fa-calendar-plus"></i>
-                                                </button>`;
-                        }
-                        return `<div class="btn-group" role="group" aria-label="Basic example">
-                                        ${btnPerpanjang}
-                                        <a type="button" href="<?php echo base_url('mou/detail?mou_id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
+
+                        return `<div class="btn-group" role="group" aria-label="Basic example">                                       
+                                        <a type="button" href="<?php echo base_url('mou/detail?mou_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
@@ -257,7 +249,7 @@
         });
     }
 
-   
+
     function btnAdd() {
         swalLoading();
         $.ajax({

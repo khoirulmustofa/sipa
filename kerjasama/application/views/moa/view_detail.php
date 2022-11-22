@@ -127,10 +127,32 @@
                                 </table>
                             </div>
                         </div>
+
+                    </div>
+                    <div class="card-header">
+                        <h4 class="card-title">TABLE IMPLEMANTASI ARANGEMENT (AI) PRODI</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="myDatatables" class="display table table-striped table-hover text-nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Prodi</th>
+                                        <th>Tingkatan</th>
+                                        <th>Judul Kegiatan</th>
+                                        <th>Manfaat</th>
+                                        <th>Awal kegiatan</th>
+                                        <th>Akhir Kegiatan</th>
+                                        <th>Durasi</th>
+                                        <th>Dosen Yang Terlibat</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -145,7 +167,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            <iframe src="<?php echo base_url('assets/doc_mou/'.$mou_row->dokumen)?>" title="description" style="width: 100%; height: 720px;"></iframe>
+                <iframe src="<?php echo base_url('assets/doc_mou/' . $mou_row->dokumen) ?>" title="description" style="width: 100%; height: 720px;"></iframe>
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>

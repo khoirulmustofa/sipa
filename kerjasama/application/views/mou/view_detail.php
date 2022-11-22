@@ -65,7 +65,23 @@
                             <tr>
                                 <td>Dokumen</td>
                                 <td><button onclick="btn_lihat_dokumen()" class="btn btn-info">Lihat</button></td>
-                            </tr>                            
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td><?php
+                                    $tanggal_sekarang = date('Y-m-d');
+                                    $tanggal_akhir    = date('Y-m-d', strtotime($tanggal_akhir));
+                                    $tanggal_6lagi =  date('Y-m-d', strtotime('+6 months'));
+                                  
+                                    if ($tanggal_akhir > $tanggal_sekarang && $tanggal_akhir < $tanggal_6lagi) {
+                                        echo 'Akan Berakhir';
+                                    } else if($tanggal_akhir > $tanggal_sekarang) {
+                                        echo 'Berakhir';
+                                    }else {
+                                        echo 'Aktif';
+                                    }
+                                    ?></td>
+                            </tr>
                             <tr>
                                 <td></td>
                                 <td><a href="<?php echo site_url('tbl_mou') ?>" class="btn btn-default">Cancel</a></td>
