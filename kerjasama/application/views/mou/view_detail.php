@@ -72,21 +72,24 @@
                                     $tanggal_sekarang = date('Y-m-d');
                                     $tanggal_akhir    = date('Y-m-d', strtotime($tanggal_akhir));
                                     $tanggal_6lagi =  date('Y-m-d', strtotime('+6 months'));
-                                  
+
                                     if ($tanggal_akhir > $tanggal_sekarang && $tanggal_akhir < $tanggal_6lagi) {
                                         echo 'Akan Berakhir';
-                                    } else if($tanggal_akhir > $tanggal_sekarang) {
+                                    } else if ($tanggal_akhir > $tanggal_sekarang) {
                                         echo 'Berakhir';
-                                    }else {
+                                    } else {
                                         echo 'Aktif';
                                     }
                                     ?></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><a href="<?php echo site_url('tbl_mou') ?>" class="btn btn-default">Cancel</a></td>
+                                <td><a href="<?php echo base_url('mou/edit?mou_id=') . $id ?>" class="btn btn-primary pull-right"><i class="far fa-edit"></i> Edit</a></td>
                             </tr>
                         </table>
+                    </div>
+                    <div class="card-action">
+                        <a href="<?php echo base_url('mou') ?>" class="btn btn-default"><i class="far fa-window-close"></i> Batal</a>
                     </div>
                 </div>
             </div>

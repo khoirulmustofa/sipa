@@ -110,13 +110,13 @@
                     render: function(data, type, row, meta) {
 
                         return `<div class="btn-group" role="group" aria-label="Basic example">                                       
-                                        <a type="button" href="<?php echo base_url('mou/detail?mou_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
+                                        <a href="<?php echo base_url('mou/detail?mou_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
+                                        <a href="<?php echo base_url('mou/edit?mou_id=') ?>${data}" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
-                                        </button>
-                                        <button type="button" onclick="btnDelete('${data}')" title="Delete" class="btn btn-danger btn-sm">
+                                        </a>
+                                        <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </div>`;
@@ -218,100 +218,6 @@
         return dateObject.toISOString().split('T')[0];
     };
 
-    function btn_detail(id) {
-        swalLoading
-        $.ajax({
-            url: '<?php echo base_url('mou/detail') ?>',
-            data: {
-                mou_id: id
-            },
-            type: "GET",
-            dataType: "JSON",
-            success: function(respon) {
-                Swal.close();
-                if (respon.status) {
-                    $('#view_modal_form').html(respon.view_modal_form);
-                    $('#modal_form').modal('show');
-                } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.close();
-                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
-            }
-        });
-    }
-
-
-    function btnAdd() {
-        swalLoading();
-        $.ajax({
-            url: '<?php echo base_url('mou/create') ?>',
-            type: "GET",
-            dataType: "JSON",
-            success: function(respon) {
-                Swal.close();
-                if (respon.status) {
-                    $('#view_modal_form').html(respon.view_modal_form);
-                    $('#modal_form').modal('show');
-                } else {
-                    messegeWarning(respon.messege);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.close();
-                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
-            }
-        });
-    }
-
-
-    function btn_edit(id) {
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
-        $.ajax({
-            url: '<?php echo base_url('tu/kerja_sama/edit_kerja_sama') ?>',
-            data: {
-                id_kerjasama: id
-            },
-            type: "GET",
-            dataType: "JSON",
-            success: function(respon) {
-                Swal.close();
-                if (respon.status) {
-                    $('#view_modal_form').html(respon.view_modal_form);
-                    $('#modal_form').modal('show');
-                } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.close();
-                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
-            }
-        });
-    }
-
     function btn_delete(id) {
         Swal.fire({
             title: 'Question?',
@@ -326,33 +232,21 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '<?php echo base_url('tu/kerja_sama/hapus_action') ?>',
+                    url: '<?php echo base_url('mou/delete_action') ?>',
                     data: {
-                        id_kerjasama: id
+                        id: id
                     },
-                    type: "GET",
+                    type: "POST",
                     dataType: "JSON",
                     success: function(respon) {
                         if (respon.status) {
-                            Swal.fire({
-                                title: "Berhasil",
-                                icon: 'success',
-                                html: respon.messege,
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                                showConfirmButton: false,
-                                timer: 1000,
-                            }).then((result) => {
-                                $("#dt_kerja_sama").DataTable().ajax.reload(null, false);
-                            });
+                            messegeSuccess(respon.messege);
+                            setTimeout(function() {
+                                window.location.href = "<?php echo base_url('mou') ?>";
+                            }, 1000);
+
                         } else {
-                            Swal.fire({
-                                title: "Ooops..",
-                                icon: 'warning',
-                                html: respon.messege,
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                            });
+                            messegeWarning(respon.messege);
                         }
                     },
                     error: function(xhr, ajaxOptions, thrownError) {

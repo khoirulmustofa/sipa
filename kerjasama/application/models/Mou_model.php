@@ -47,9 +47,23 @@ class Mou_model extends CI_Model
         return  $this->db->get();
     }
 
-    public function insert_mou($data)
+    public function insert_mou($data = array())
     {
         $this->db->insert('tbl_mou', $data);
+        return  $this->db->affected_rows();
+    }
+
+    public function update_mou_by_id($id = "", $data = array())
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_mou', $data);
+        return  $this->db->affected_rows();
+    }
+
+    public function delete_mou_by_id($id = "")
+    {
+        $this->db->where('id', $id);
+        $this->db->delete("tbl_mou");
         return  $this->db->affected_rows();
     }
 
@@ -63,7 +77,7 @@ class Mou_model extends CI_Model
         $this->db->join("master_kota_kabupaten as d", "d.master_kota_kabupaten_id = a.kota_kabupaten_id", "left");
         $this->db->join("master_kecamatan as e", "e.master_kecamatan_id = a.kecamatan_id", "left");
         $this->db->join("master_kelurahan as f", "f.master_kelurahan_id = a.kelurahan_id", "left");
-        $this->db->where("a.id",$mou_id);
+        $this->db->where("a.id", $mou_id);
         return  $this->db->get();
     }
 }

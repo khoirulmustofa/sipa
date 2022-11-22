@@ -7,11 +7,7 @@
                     <h5 class="text-white op-7 mb-2">
                         Fakultas Teknik Universitas Islam Riau</h5>
                 </div>
-                <div class="ml-md-auto py-2 py-md-0">
-                    <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
-                        <button type="button" class="btn btn-success" onclick="btnAdd()"><i class="far fa-plus-square"></i> Tambah MOU</button>
-                    <?php } ?>
-                </div>
+
             </div>
         </div>
     </div>
@@ -32,6 +28,9 @@
                                         <option value="5">> 5 Tahun</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="<?php echo base_url('mou/tambah')?>" class="btn btn-success float-right" ><i class="far fa-plus-square"></i> Tambah MOU</a>
                             </div>
                         </div>
 
