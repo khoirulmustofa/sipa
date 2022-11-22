@@ -52,4 +52,18 @@ class Mou_model extends CI_Model
         $this->db->insert('tbl_mou', $data);
         return  $this->db->affected_rows();
     }
+
+    public function get_mou_detail_by_id($mou_id = "")
+    {
+        $this->db->select("a.id,a.periode,a.tanggal,a.nama_lembaga_mitra,a.negara_id,a.provinsi_id,a.kota_kabupaten_id,a.kecamatan_id,a.kelurahan_id,a.alamat,a.durasi,a.tanggal_akhir,a.dokumen");
+        $this->db->select("b.nama_negara,c.province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama");
+        $this->db->from("tbl_mou as a");
+        $this->db->join("master_negara as b", "b.id = a.negara_id", "left");
+        $this->db->join("master_provinsi as c", "c.master_provinsi_id = a.provinsi_id", "left");
+        $this->db->join("master_kota_kabupaten as d", "d.master_kota_kabupaten_id = a.kota_kabupaten_id", "left");
+        $this->db->join("master_kecamatan as e", "e.master_kecamatan_id = a.kecamatan_id", "left");
+        $this->db->join("master_kelurahan as f", "f.master_kelurahan_id = a.kelurahan_id", "left");
+        $this->db->where("a.id",$mou_id);
+        return  $this->db->get();
+    }
 }

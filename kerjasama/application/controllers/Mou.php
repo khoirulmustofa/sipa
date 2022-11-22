@@ -126,7 +126,7 @@ class Mou extends CI_Controller
             $data['alamat'] = $this->input->post('alamat', TRUE);
             $data['durasi'] = $this->input->post('durasi', TRUE);
             $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
-            
+
             if ($this->Mou_model->insert_mou($data) > 0) {
                 $data_response =  array(
                     'status' => true,
@@ -142,5 +142,33 @@ class Mou extends CI_Controller
             }
             echo json_encode($data_response);
         }
+    }
+
+    public function detail()
+    {
+        $this->load->model('Mou_model');
+
+        $mou_id = $this->input->get('mou_id', TRUE);
+        $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
+
+        $data['menu'] = 'menu_mou';
+        $data['title'] = "Detail Memorandum of Understanding (MOU)";
+        $data['load_js'] = 'mou/js_detail';
+        $data['id'] = $mou_row->id;
+        $data['periode'] = $mou_row->periode;
+        $data['tanggal'] = $mou_row->tanggal;
+        $data['nama_lembaga_mitra'] = $mou_row->nama_lembaga_mitra;
+        $data['nama_negara'] = $mou_row->nama_negara;
+        $data['province_name'] = $mou_row->province_name;
+        $data['kota_kabupaten_nama'] = $mou_row->kota_kabupaten_nama;
+        $data['kecamatan_nama'] = $mou_row->kecamatan_nama;
+        $data['kelurahan_nama'] = $mou_row->kelurahan_nama;
+        $data['alamat'] = $mou_row->alamat;
+        $data['durasi'] = $mou_row->durasi;
+        $data['tanggal_akhir'] = $mou_row->tanggal_akhir;
+        $data['dokumen'] = $mou_row->dokumen;
+
+
+        $this->template->load('_template/main_template', 'mou/view_detail', $data);
     }
 }

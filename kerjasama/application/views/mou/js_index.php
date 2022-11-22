@@ -118,9 +118,9 @@
                         }
                         return `<div class="btn-group" role="group" aria-label="Basic example">
                                         ${btnPerpanjang}
-                                        <button type="button" onclick="btnDetail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                        <a type="button" href="<?php echo base_url('mou/detail?mou_id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>
+                                        </a>
                                         <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
@@ -227,19 +227,11 @@
     };
 
     function btn_detail(id) {
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
+        swalLoading
         $.ajax({
-            url: '<?php echo base_url('tu/kerja_sama/detail_kerja_sama') ?>',
+            url: '<?php echo base_url('mou/detail') ?>',
             data: {
-                id_kerjasama: id
+                mou_id: id
             },
             type: "GET",
             dataType: "JSON",
