@@ -241,7 +241,6 @@ class Mou extends CI_Controller
                 $data['dokumen'] = $data_upload1['file_name'];
             }
 
-            $data['periode'] = $this->input->post('periode', TRUE);
             $data['tanggal'] = $this->input->post('tanggal', TRUE);
             $data['nama_lembaga_mitra'] = $this->input->post('nama_lembaga_mitra', TRUE);
             $data['negara_id'] = $this->input->post('negara_id', TRUE);
@@ -265,6 +264,108 @@ class Mou extends CI_Controller
                     'status' => false,
                     // 'token_csrf' => $this->security->get_csrf_hash(),
                     'messege' => 'Edit Memorandum of Understanding (MOU) GAGAL'
+                );
+            }
+            echo json_encode($data_response);
+        }
+    }
+
+    public function perpanjang()
+    {
+        $this->load->model('Mou_model');
+        $this->load->model('Wilayah_indonesia_model');
+
+        $mou_id = $this->input->get('mou_id', TRUE);
+        $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
+
+        $data['menu'] = 'menu_mou';
+        $data['title'] = "Perpanjang Memorandum of Understanding (MOU)";
+        $data['load_js'] = 'mou/js_form';
+        $data['action'] = 'mou/perpanjang_action';
+        $data['id'] = set_value('id', $mou_row->id);
+        $data['periode'] = set_value('periode', $mou_row->periode);
+        $data['tanggal'] = set_value('tanggal', $mou_row->tanggal);
+        $data['nama_lembaga_mitra'] = set_value('nama_lembaga_mitra', $mou_row->nama_lembaga_mitra);
+        $data['negara_id'] = set_value('negara_id', $mou_row->negara_id);
+        $data['provinsi_id'] = set_value('provinsi_id', $mou_row->provinsi_id);
+        $data['kota_kabupaten_id'] = set_value('kota_kabupaten_id', $mou_row->kota_kabupaten_id);
+        $data['kecamatan_id'] = set_value('kecamatan_id', $mou_row->kecamatan_id);
+        $data['kelurahan_id'] = set_value('kelurahan_id', $mou_row->kelurahan_id);
+        $data['alamat'] = set_value('alamat', $mou_row->alamat);
+        $data['durasi'] = set_value('durasi', $mou_row->durasi);
+        $data['tanggal_akhir'] = set_value('tanggal_akhir', $mou_row->tanggal_akhir);
+        $data['dokumen'] = set_value('dokumen', $mou_row->dokumen);
+
+        $data['negara_result'] = $this->Wilayah_indonesia_model->get_master_negara()->result();
+        $data['provinsi_result'] = $this->Wilayah_indonesia_model->get_master_provinsi()->result();
+        $data['kota_kabupaten_result'] = $this->Wilayah_indonesia_model->get_master_kota_kabupaten_by_provinsi_id($mou_row->provinsi_id)->result();
+        $data['kecamatan_result'] = $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id($mou_row->kota_kabupaten_id)->result();
+        $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id($mou_row->kecamatan_id)->result();
+
+        $this->template->load('_template/main_template', 'mou/view_perpanjang', $data);
+    }
+
+    public function perpanjang_action()
+    {
+        $this->load->model('Mou_model');
+
+        // validasi form
+        $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required');
+        $this->form_validation->set_rules('nama_lembaga_mitra', 'Nama Lembaga', 'trim|required');
+        $this->form_validation->set_rules('negara_id', 'Negara', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('durasi', 'Durasi', 'trim|required');
+        if ($this->input->post('negara_id', TRUE) == 102) {
+            $this->form_validation->set_rules('provinsi_id', 'Provinsi', 'trim|required');
+            $this->form_validation->set_rules('kota_kabupaten_id', 'Kota Kabupaten', 'trim|required');
+            $this->form_validation->set_rules('kecamatan_id', 'Kota Kecamatan', 'trim|required');
+            $this->form_validation->set_rules('kelurahan_id', 'Kelurhan / Desa', 'trim|required');
+        }
+
+        if ($this->form_validation->run() == FALSE) {
+            $data_response =  array(
+                'status' => false,
+                // 'token_csrf' => $this->security->get_csrf_hash(),
+                'messege' => validation_errors(),
+            );
+            echo json_encode($data_response);
+        } else {
+            // jika ada dokumen
+            if (!empty($_FILES['dokumen']['name'])) {
+                $config_doc1['upload_path'] = './assets/doc_mou/';
+                $config_doc1['allowed_types'] = '*';
+                $config_doc1['file_name'] = "doc__mou_" . date('Ymdhis');
+                $this->load->library('upload', $config_doc1);
+                $this->upload->initialize($config_doc1);
+
+                $this->upload->do_upload('dokumen');
+                $data_upload1 = $this->upload->data();
+                $data['dokumen'] = $data_upload1['file_name'];
+            }
+
+            $data['periode'] = ((int) $this->input->post('periode', TRUE)) + 1;
+            $data['tanggal'] = $this->input->post('tanggal', TRUE);
+            $data['nama_lembaga_mitra'] = $this->input->post('nama_lembaga_mitra', TRUE);
+            $data['negara_id'] = $this->input->post('negara_id', TRUE);
+            $data['provinsi_id'] = $this->input->post('provinsi_id', TRUE);
+            $data['kota_kabupaten_id'] = $this->input->post('kota_kabupaten_id', TRUE);
+            $data['kecamatan_id'] = $this->input->post('kecamatan_id', TRUE);
+            $data['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
+            $data['alamat'] = $this->input->post('alamat', TRUE);
+            $data['durasi'] = $this->input->post('durasi', TRUE);
+            $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
+          
+            if ($this->Mou_model->insert_mou($data) > 0) {
+                $data_response =  array(
+                    'status' => true,
+                    // 'token_csrf' => $this->security->get_csrf_hash(),
+                    'messege' => 'Perpanjang Memorandum of Understanding (MOU) BERHASIL'
+                );
+            } else {
+                $data_response =  array(
+                    'status' => false,
+                    // 'token_csrf' => $this->security->get_csrf_hash(),
+                    'messege' => 'Perpanjang Memorandum of Understanding (MOU) GAGAL'
                 );
             }
             echo json_encode($data_response);
