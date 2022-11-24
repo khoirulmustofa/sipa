@@ -70,7 +70,11 @@ class Mou extends CI_Controller
         $data['kecamatan_result'] = $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id("")->result();
         $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id("")->result();
 
-        $this->template->load('_template/main_template', 'mou/view_form', $data);
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('mou/view_form', $data, true)
+        );
+        echo json_encode($data_response);
     }
 
     public function tambah_action()
@@ -173,7 +177,7 @@ class Mou extends CI_Controller
         $this->load->model('Mou_model');
         $this->load->model('Wilayah_indonesia_model');
 
-        $mou_id = $this->input->get('mou_id', TRUE);
+        $mou_id = $this->input->get('id', TRUE);
         $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
 
         $data['menu'] = 'menu_mou';
@@ -200,13 +204,16 @@ class Mou extends CI_Controller
         $data['kecamatan_result'] = $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id($mou_row->kota_kabupaten_id)->result();
         $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id($mou_row->kecamatan_id)->result();
 
-        $this->template->load('_template/main_template', 'mou/view_form', $data);
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('mou/view_form', $data, true)
+        );
+        echo json_encode($data_response);
     }
 
     public function edit_action()
     {
         $this->load->model('Mou_model');
-
         // validasi form
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required');
         $this->form_validation->set_rules('nama_lembaga_mitra', 'Nama Lembaga', 'trim|required');
@@ -241,6 +248,7 @@ class Mou extends CI_Controller
                 $data['dokumen'] = $data_upload1['file_name'];
             }
 
+            $data['periode'] = $this->input->post('periode', TRUE);
             $data['tanggal'] = $this->input->post('tanggal', TRUE);
             $data['nama_lembaga_mitra'] = $this->input->post('nama_lembaga_mitra', TRUE);
             $data['negara_id'] = $this->input->post('negara_id', TRUE);
@@ -253,19 +261,14 @@ class Mou extends CI_Controller
             $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
 
             $id =  $this->input->post('id', TRUE);
-            if ($this->Mou_model->update_mou_by_id($id, $data) > 0) {
-                $data_response =  array(
-                    'status' => true,
-                    // 'token_csrf' => $this->security->get_csrf_hash(),
-                    'messege' => 'Edit Memorandum of Understanding (MOU) BERHASIL'
-                );
-            } else {
-                $data_response =  array(
-                    'status' => false,
-                    // 'token_csrf' => $this->security->get_csrf_hash(),
-                    'messege' => 'Edit Memorandum of Understanding (MOU) GAGAL'
-                );
-            }
+
+            $this->Mou_model->update_mou_by_id($id, $data);
+            $data_response =  array(
+                'status' => true,
+                // 'token_csrf' => $this->security->get_csrf_hash(),
+                'messege' => 'Edit Memorandum of Understanding (MOU) BERHASIL'
+            );
+
             echo json_encode($data_response);
         }
     }
@@ -354,7 +357,7 @@ class Mou extends CI_Controller
             $data['alamat'] = $this->input->post('alamat', TRUE);
             $data['durasi'] = $this->input->post('durasi', TRUE);
             $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
-          
+
             if ($this->Mou_model->insert_mou($data) > 0) {
                 $data_response =  array(
                     'status' => true,

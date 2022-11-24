@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <a href="<?php echo base_url('mou/tambah')?>" class="btn btn-success float-right" ><i class="far fa-plus-square"></i> Tambah MOU</a>
+                                <button type="button" onclick="btn_tambah()" class="btn btn-success float-right" ><i class="far fa-plus-square"></i> Tambah MOU</button>
                             </div>
                         </div>
 

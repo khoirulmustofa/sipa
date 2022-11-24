@@ -113,9 +113,9 @@
                                         <a href="<?php echo base_url('mou/detail?mou_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="<?php echo base_url('mou/edit?mou_id=') ?>${data}" title="Edit" class="btn btn-warning btn-sm">
+                                        <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
-                                        </a>
+                                        </button>
                                         <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
@@ -202,6 +202,53 @@
 
         return dateObject.toISOString().split('T')[0];
     };
+
+    function btn_tambah() {
+        swalLoading()
+        $.ajax({
+            url: '<?php echo base_url('mou/tambah') ?>',            
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {                    
+                    messegeWarning(respon.messege);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
+    }
+
+    function btn_edit(id) {
+        swalLoading()
+        $.ajax({
+            url: '<?php echo base_url('mou/edit') ?>',
+            data: {
+                id: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {                    
+                    messegeWarning(respon.messege);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
+    }
 
     function btn_delete(id) {
         Swal.fire({
