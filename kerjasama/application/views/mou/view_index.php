@@ -45,12 +45,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama Lembaga</th>
                                         <th>Periode</th>
-                                        <th>Negara</th>
-                                        <th>Provinsi</th>
-                                        <th>Kabupaten/Kota</th>
-                                        <th>Kecamatan</th>
-                                        <th>Kelurahan</th>
-                                        <th>ALamat</th>
+                                        <th>Negara</th>                                        
                                         <th>Durasi</th>
                                         <th>Akhir</th>
                                         <th>Status</th>

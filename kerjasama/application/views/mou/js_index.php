@@ -136,22 +136,7 @@
                     data: "periode",
                 }, {
                     data: "nama_negara",
-                },
-                {
-                    data: "province_name",
-                },
-                {
-                    data: "kota_kabupaten_nama",
-                },
-                {
-                    data: "kecamatan_nama",
-                },
-                {
-                    data: "kelurahan_nama",
-                },
-                {
-                    data: "alamat",
-                },
+                },                
                 {
                     data: "durasi",
                 },
