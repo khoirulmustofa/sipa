@@ -35,7 +35,7 @@ class Wilayah_indonesia extends CI_Controller
         // load model
         $this->load->model('Wilayah_indonesia_model');
         // leparan data provinsi_id
-        $provinsi_id =  $this->input->get('provinsi_id', TRUE);
+        $provinsi_id =  $this->input->get('master_provinsi_id', TRUE);
         // ambil query dari model Wilayah_indonesia_model
         $kota_kabupaten_result =  $this->Wilayah_indonesia_model->get_master_kota_kabupaten_by_provinsi_id($provinsi_id)->result();
 
@@ -50,12 +50,12 @@ class Wilayah_indonesia extends CI_Controller
         echo json_encode($data_response);
     }
 
-    public function getKecamatan()
+    public function get_kecamatan()
     {
         // load model
         $this->load->model('Wilayah_indonesia_model');
         // leparan data kota_kabupaten_id
-        $kota_kabupaten_id =  $this->input->get('kabupaten_kota_id', TRUE);
+        $kota_kabupaten_id =  $this->input->get('master_kota_kabupaten_id', TRUE);
         // ambil query dari model Wilayah_indonesia_model
         $kecamatan_result =  $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id($kota_kabupaten_id)->result();
 
@@ -70,12 +70,12 @@ class Wilayah_indonesia extends CI_Controller
         echo json_encode($data_response);
     }
 
-    public function getKelurahan()
+    public function get_kelurahan()
     {
         // load model
         $this->load->model('Wilayah_indonesia_model');
         // leparan data kota_kabupaten_id
-        $kecamatan_id =  $this->input->get('kecamatan_id', TRUE);
+        $kecamatan_id =  $this->input->get('master_kecamatan_id', TRUE);
         // ambil query dari model Wilayah_indonesia_model      
         $kelurahan_result =  $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id($kecamatan_id)->result();
 

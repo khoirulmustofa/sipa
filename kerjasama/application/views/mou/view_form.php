@@ -128,18 +128,18 @@ echo form_open_multipart($action, $attribute);
         $("#provinsi_id").change(function() {
             let provinsi_id = $('#provinsi_id').val();
             $.ajax({
-                url: '<?php echo base_url('tu/kerja_sama/get_kota_kabupaten') ?>',
+                url: '<?php echo base_url('wilayah_indonesia/get_kota_kabupaten') ?>',
                 data: {
-                    provinsi_id: provinsi_id
+                    master_provinsi_id: provinsi_id
                 },
                 type: "GET",
                 dataType: "JSON",
                 success: function(respon) {
                     Swal.close();
                     if (respon.status) {
-                        $('#kabupaten_kota_id').html(respon.kota_kabupaten_html);
+                        $('#kota_kabupaten_id').html(respon.kota_kabupaten_html);
                         if (provinsi_id == "") {
-                            $('#kabupaten_kota_id').html('<option value="">Pilih Kota Kabupaten</option>');
+                            $('#kota_kabupaten_id').html('<option value="">Pilih Kota Kabupaten</option>');
                         }
                     } else {
                         Swal.fire({
@@ -159,12 +159,12 @@ echo form_open_multipart($action, $attribute);
         });
 
         // Load Kecamatan
-        $("#kabupaten_kota_id").change(function() {
-            let kabupaten_kota_id = $('#kabupaten_kota_id').val();
+        $("#kota_kabupaten_id").change(function() {
+            let kabupaten_kota_id = $('#kota_kabupaten_id').val();
             $.ajax({
-                url: '<?php echo base_url('tu/kerja_sama/get_kecamatan') ?>',
+                url: '<?php echo base_url('wilayah_indonesia/get_kecamatan') ?>',
                 data: {
-                    kabupaten_kota_id: kabupaten_kota_id
+                    master_kota_kabupaten_id: kabupaten_kota_id
                 },
                 type: "GET",
                 dataType: "JSON",
@@ -196,9 +196,9 @@ echo form_open_multipart($action, $attribute);
         $("#kecamatan_id").change(function() {
             let kecamatan_id = $('#kecamatan_id').val();
             $.ajax({
-                url: '<?php echo base_url('tu/kerja_sama/get_kelurahan') ?>',
+                url: '<?php echo base_url('wilayah_indonesia/get_kelurahan') ?>',
                 data: {
-                    kecamatan_id: kecamatan_id
+                    master_kecamatan_id: kecamatan_id
                 },
                 type: "GET",
                 dataType: "JSON",

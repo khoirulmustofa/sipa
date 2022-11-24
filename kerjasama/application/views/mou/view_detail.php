@@ -80,6 +80,12 @@
                                             </span>
                                             Akan Berakhir
                                         </button>
+                                        <a href="<?php echo base_url('mou/perpanjang?mou_id=' . $id) ?>" class="btn btn-success">
+                                            <span class="btn-label">
+                                                <i class="fa fa-check"></i>
+                                            </span>
+                                            Perpanjang
+                                        </a>
                                     <?php   } else if ($tanggal_akhir > $tanggal_sekarang) { ?>
                                         <button class="btn btn-default">
                                             <span class="btn-label">
@@ -87,12 +93,7 @@
                                             </span>
                                             Berakhir
                                         </button>
-                                        <a href="<?php echo base_url('mou/perpanjang?mou_id=' . $id) ?>" class="btn btn-success">
-                                            <span class="btn-label">
-                                                <i class="fa fa-check"></i>
-                                            </span>
-                                            Perpanjang
-                                        </a>
+                                       
                                     <?php  } else { ?>
                                         <button class="btn btn-success">
                                             <span class="btn-label">
