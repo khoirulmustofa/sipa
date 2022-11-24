@@ -44,10 +44,10 @@ echo form_open_multipart($action, $attribute);
             <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" placeholder="Masukan Tanggal ...">
         </div>
         <div class="form-group">
-            <label for="nama_lembaga_mitra">Nama Lembaga Mitra</label>
+            <label for="nama_lembaga_mitra_moa">Nama Lembaga Mitra</label>
             <div class="tambah_mitra_wrap">
                 <button class="btn btn-success tambah_mitra">Tambah</button>
-                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra[]" class="form-control"  placeholder="Nama Lembaga Mitra ..."></div>
+                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control"  placeholder="Nama Lembaga Mitra ..."></div>
             </div>           
         </div>
         <div class="form-group">
@@ -102,8 +102,8 @@ echo form_open_multipart($action, $attribute);
             </div>
         </div>
         <div class="form-group">
-            <label for="alamat">Alamat</label>
-            <textarea class="form-control" name="alamat" id="alamat" cols="30" rows="5" placeholder="Masukan Alamat ..."><?= $alamat ?></textarea>
+            <label for="alamat_moa">Alamat</label>
+            <textarea class="form-control" name="alamat_moa" id="alamat_moa" cols="30" rows="5" placeholder="Masukan Alamat ..."><?= $alamat_moa ?></textarea>
         </div>
         <div class="form-group">
             <label for="durasi">Durasi</label>
@@ -165,7 +165,7 @@ echo form_open_multipart($action, $attribute);
 
         $(".tambah_mitra").click(function(e) {
             e.preventDefault();
-            $(".tambah_mitra_wrap").append('<div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra[]" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>');
+            $(".tambah_mitra_wrap").append('<div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>');
         });
 
         $(".tambah_mitra_wrap").on("click", ".btn_hapus_mitra", function(e) {

@@ -104,10 +104,7 @@
                                     <?php } ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td><a href="<?php echo base_url('mou/edit?mou_id=') . $id ?>" class="btn btn-primary pull-right"><i class="far fa-edit"></i> Edit</a></td>
-                            </tr>
+                           
                         </table>
                     </div>
                     <div class="card-action">

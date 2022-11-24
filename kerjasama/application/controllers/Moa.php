@@ -52,13 +52,13 @@ class Moa extends CI_Controller
         $data['kategori_moa'] = set_value('kategori_moa');
         $data['tingkat_moa'] = set_value('tingkat_moa');
         $data['tanggal'] = set_value('tanggal');
-        $data['nama_lembaga_mitra'] = set_value('nama_lembaga_mitra');
+        $data['nama_lembaga_mitra_moa'] = set_value('nama_lembaga_mitra_moa');
         $data['negara_id'] = set_value('negara_id');
         $data['provinsi_id'] = set_value('negara_id');
         $data['kota_kabupaten_id'] = set_value('negara_id');
         $data['kecamata_id'] = set_value('negara_id');
         $data['kelurahan_id'] = set_value('negara_id');
-        $data['alamat'] = set_value('alamat');
+        $data['alamat_moa'] = set_value('alamat_moa');
         $data['durasi'] = set_value('durasi');
 
         $data['mou_result'] = $this->Mou_model->getMouResult()->result();
@@ -86,7 +86,7 @@ class Moa extends CI_Controller
         $this->form_validation->set_rules('kategori_moa', 'Kategori', 'trim|required');
         $this->form_validation->set_rules('tingkat_moa', 'Tingkatan', 'trim|required');
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'trim|required');
-        $this->form_validation->set_rules('nama_lembaga_mitra[]', 'nama_lembaga_mitra', 'trim|required');
+        $this->form_validation->set_rules('nama_lembaga_mitra_moa[]', 'Nama Lembaga Mitra', 'trim|required');
         $this->form_validation->set_rules('negara_id', 'Negara', 'trim|required');
         if ($this->input->post('negara_id', TRUE) == 102) {
             $this->form_validation->set_rules('provinsi_id', 'Provinsi', 'trim|required');
@@ -94,7 +94,7 @@ class Moa extends CI_Controller
             $this->form_validation->set_rules('kecamatan_id', 'Kota Kecamatan', 'trim|required');
             $this->form_validation->set_rules('kelurahan_id', 'Kelurhan / Desa', 'trim|required');
         }
-        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('alamat_moa', 'Alamat', 'trim|required');
         $this->form_validation->set_rules('durasi', 'Durasi', 'trim|required');
         $this->form_validation->set_rules('kode_prodi[]', 'Pilih Prodi', 'trim|required');
 
@@ -143,19 +143,19 @@ class Moa extends CI_Controller
                 // 'token_csrf' => $this->security->get_csrf_hash(),
                 'messege' => validation_errors(),
             );
-            echo json_encode($data_response);
+           echo json_encode($data_response);
         } else {
             $data['mou_id'] = $this->input->post('mou_id', TRUE);
             $data['kategori_moa'] = $this->input->post('kategori_moa', TRUE);
             $data['tingkat_moa'] = $this->input->post('tingkat_moa', TRUE);
             $data['tanggal'] = $this->input->post('tanggal', TRUE);
-            $data['nama_lembaga_mitra'] = implode("#", $this->input->post('nama_lembaga_mitra[]', TRUE));
+            $data['nama_lembaga_mitra_moa'] = implode("#", $this->input->post('nama_lembaga_mitra_moa[]', TRUE));
             $data['negara_id'] = $this->input->post('negara_id', TRUE);
             $data['provinsi_id'] = $this->input->post('provinsi_id', TRUE);
             $data['kota_kabupaten_id'] = $this->input->post('kota_kabupaten_id', TRUE);
             $data['kecamatan_id'] = $this->input->post('kecamatan_id', TRUE);
             $data['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
-            $data['alamat'] = $this->input->post('alamat', TRUE);
+            $data['alamat_moa'] = $this->input->post('alamat_moa', TRUE);
             $data['durasi'] = $this->input->post('durasi', TRUE);
             $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
             $data['kode_prodi'] = implode("#", $this->input->post('kode_prodi[]', TRUE));
