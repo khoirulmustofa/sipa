@@ -60,16 +60,51 @@ echo form_open_multipart($action, $attribute);
             <label for="dosen_terlibat[]">Dosen Yang Terlibat</label>
             <div class="tambah_dosen_wrap">
                 <button class="btn btn-success tambah_dosen">Tambah</button>
-                <div class="pb-1 pt-1">
-                    <select class="form-control" name="dosen_terlibat[]">
-                        <option value="">--Pilih Dosen--</option>
-                        <?php foreach ($dosen_result as $key => $value) { ?>
-                            <option value="<?php echo $value->npk ?>">
-                                <?php echo $value->nama_dosen ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
+
+                <?php
+                if ($dosen_terlibat != "") {
+                    $array_dosen = explode('#', $dosen_terlibat);
+
+                    if (count($array_dosen) > 0) {
+                        foreach ($array_dosen as $key => $value) { ?>
+                            <?php if ($array_dosen[0] == $value) { ?>
+                                <div class="pb-1 pt-1">
+                                    <select class="form-control" name="dosen_terlibat[]">
+                                        <option value="">--Pilih Dosen--</option>
+                                        <?php foreach ($dosen_result as $key3 => $value3) { ?>
+                                            <option value="<?php echo $value3->npk ?>" <?php echo $value3->npk == $value ? "selected" : "" ?>>
+                                                <?php echo $value3->nama_dosen ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } else { ?>
+                                <div class="input-group pb-1">
+                                    <select class="form-control" name="dosen_terlibat[]">
+                                        <option value="">--Pilih Dosen--</option>
+                                        <?php foreach ($dosen_result as $key2 => $value2) { ?>
+                                            <option value="<?php echo $value2->npk ?>" <?php echo $value2->npk == $value ? "selected" : "" ?>>
+                                                <?php echo $value2->nama_dosen ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                    <span><a href="#" class="btn_hapus_mitra"> Hapus</a></span>
+                                </div>
+                            <?php } ?>
+                        <?php  } ?>
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="pb-1 pt-1">
+                        <select class="form-control" name="dosen_terlibat[]">
+                            <option value="">--Pilih Dosen--</option>
+                            <?php foreach ($dosen_result as $key => $value) { ?>
+                                <option value="<?php echo $value->npk ?>">
+                                    <?php echo $value->nama_dosen ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <div class="form-group">

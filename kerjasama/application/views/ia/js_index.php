@@ -195,7 +195,7 @@
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
-                    $(".modal-dialog").addClass("modal-xl");   
+                    $(".modal-dialog").addClass("modal-xl");
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
@@ -219,8 +219,8 @@
             dataType: "JSON",
             success: function(respon) {
                 Swal.close();
-                if (respon.status) { 
-                    $(".modal-dialog").addClass("modal-xl");                  
+                if (respon.status) {
+                    $(".modal-dialog").addClass("modal-xl");
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
@@ -235,35 +235,21 @@
     }
 
     function btn_edit(id) {
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
         $.ajax({
-            url: '<?php echo base_url('tu/kerja_sama/edit_kerja_sama') ?>',
+            url: '<?php echo base_url('ia/update') ?>',
             data: {
-                id_kerjasama: id
+                id: id
             },
             type: "GET",
             dataType: "JSON",
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
+                    $(".modal-dialog").addClass("modal-xl");
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
+                    messegeWarning(respon.messege);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {

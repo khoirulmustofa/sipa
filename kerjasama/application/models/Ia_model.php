@@ -22,6 +22,13 @@ class Ia_model extends CI_Model
         return  $this->db->affected_rows();
     }
 
+    public function update_ia_by_id($id = "", $data = array())
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_ia', $data);
+        return  $this->db->affected_rows();
+    }
+
     public function get_ia_by_id($id = "")
     {
         $this->db->select("*");
