@@ -46,4 +46,12 @@ class Moa_model extends CI_Model
         $this->db->where("a.id", $id);
         return  $this->db->get();
     }
+
+    public function get_moa()
+    {
+        $this->db->select('*');
+        $this->db->from("tbl_moa");
+        $this->db->order_by("tanggal");
+        return  $this->db->get();
+    }
 }

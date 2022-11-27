@@ -161,6 +161,12 @@
                                     <p>Memorandum of Agreement (MOA)</p>
                                 </a>
                             </li>
+                            <li class="nav-item<?php echo $menu == "menu_ia" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('ia') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Implementation Arrangement (IA)</p>
+                                </a>
+                            </li>
                         <?php } ?>
 
                         <?php if ($_SESSION['status_login'] == "Prodi") { ?>

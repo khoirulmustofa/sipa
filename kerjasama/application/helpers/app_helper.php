@@ -32,6 +32,11 @@ function tgl_indo($tgl)
     return $tanggal . ' ' . $bulan . ' ' . $tahun;
 }
 
+function set_bulan_tahun($date)
+{
+    return date("F Y",strtotime($date));
+}
+
 function getBulann($bln)
 {
     switch ($bln) {

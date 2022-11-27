@@ -13,11 +13,12 @@ class Latihan_page extends CI_Controller
 
     public function index()
     {
-        $data['menu'] = 'menu_latihan';
-        $data['title'] = "Daftar Latihan Page";
-        $data['load_css'] = '';
-        $data['load_js'] = '';
+        echo date("F-Y",strtotime("2022-11-15"));
+        // $data['menu'] = 'menu_latihan';
+        // $data['title'] = "Daftar Latihan Page";
+        // $data['load_css'] = '';
+        // $data['load_js'] = '';
 
-        $this->template->load('_template/main_template', 'latihan_page/view_index', $data);
+        // $this->template->load('_template/main_template', 'latihan_page/view_index', $data);
     }
 }
