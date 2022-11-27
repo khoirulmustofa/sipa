@@ -107,20 +107,20 @@
                     render: function(data, type, row, meta) {
 
                         return `<div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="<?= base_url('ia/detail?moa_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
+                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </a>
-                                        <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
+                                        </button>
+                                        <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
-                                        <button type="button" onclick="btnDelete('${data}')" title="Delete" class="btn btn-danger btn-sm">
+                                        <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </div>`;
                     }
                 },
                 {
-                    data: "tingkat_moa",
+                    data: "tingkat_ia",
                 },
                 {
                     data: "judul_kegiatan",
@@ -187,8 +187,7 @@
         return dateObject.toISOString().split('T')[0];
     };
 
-    function btnAddIA() {
-        swalLoading();
+    function btn_create() {
         $.ajax({
             url: '<?php echo base_url('ia/create') ?>',
             type: "GET",
@@ -196,6 +195,7 @@
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
+                    $(".modal-dialog").addClass("modal-xl");   
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
@@ -209,18 +209,18 @@
         });
     }
 
-    function btnDetail(id) {
-        swalLoading();
+    function btn_detail(id) {
         $.ajax({
             url: '<?php echo base_url('ia/detail') ?>',
             data: {
-                moa_id: id
+                id: id
             },
             type: "GET",
             dataType: "JSON",
             success: function(respon) {
                 Swal.close();
-                if (respon.status) {
+                if (respon.status) { 
+                    $(".modal-dialog").addClass("modal-xl");                  
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {

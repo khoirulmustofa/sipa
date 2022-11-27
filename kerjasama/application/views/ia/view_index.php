@@ -9,7 +9,7 @@
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
                     <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
-                        <button type="button" class="btn btn-success" onclick="btnAddIA()"><i class="far fa-plus-square"></i> Tambah IA</button>
+                        <button type="button" class="btn btn-success" onclick="btn_create()"><i class="far fa-plus-square"></i> Tambah IA</button>
                     <?php } ?>
                 </div>
             </div>
@@ -66,22 +66,3 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_preview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content" style="height: 100%">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Preview Dokumen</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="view_modal_preview" style="width: 100%; "></div>
-                <div id="view_modal_button"></div>
-            </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -24,20 +24,20 @@ echo form_open_multipart($action, $attribute);
         </div>
         <div class="form-group">
             <label>Kategori</label>
-            <select class="form-control" name="kategori_moa" id="kategori_moa">
+            <select class="form-control" name="kategori_ia" id="kategori_ia">
                 <option value="">--Pilih kategori--</option>
-                <option value="Pendidikan/Pengajaran" <?php echo $kategori_moa == 'Pendidikan/Pengajaran' ? 'selected' : ''; ?>>Pendidikan/Pengajaran</option>
-                <option value="Penelitian" <?php echo $kategori_moa == 'Penelitian' ? 'selected' : ''; ?>>Penelitian</option>
-                <option value="Pengabdian Masyarakat" <?php echo $kategori_moa == 'Pengabdian Masyarakat' ? 'selected' : ''; ?>>Pengabdian Masyarakat</option>
+                <option value="Pendidikan/Pengajaran" <?php echo $kategori_ia == 'Pendidikan/Pengajaran' ? 'selected' : ''; ?>>Pendidikan/Pengajaran</option>
+                <option value="Penelitian" <?php echo $kategori_ia == 'Penelitian' ? 'selected' : ''; ?>>Penelitian</option>
+                <option value="Pengabdian Masyarakat" <?php echo $kategori_ia == 'Pengabdian Masyarakat' ? 'selected' : ''; ?>>Pengabdian Masyarakat</option>
             </select>
         </div>
         <div class="form-group">
             <label>Tingkatan</label>
-            <select class="form-control" name="tingkat_moa" id="tingkat_moa">
+            <select class="form-control" name="tingkat_ia" id="tingkat_ia">
                 <option value="">--Pilih Tingkatan--</option>
-                <option value="Wilayah" <?php echo $tingkat_moa == 'Wilayah' ? 'selected' : ''; ?>>Wilayah</option>
-                <option value="Nasional" <?php echo $tingkat_moa == 'Nasional' ? 'selected' : ''; ?>>Nasional</option>
-                <option value="Internasional" <?php echo $tingkat_moa == 'Internasional' ? 'selected' : ''; ?>>Internasional</option>
+                <option value="Wilayah" <?php echo $tingkat_ia == 'Wilayah' ? 'selected' : ''; ?>>Wilayah</option>
+                <option value="Nasional" <?php echo $tingkat_ia == 'Nasional' ? 'selected' : ''; ?>>Nasional</option>
+                <option value="Internasional" <?php echo $tingkat_ia == 'Internasional' ? 'selected' : ''; ?>>Internasional</option>
             </select>
         </div>
         <div class="form-group">
@@ -71,7 +71,18 @@ echo form_open_multipart($action, $attribute);
                     </select>
                 </div>
             </div>
-
+        </div>
+        <div class="form-group">
+            <label for="dokumen1">Dokumen 1</label>
+            <input type="file" class="form-control" id="dokumen1" name="dokumen1">
+        </div>
+        <div class="form-group">
+            <label for="dokumen2">Dokumen 2</label>
+            <input type="file" class="form-control" id="dokumen2" name="dokumen2">
+        </div>
+        <div class="form-group">
+            <label for="dokumen3">Dokumen 3</label>
+            <input type="file" class="form-control" id="dokumen3" name="dokumen3">
         </div>
     </div>
     <div class="card-footer">
@@ -107,7 +118,7 @@ echo form_open_multipart($action, $attribute);
             console.log("Paren ", $(this).parent().parent());
             $(this).parent().parent().remove();
             xx--;
-            
+
         });
 
         $('form#my_form').on('submit', function(e) {
