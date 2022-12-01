@@ -45,37 +45,48 @@ class Moa extends CI_Controller
         $this->load->model('Wilayah_indonesia_model');
         $this->load->model('Prodi_model');
 
-        $data['menu'] = "menu_master";
-        $data['title'] = 'Tambah Memorandum of Agreement (MOA)';
-        $data['action'] = "moa/create_action";
-        $data['id'] = set_value('id');
-        $data['mou_id'] = set_value('mou_id');
-        $data['kategori_moa'] = set_value('kategori_moa');
-        $data['tingkat_moa'] = set_value('tingkat_moa');
-        $data['tanggal'] = set_value('tanggal');
-        $data['nama_lembaga_mitra_moa'] = set_value('nama_lembaga_mitra_moa');
-        $data['negara_id'] = set_value('negara_id');
-        $data['provinsi_id'] = set_value('negara_id');
-        $data['kota_kabupaten_id'] = set_value('negara_id');
-        $data['kecamata_id'] = set_value('negara_id');
-        $data['kelurahan_id'] = set_value('negara_id');
-        $data['alamat_moa'] = set_value('alamat_moa');
-        $data['durasi'] = set_value('durasi');
+        $model_row = $this->Mou_model->get_mou()->result();
+        if (count($model_row)> 0) {
+            $data['menu'] = "menu_master";
+            $data['title'] = 'Tambah Memorandum of Agreement (MOA)';
+            $data['action'] = "moa/create_action";
+            $data['id'] = set_value('id');
+            $data['mou_id'] = set_value('mou_id');
+            $data['kategori_moa'] = set_value('kategori_moa');
+            $data['tingkat_moa'] = set_value('tingkat_moa');
+            $data['tanggal'] = set_value('tanggal');
+            $data['nama_lembaga_mitra_moa'] = set_value('nama_lembaga_mitra_moa');
+            $data['negara_id'] = set_value('negara_id');
+            $data['provinsi_id'] = set_value('negara_id');
+            $data['kota_kabupaten_id'] = set_value('negara_id');
+            $data['kecamata_id'] = set_value('negara_id');
+            $data['kelurahan_id'] = set_value('negara_id');
+            $data['alamat_moa'] = set_value('alamat_moa');
+            $data['durasi'] = set_value('durasi');
+    
+            $data['mou_result'] = $this->Mou_model->getMouResult()->result();
+            $data['negara_result'] = $this->Wilayah_indonesia_model->get_master_negara()->result();
+            $data['provinsi_result'] = $this->Wilayah_indonesia_model->get_master_provinsi()->result();
+            $data['kota_kabupaten_result'] = $this->Wilayah_indonesia_model->get_master_kota_kabupaten_by_provinsi_id("")->result();
+            $data['kecamatan_result'] = $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id("")->result();
+            $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id("")->result();
+            $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
+    
+            $data_response =  array(
+                'status' => true,
+                // 'token_csrf' => $this->security->get_csrf_hash(),
+                'view_modal_form' => $this->load->view('moa/view_form', $data, true)
+            );
+            echo json_encode($data_response);
+        }else {
+            $data_response =  array(
+                'status' => true,
+                'messege' => 'Data Memorandum of Understanding (MOU) Belum ada'
+            );
+            echo json_encode($data_response);
+        }
 
-        $data['mou_result'] = $this->Mou_model->getMouResult()->result();
-        $data['negara_result'] = $this->Wilayah_indonesia_model->get_master_negara()->result();
-        $data['provinsi_result'] = $this->Wilayah_indonesia_model->get_master_provinsi()->result();
-        $data['kota_kabupaten_result'] = $this->Wilayah_indonesia_model->get_master_kota_kabupaten_by_provinsi_id("")->result();
-        $data['kecamatan_result'] = $this->Wilayah_indonesia_model->get_master_kecamatan_by_kota_kabupaten_id("")->result();
-        $data['kelurahan_result'] = $this->Wilayah_indonesia_model->get_master_kelurahan_by_kecamatan_id("")->result();
-        $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
-
-        $data_response =  array(
-            'status' => true,
-            // 'token_csrf' => $this->security->get_csrf_hash(),
-            'view_modal_form' => $this->load->view('moa/view_form', $data, true)
-        );
-        echo json_encode($data_response);
+        
     }
 
     public function create_action()
