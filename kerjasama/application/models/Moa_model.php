@@ -47,17 +47,18 @@ class Moa_model extends CI_Model
     }
 
 
-    public function getMoaDetailById($id = "")
+    public function get_moa_detail_by_id($id = "")
     {
         // $this->db->select("a.id,a.mou_id,a.kategori_moa,a.tingkat_moa,a.tanggal,a.nama_lembaga_mitra_moa,a.negara_id,a.provinsi_id,a.kota_kabupaten_id,a.kecamatan_id,a.kelurahan_id,a.alamat,a.durasi,a.tanggal_akhir,a.dokumen1,a.dokumen2,a.dokumen3,a.kode_prodi");
         // $this->db->select("c.nama_negara,d.province_name,e.kota_kabupaten_nama,f.kecamatan_nama");
-        $this->db->select("a.*,b.*,c.*,d.*,e.*,f.*");
+        $this->db->select("a.*,b.*,c.*,d.*,e.*,f.*,g.*");
         $this->db->from("tbl_moa as a");
         $this->db->join("tbl_mou as b", "b.id = a.mou_id", "left");
         $this->db->join("master_negara as c", "c.id = a.negara_id", "left");
         $this->db->join("master_provinsi as d", "d.master_provinsi_id = a.provinsi_id", "left");
         $this->db->join("master_kota_kabupaten as e", "e.master_kota_kabupaten_id = a.kota_kabupaten_id", "left");
         $this->db->join("master_kecamatan as f", "f.master_kecamatan_id = a.kecamatan_id", "left");
+        $this->db->join("master_kelurahan as g", "g.master_kelurahan_id = a.kelurahan_id", "left");
         $this->db->where("a.id", $id);
         return  $this->db->get();
     }

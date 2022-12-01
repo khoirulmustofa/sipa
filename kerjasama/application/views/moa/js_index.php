@@ -118,9 +118,9 @@
                         }
                         return `<div class="btn-group" role="group" aria-label="Basic example">
                                         ${btnPerpanjang}
-                                        <a href="<?= base_url('moa/detail?moa_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
+                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </a>
+                                        </button>
                                         <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
@@ -161,6 +161,26 @@
                     data: "tanggal_akhir",
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
+                    }
+                },
+                {
+                    data: "tanggal_akhir",
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, row, meta) {
+                        let date_sekarang = new Date();
+                        let tanggal_akhir = new Date(row['tanggal_akhir']);
+                        let taggal_6_bulan = addMonths(date_sekarang, 3)
+                        let result = ``;
+                        if (tanggal_akhir > date_sekarang && tanggal_akhir <
+                            new Date(taggal_6_bulan)) {
+                            result = "<div class='berkedip'>Akan Berakhir</div>";
+                        } else if (tanggal_akhir < date_sekarang) {
+                            result = "Berakhir";
+                        } else {
+                            result = "Aktif";
+                        }
+                        return result;
                     }
                 }
             ],
@@ -234,18 +254,19 @@
         });
     }
 
-    function btnDetail(id) {
+    function btn_detail(id) {
         swalLoading();
         $.ajax({
             url: '<?php echo base_url('moa/detail') ?>',
             data: {
-                moa_id: id
+                id: id
             },
             type: "GET",
             dataType: "JSON",
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
+                    $('.modal-dialog').addClass('modal-xl');
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
@@ -271,6 +292,7 @@
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
+                    $('.modal-dialog').addClass('modal-xl');
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {

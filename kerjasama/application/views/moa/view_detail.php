@@ -1,183 +1,160 @@
-<?php $CI = &get_instance(); ?>
-<div class="content">
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h1 class="text-white pb-2 fw-bold"><?= $title ?></h1>
-                    <h5 class="text-white op-7 mb-2">
-                        Fakultas Teknik Universitas Islam Riau</h5>
-                </div>
-
-            </div>
-        </div>
+<?php
+$attribute = array('role' => 'form', 'id' => 'my_form');
+echo form_open_multipart($action, $attribute);
+?>
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-file-alt"></i> <?php echo $title ?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-    <div class="page-inner mt--5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <table class="table">
-                                    <tr>
-                                        <th>Dokumen MUO</th>
-                                        <td>:</td>
-                                        <td>
-                                            <?php
-                                            $CI->load->model('Mou_model');
-                                            $mou_row =  $CI->Mou_model->getMouById($moa_row->mou_id)->row();
-                                            ?>
-                                            <button onclick="btnShowMOA()" class="btn btn-info">Lihat</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Kategori</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->kategori_moa ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tanggak MOA</th>
-                                        <td>:</td>
-                                        <td><?= tgl_indo($moa_row->tanggal) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tanggal MOA Berakhir</th>
-                                        <td>:</td>
-                                        <td><?= tgl_indo($moa_row->tanggal_akhir) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Kecamata</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->kecamatan_nama ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Kabupaten/Kota</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->kota_kabupaten_nama ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Provinsi</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->province_name ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Negara</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->nama_negara ?></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table class="table">
-                                    <tr>
-                                        <th>Lembaga Mitra</th>
-                                        <td>:</td>
-                                        <td>
-                                            <?php $arr_nama_lembaga_mitra = explode("#", $moa_row->nama_lembaga_mitra_moa);
-
-                                            $result = "";
-                                            $no = 1;
-                                            foreach ($arr_nama_lembaga_mitra as $key => $value) {
-                                                $result = $result . $no++ . ". " . $value . "<br>";
-                                            }
-                                            echo $result;
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Alamat</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->alamat_moa ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Dokumen Pendukung 1</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->dokumen1 ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Dokumen Pendukung 2</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->dokumen2 ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Dokumen Pendukung 3</th>
-                                        <td>:</td>
-                                        <td><?= $moa_row->dokumen3 ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ditujukan Kepada Prodi</th>
-                                        <td>:</td>
-                                        <td>
-                                            <?php
-
-                                            $CI->load->model('Prodi_model');
-                                            $prodi_result =  $CI->Prodi_model->getProdiByIdArr(explode("#", $moa_row->kode_prodi))->result();
-
-                                            $result1 = "";
-                                            $no1 = 1;
-                                            foreach ($prodi_result as $key => $value) {
-                                                $result1 = $result1 . $no1++ . ". " . $value->nama_prodi . "<br>";
-                                            }
-                                            echo $result1;
-                                            ?>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-header">
-                        <h4 class="card-title">TABLE IMPLEMANTASI ARANGEMENT (AI) PRODI</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="myDatatables" class="display table table-striped table-hover text-nowrap" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Prodi</th>
-                                        <th>Tingkatan</th>
-                                        <th>Judul Kegiatan</th>
-                                        <th>Manfaat</th>
-                                        <th>Awal kegiatan</th>
-                                        <th>Akhir Kegiatan</th>
-                                        <th>Durasi</th>
-                                        <th>Dosen Yang Terlibat</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="modal-body">
+        <table class="table">
+            <tr>
+                <td>MOU</td>
+                <td><?php echo $moa_row->nama_lembaga_mitra; ?></td>
+            </tr>
+            <tr>
+                <td>Kategori Moa</td>
+                <td><?php $arr_kategori_moa = explode('#', $moa_row->kategori_moa);
+                    foreach ($arr_kategori_moa as $key => $value) {
+                        echo  $value . "<br>";
+                    }
+                    ?></td>
+            </tr>
+            <tr>
+                <td>Tingkat Moa</td>
+                <td><?php echo $moa_row->tingkat_moa; ?></td>
+            </tr>
+            <tr>
+                <td>Tanggal</td>
+                <td><?php echo tgl_indo($moa_row->tanggal) ?></td>
+            </tr>
+            <tr>
+                <td>Nama Lembaga Mitra Moa</td>
+                <td>
+                    <?php $arr_nama_lembaga_mitra_moa = explode('#', $moa_row->nama_lembaga_mitra_moa);
+                    foreach ($arr_nama_lembaga_mitra_moa as $key => $value) {
+                        echo  $value . "<br>";
+                    }
+                    ?></td>
+            </tr>
+            <tr>
+                <td>Negara Id</td>
+                <td><?php echo $moa_row->nama_negara; ?></td>
+            </tr>
+            <tr>
+                <td>Provinsi Id</td>
+                <td><?php echo $moa_row->province_name; ?></td>
+            </tr>
+            <tr>
+                <td>Kota Kabupaten Id</td>
+                <td><?php echo $moa_row->kota_kabupaten_nama; ?></td>
+            </tr>
+            <tr>
+                <td>Kecamatan Id</td>
+                <td><?php echo $moa_row->kecamatan_nama; ?></td>
+            </tr>
+            <tr>
+                <td>Kelurahan Id</td>
+                <td><?php echo $moa_row->kelurahan_nama; ?></td>
+            </tr>
+            <tr>
+                <td>Alamat Moa</td>
+                <td><?php echo $moa_row->alamat_moa; ?></td>
+            </tr>
+            <tr>
+                <td>Durasi</td>
+                <td><?php echo $moa_row->durasi; ?></td>
+            </tr>
+            <tr>
+                <td>Tanggal Akhir</td>
+                <td><?php echo tgl_indo($moa_row->tanggal_akhir_moa); ?></td>
+            </tr>
+            <tr>
+                <td>Dokumen1</td>
+                <td><?php
+                    if ($moa_row->dokumen1 != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen1) ?>" type="" style="width: 100%;" height="720px">
+                    <?php } ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Dokumen2</td>
+                <td><?php
+                    if ($moa_row->dokumen2 != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen2) ?>" type="" style="width: 100%;" height="720px">
+                    <?php } ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Dokumen3</td>
+                <td><?php
+                    if ($moa_row->dokumen3 != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen3) ?>" type="" style="width: 100%;" height="720px">
+                    <?php } ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Nama Dokumen1</td>
+                <td><?php echo $moa_row->nama_dokumen1; ?></td>
+            </tr>
+            <tr>
+                <td>Nama Dokumen2</td>
+                <td><?php echo $moa_row->nama_dokumen2; ?></td>
+            </tr>
+            <tr>
+                <td>Nama Dokumen3</td>
+                <td><?php echo $moa_row->nama_dokumen3; ?></td>
+            </tr>
+            <tr>
+                <td>Kode Prodi</td>
+                <td><?php $arr_kode_prodi = explode('#', $moa_row->kode_prodi);
+                    foreach ($prodi_result as $key => $value) {
+                        echo in_array($value->kode_prodi, $arr_kode_prodi) ? $value->nama_prodi : " ";
+                        echo "<br>";
+                    }
+                    ?></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td id="status_moa"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="card-footer">
+        <input type="hidden" name="id" value="<?= $id ?>">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
+        <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
 </div>
+<embed src="" type="">
+<?php echo form_close() ?>
 
-<div class="modal fade" id="modal_dok_mou" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="far fa-file-alt"></i> Detail Dok MOU</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <iframe src="<?php echo base_url('assets/doc_mou/' . $mou_row->dokumen) ?>" title="description" style="width: 100%; height: 720px;"></iframe>
-            </div>
-            <div class="card-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
-    function btnShowMOA() {
-        $('#modal_dok_mou').modal('show');
+    $(document).ready(function() {
+
+        load_status();
+
+
+    });
+
+    function load_status() {
+        let date_sekarang = new Date();
+        let tanggal_akhir = new Date('<?php echo $moa_row->tanggal_akhir_moa ?>');
+        let taggal_6_bulan = addMonths(date_sekarang, 3);
+        let result = ``;
+        if (tanggal_akhir > date_sekarang && tanggal_akhir <
+            new Date(taggal_6_bulan)) {
+            result = "<div class='berkedip'>Akan Berakhir</div>";
+        } else if (tanggal_akhir < date_sekarang) {
+            result = "Berakhir";
+        } else {
+            result = "Aktif";
+        }
+        $('#status_moa').html(result);
     }
 </script>

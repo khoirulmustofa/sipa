@@ -50,6 +50,7 @@
                                         <th>Tingkatan</th>
                                         <th>Awal MOA</th>
                                         <th>Akhir MOA</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                             </table>

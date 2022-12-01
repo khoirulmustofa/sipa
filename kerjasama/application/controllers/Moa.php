@@ -161,7 +161,7 @@ class Moa extends CI_Controller
             $data['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
             $data['alamat_moa'] = $this->input->post('alamat_moa', TRUE);
             $data['durasi'] = $this->input->post('durasi', TRUE);
-            $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
+            $data['tanggal_akhir_moa'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
             $data['kode_prodi'] = implode("#", $this->input->post('kode_prodi[]', TRUE));
 
             if ($this->Moa_model->insert_moa($data) > 0) {
@@ -206,7 +206,7 @@ class Moa extends CI_Controller
             $data['kelurahan_id'] = set_value('kelurahan_id', $moa_row->kelurahan_id);
             $data['alamat_moa'] = set_value('alamat_moa', $moa_row->alamat_moa);
             $data['durasi'] = set_value('durasi', $moa_row->durasi);
-            $data['tanggal_akhir'] = set_value('tanggal_akhir', $moa_row->tanggal_akhir);
+            $data['tanggal_akhir_moa'] = set_value('tanggal_akhir_moa', $moa_row->tanggal_akhir_moa);
             $data['dokumen1'] = set_value('dokumen1', $moa_row->dokumen1);
             $data['dokumen2'] = set_value('dokumen2', $moa_row->dokumen2);
             $data['dokumen3'] = set_value('dokumen3', $moa_row->dokumen3);
@@ -319,7 +319,7 @@ class Moa extends CI_Controller
             $data['kelurahan_id'] = $this->input->post('kelurahan_id', TRUE);
             $data['alamat_moa'] = $this->input->post('alamat_moa', TRUE);
             $data['durasi'] = $this->input->post('durasi', TRUE);
-            $data['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
+            $data['tanggal_akhir_moa'] = date('Y-m-d', strtotime($this->input->post('tanggal', TRUE) . ' + ' . $this->input->post('durasi', TRUE) . ' years'));
             $data['kode_prodi'] = implode("#", $this->input->post('kode_prodi[]', TRUE));
 
             $id = $this->input->post('id', TRUE);
@@ -337,13 +337,30 @@ class Moa extends CI_Controller
     public function detail()
     {
         $this->load->model('Moa_model');
+        $this->load->model('Mou_model');
+        $this->load->model('Wilayah_indonesia_model');
+        $this->load->model('Prodi_model');
 
-        $moa_id = $this->input->get('moa_id', TRUE);
-        $data['menu'] = 'menu_moa';
-        $data['title'] = "Detail Memorandum of Agreement (MOA)";
-        $data['moa_row'] = $this->Moa_model->getMoaDetailById($moa_id)->row();
-
-        $this->template->load('_template/main_template', 'moa/view_detail', $data);
+        $id = $this->input->get('id', TRUE);
+        $moa_row = $this->Moa_model->get_moa_detail_by_id($id)->row();
+        if ($moa_row) {
+            $data['title'] = 'Detail Memorandum of Agreement (MOA)';
+            $data['action'] = "moa/update_action";
+            $data['id'] = set_value('id', $moa_row->id);
+            $data['moa_row'] = $moa_row;
+            $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
+            $data_response =  array(
+                'status' => true,
+                'view_modal_form' => $this->load->view('moa/view_detail', $data, true)
+            );
+            echo json_encode($data_response);
+        } else {
+            $data_response =  array(
+                'status' => true,
+                'messege' => 'Data tidak ditemukan'
+            );
+            echo json_encode($data_response);
+        }
     }
 
     public function delete_action()
