@@ -50,17 +50,20 @@ CREATE TABLE `tbl_moa` (
   `kelurahan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `durasi` int(11) DEFAULT NULL,
-  `tanggal_akhir` date DEFAULT NULL,
+  `tanggal_akhir_moa` date DEFAULT NULL,
   `dokumen1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dokumen2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dokumen3` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kode_prodi` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `status` int(11) unsigned DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `mou_id` (`mou_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `tbl_mou` */
 
