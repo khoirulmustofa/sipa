@@ -121,10 +121,10 @@
                                         <a href="<?= base_url('moa/detail?moa_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <button type="button" onclick="btnEdit('${data}')" title="Edit" class="btn btn-warning btn-sm">
+                                        <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
-                                        <button type="button" onclick="btnDelete('${data}')" title="Delete" class="btn btn-danger btn-sm">
+                                        <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
                                     </div>`;
@@ -144,6 +144,9 @@
                 },
                 {
                     data: "kategori_moa",
+                    render: function(data, type, row, meta) {
+                        return explodeLembagaMitra(data);
+                    }
                 },
                 {
                     data: "tingkat_moa",
@@ -208,7 +211,7 @@
         return dateObject.toISOString().split('T')[0];
     };
 
-    function btnAddMOA() {
+    function btn_add() {
         swalLoading();
         $.ajax({
             url: '<?php echo base_url('moa/create') ?>',
@@ -217,6 +220,7 @@
             success: function(respon) {
                 Swal.close();
                 if (respon.status) {
+                    $('.modal-dialog').addClass('modal-xl');
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
@@ -256,19 +260,11 @@
     }
 
     function btn_edit(id) {
-        Swal.fire({
-            title: 'Processing ...',
-            html: 'Please wait...',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading()
-            }
-        });
+       
         $.ajax({
-            url: '<?php echo base_url('tu/kerja_sama/edit_kerja_sama') ?>',
+            url: '<?php echo base_url('moa/update') ?>',
             data: {
-                id_kerjasama: id
+                id: id
             },
             type: "GET",
             dataType: "JSON",
@@ -278,13 +274,7 @@
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
                 } else {
-                    Swal.fire({
-                        title: "Ooops..",
-                        icon: 'warning',
-                        html: respon.messege,
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                    });
+                    messegeWarning(respon.messege);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
@@ -308,11 +298,11 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '<?php echo base_url('tu/kerja_sama/hapus_action') ?>',
+                    url: '<?php echo base_url('moa/delete_action') ?>',
                     data: {
-                        id_kerjasama: id
+                        id: id
                     },
-                    type: "GET",
+                    type: "POST",
                     dataType: "JSON",
                     success: function(respon) {
                         if (respon.status) {
@@ -325,16 +315,10 @@
                                 showConfirmButton: false,
                                 timer: 1000,
                             }).then((result) => {
-                                $("#dt_kerja_sama").DataTable().ajax.reload(null, false);
+                                $("#myDatatables").DataTable().ajax.reload(null, false);
                             });
                         } else {
-                            Swal.fire({
-                                title: "Ooops..",
-                                icon: 'warning',
-                                html: respon.messege,
-                                allowEscapeKey: false,
-                                allowOutsideClick: false,
-                            });
+                            messegeWarning(respon.messege);
                         }
                     },
                     error: function(xhr, ajaxOptions, thrownError) {

@@ -23,12 +23,21 @@ echo form_open_multipart($action, $attribute);
         </div>
         <div class="form-group">
             <label>Kategori</label>
-            <select class="form-control" name="kategori_moa" id="kategori_moa">
-                <option value="">--Pilih kategori--</option>
-                <option value="Pendidikan/Pengajaran" <?php echo $kategori_moa == 'Pendidikan/Pengajaran' ? 'selected' : ''; ?>>Pendidikan/Pengajaran</option>
-                <option value="Penelitian" <?php echo $kategori_moa == 'Penelitian' ? 'selected' : ''; ?>>Penelitian</option>
-                <option value="Pengabdian Masyarakat" <?php echo $kategori_moa == 'Pengabdian Masyarakat' ? 'selected' : ''; ?>>Pengabdian Masyarakat</option>
-            </select>
+            <?php $array_ketegori = explode('#', $kategori_moa); ?>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_moa[]" value="Pendidikan/Pengajaran" <?= in_array("Pendidikan/Pengajaran", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Pendidikan/Pengajaran</span>
+                </label>
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_moa[]" value="Penelitian" <?= in_array("Penelitian", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Penelitian</span>
+                </label>
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_moa[]" value="Pengabdian Masyarakat" <?= in_array("Pengabdian Masyarakat", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Pengabdian Masyarakat</span>
+                </label>
+            </div>
         </div>
         <div class="form-group">
             <label>Tingkatan</label>
@@ -47,8 +56,21 @@ echo form_open_multipart($action, $attribute);
             <label for="nama_lembaga_mitra_moa">Nama Lembaga Mitra</label>
             <div class="tambah_mitra_wrap">
                 <button class="btn btn-success tambah_mitra">Tambah</button>
-                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control"  placeholder="Nama Lembaga Mitra ..."></div>
-            </div>           
+                <?php if ($nama_lembaga_mitra_moa == "") { ?>
+                    <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
+                <?php } else { ?>
+                    <?php $array_nama_lembaga_mitra_moa = explode('#', $nama_lembaga_mitra_moa); ?>
+                    <?php if (count($array_nama_lembaga_mitra_moa) > 0) { ?>
+                        <?php foreach ($array_nama_lembaga_mitra_moa as $key => $value) { ?>
+                            <?php if ($array_nama_lembaga_mitra_moa[0] == $value) { ?>
+                                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value ?>" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
+                            <?php } else { ?>
+                                <div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value ?>" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php  } ?>
+                <?php } ?>
+            </div>
         </div>
         <div class="form-group">
             <label for="negara_id">Negara</label>
@@ -111,22 +133,41 @@ echo form_open_multipart($action, $attribute);
         </div>
         <div class="form-group">
             <label for="dokumen1">Dokumen 1</label>
-            <input type="file" class="form-control" id="dokumen1" name="dokumen1">
+            <div class="input-group">
+                <input type="file" class="form-control" id="dokumen1" name="dokumen1">
+                <div class="input-group-prepend">
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen1()">Nomor Surat</button>
+                </div>
+            </div>
+            <input type="text" class="form-control mt-2" id="nama_dokumen1" name="nama_dokumen1">
         </div>
         <div class="form-group">
-            <label for="dokumen2">Dokumen 2</label>
-            <input type="file" class="form-control" id="dokumen2" name="dokumen2">
+            <label for="dokumen1">Dokumen 1</label>
+            <div class="input-group">
+                <input type="file" class="form-control" id="dokumen1" name="dokumen2">
+                <div class="input-group-prepend">
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen2()">Nomor Surat</button>
+                </div>
+            </div>
+            <input type="text" class="form-control mt-2" id="nama_dokumen2" name="nama_dokumen2">
         </div>
         <div class="form-group">
-            <label for="dokumen3">Dokumen 3</label>
-            <input type="file" class="form-control" id="dokumen3" name="dokumen3">
+            <label for="dokumen3">Dokumen 1</label>
+            <div class="input-group">
+                <input type="file" class="form-control" id="dokumen3" name="dokumen3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen3()">Nomor Surat</button>
+                </div>
+            </div>
+            <input type="text" class="form-control mt-2" id="nama_dokumen3" name="nama_dokumen3">
         </div>
         <div class="form-group">
             <label for="kode_prodi">Pilih Prodi</label>
             <div class="form-check">
+                <?php $arr_kode_prodi = explode('#', $kode_prodi); ?>
                 <?php foreach ($prodi_result as $key => $value) { ?>
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" name="kode_prodi[]" value="<?php echo $value->kode_prodi ?>">
+                        <input class="form-check-input" type="checkbox" name="kode_prodi[]" <?php echo in_array($value->kode_prodi, $arr_kode_prodi) ? "checked" : "" ?> value="<?php echo $value->kode_prodi ?>">
                         <span class="form-check-sign"><?php echo $value->nama_prodi ?></span>
                     </label>
                 <?php } ?>
@@ -159,6 +200,10 @@ echo form_open_multipart($action, $attribute);
             $('#indonesia').show();
         }
 
+        $('#nama_dokumen1').hide();
+        $('#nama_dokumen2').hide();
+        $('#nama_dokumen3').hide();
+
     });
 
     $(function() {
@@ -174,8 +219,8 @@ echo form_open_multipart($action, $attribute);
             x--;
         })
 
-         // Setting negara indo
-         $("#negara_id").change(function() {
+        // Setting negara indo
+        $("#negara_id").change(function() {
             let negara_id = $('#negara_id').val();
             if (negara_id == "102") {
                 $('#indonesia').show();
@@ -291,7 +336,6 @@ echo form_open_multipart($action, $attribute);
         $('form#my_form').on('submit', function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
-            swalLoading();
             $.ajax({
                 url: $(this).attr('action'),
                 data: new FormData(this),
@@ -318,4 +362,16 @@ echo form_open_multipart($action, $attribute);
             });
         });
     });
+
+    function btn_show_dokumen1() {
+        $('#nama_dokumen1').show();
+    }
+
+    function btn_show_dokumen2() {
+        $('#nama_dokumen2').show();
+    }
+
+    function btn_show_dokumen3() {
+        $('#nama_dokumen3').show();
+    }
 </script>

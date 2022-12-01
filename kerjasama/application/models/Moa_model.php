@@ -32,6 +32,21 @@ class Moa_model extends CI_Model
         return  $this->db->affected_rows();
     }
 
+    public function update_moa_by_id($id = "", $data = array())
+    {
+        $this->db->where('id', $id);
+        $this->db->update('tbl_moa', $data);
+        return  $this->db->affected_rows();
+    }
+
+    public function delete_moa_by_id($id = "")
+    {
+        $this->db->where('id', $id);
+        $this->db->delete("tbl_moa");
+        return  $this->db->affected_rows();
+    }
+
+
     public function getMoaDetailById($id = "")
     {
         // $this->db->select("a.id,a.mou_id,a.kategori_moa,a.tingkat_moa,a.tanggal,a.nama_lembaga_mitra_moa,a.negara_id,a.provinsi_id,a.kota_kabupaten_id,a.kecamatan_id,a.kelurahan_id,a.alamat,a.durasi,a.tanggal_akhir,a.dokumen1,a.dokumen2,a.dokumen3,a.kode_prodi");
@@ -44,6 +59,13 @@ class Moa_model extends CI_Model
         $this->db->join("master_kota_kabupaten as e", "e.master_kota_kabupaten_id = a.kota_kabupaten_id", "left");
         $this->db->join("master_kecamatan as f", "f.master_kecamatan_id = a.kecamatan_id", "left");
         $this->db->where("a.id", $id);
+        return  $this->db->get();
+    }
+
+    public function get_moa_by_id($id = "")
+    {       
+        $this->db->from("tbl_moa");
+        $this->db->where("id", $id);
         return  $this->db->get();
     }
 

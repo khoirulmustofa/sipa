@@ -60,7 +60,6 @@ echo form_open_multipart($action, $attribute);
             <label for="dosen_terlibat[]">Dosen Yang Terlibat</label>
             <div class="tambah_dosen_wrap">
                 <button class="btn btn-success tambah_dosen">Tambah</button>
-
                 <?php
                 if ($dosen_terlibat != "") {
                     $array_dosen = explode('#', $dosen_terlibat);

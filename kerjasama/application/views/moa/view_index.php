@@ -9,7 +9,7 @@
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
                     <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
-                        <button type="button" class="btn btn-success" onclick="btnAddMOA()"><i class="far fa-plus-square"></i> Tambah MOA</button>
+                        <button type="button" class="btn btn-success" onclick="btn_add()"><i class="far fa-plus-square"></i> Tambah MOA</button>
                     <?php } ?>
                 </div>
             </div>
