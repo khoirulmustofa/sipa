@@ -45,11 +45,10 @@
                                         <th>Action</th>
                                         <th>Lembaga Mitra</th>
                                         <th>Negara</th>
-                                        <th>Durasi MOA</th>
                                         <th>Kategori</th>
                                         <th>Tingkatan</th>
-                                        <th>Awal MOA</th>
-                                        <th>Akhir MOA</th>
+                                        <th>Tanggal Awal MOA</th>
+                                        <th>Tanggal Akhir MOA</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>

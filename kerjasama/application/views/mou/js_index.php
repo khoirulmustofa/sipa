@@ -108,11 +108,10 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row, meta) {
-
                         return `<div class="btn-group" role="group" aria-label="Basic example">                                       
-                                        <a href="<?php echo base_url('mou/detail?mou_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
+                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </a>
+                                        </button>
                                         <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
@@ -225,8 +224,7 @@
         });
     }
 
-    function btn_edit(id) {
-        swalLoading()
+    function btn_edit(id) {     
         $.ajax({
             url: '<?php echo base_url('mou/edit') ?>',
             data: {
@@ -248,6 +246,31 @@
                 alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
             }
         });
+    }
+
+    function btn_detail(id) {
+        $.ajax({
+            url: '<?php echo base_url('mou/detail') ?>',
+            data: {
+                id: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('.modal-dialog').addClass('modal-xl');
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {                    
+                    messegeWarning(respon.messege);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        }); 
     }
 
     function btn_delete(id) {

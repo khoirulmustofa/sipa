@@ -273,11 +273,11 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '<?php echo base_url('tu/kerja_sama/hapus_action') ?>',
+                    url: '<?php echo base_url('ia/delete_action') ?>',
                     data: {
-                        id_kerjasama: id
+                        id: id
                     },
-                    type: "GET",
+                    type: "POST",
                     dataType: "JSON",
                     success: function(respon) {
                         if (respon.status) {
@@ -290,7 +290,7 @@
                                 showConfirmButton: false,
                                 timer: 1000,
                             }).then((result) => {
-                                $("#dt_kerja_sama").DataTable().ajax.reload(null, false);
+                                $("#myDatatables").DataTable().ajax.reload(null, false);
                             });
                         } else {
                             Swal.fire({

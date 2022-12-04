@@ -75,38 +75,38 @@ echo form_open_multipart($action, $attribute);
             <tr>
                 <td>Dokumen1</td>
                 <td><?php
-                    if ($moa_row->dokumen1 != "") { ?>
-                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen1) ?>" type="" style="width: 100%;" height="720px">
+                    if ($moa_row->dokumen1_moa != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen1_moa) ?>" type="" style="width: 100%;" height="720px">
                     <?php } ?>
                 </td>
             </tr>
             <tr>
                 <td>Dokumen2</td>
                 <td><?php
-                    if ($moa_row->dokumen2 != "") { ?>
-                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen2) ?>" type="" style="width: 100%;" height="720px">
+                    if ($moa_row->dokumen2_moa != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen2_moa) ?>" type="" style="width: 100%;" height="720px">
                     <?php } ?>
                 </td>
             </tr>
             <tr>
                 <td>Dokumen3</td>
                 <td><?php
-                    if ($moa_row->dokumen3 != "") { ?>
-                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen3) ?>" type="" style="width: 100%;" height="720px">
+                    if ($moa_row->dokumen3_moa != "") { ?>
+                        <embed src="<?php echo base_url('assets/doc_moa/' . $moa_row->dokumen3_moa) ?>" type="" style="width: 100%;" height="720px">
                     <?php } ?>
                 </td>
             </tr>
             <tr>
                 <td>Nama Dokumen1</td>
-                <td><?php echo $moa_row->nama_dokumen1; ?></td>
+                <td><?php echo $moa_row->nama_dokumen1_moa; ?></td>
             </tr>
             <tr>
                 <td>Nama Dokumen2</td>
-                <td><?php echo $moa_row->nama_dokumen2; ?></td>
+                <td><?php echo $moa_row->nama_dokumen2_moa; ?></td>
             </tr>
             <tr>
                 <td>Nama Dokumen3</td>
-                <td><?php echo $moa_row->nama_dokumen3; ?></td>
+                <td><?php echo $moa_row->nama_dokumen3_moa; ?></td>
             </tr>
             <tr>
                 <td>Kode Prodi</td>

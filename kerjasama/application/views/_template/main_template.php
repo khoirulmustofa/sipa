@@ -167,6 +167,13 @@
                                     <p>Implementation Arrangement (IA)</p>
                                 </a>
                             </li>
+                            <li class="nav-item<?php echo $menu == "menu_rekapitulasi" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('rekapitulasi_kerja_sama') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Rekapitulasi Kerjasama</p>
+                                </a>
+                            </li>
+
                         <?php } ?>
 
                         <?php if ($_SESSION['status_login'] == "Prodi") { ?>

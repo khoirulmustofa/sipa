@@ -299,4 +299,25 @@ class Ia extends CI_Controller
             echo json_encode($data_response);
         }
     }
+
+    public function delete_action()
+    {
+        $this->load->model('Ia_model');
+
+        $id =  $this->input->post('id', TRUE);
+        if ($this->Ia_model->delete_ia_by_id($id) > 0) {
+            $data_response =  array(
+                'status' => true,
+                // 'token_csrf' => $this->security->get_csrf_hash(),
+                'messege' => 'Hapus Implementation Arrangement (IA) BERHASIL'
+            );
+        } else {
+            $data_response =  array(
+                'status' => false,
+                // 'token_csrf' => $this->security->get_csrf_hash(),
+                'messege' => 'Hapus  Implementation Arrangement (IA) GAGAL'
+            );
+        }
+        echo json_encode($data_response);
+    }
 }

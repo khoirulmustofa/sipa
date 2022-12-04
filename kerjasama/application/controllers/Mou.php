@@ -147,30 +147,41 @@ class Mou extends CI_Controller
     public function detail()
     {
         $this->load->model('Mou_model');
+        $this->load->model('Wilayah_indonesia_model');
 
-        $mou_id = $this->input->get('mou_id', TRUE);
+        $mou_id = $this->input->get('id', TRUE);
         $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
 
         $data['menu'] = 'menu_mou';
         $data['title'] = "Detail Memorandum of Understanding (MOU)";
-        $data['load_js'] = 'mou/js_detail';
-        $data['id'] = $mou_row->id;
-        $data['periode'] = $mou_row->periode;
-        $data['tanggal'] = $mou_row->tanggal;
-        $data['nama_lembaga_mitra'] = $mou_row->nama_lembaga_mitra;
-        $data['nama_negara'] = $mou_row->nama_negara;
-        $data['province_name'] = $mou_row->province_name;
-        $data['kota_kabupaten_nama'] = $mou_row->kota_kabupaten_nama;
-        $data['kecamatan_nama'] = $mou_row->kecamatan_nama;
-        $data['kelurahan_nama'] = $mou_row->kelurahan_nama;
-        $data['alamat'] = $mou_row->alamat;
-        $data['durasi'] = $mou_row->durasi;
-        $data['tanggal_akhir'] = $mou_row->tanggal_akhir;
-        $data['dokumen'] = $mou_row->dokumen;
+        $data['load_js'] = 'mou/js_form';
+        $data['id'] = set_value('id', $mou_row->id);
+        $data['periode'] = set_value('periode', $mou_row->periode);
+        $data['tanggal'] = set_value('tanggal', $mou_row->tanggal);
+        $data['nama_lembaga_mitra'] = set_value('nama_lembaga_mitra', $mou_row->nama_lembaga_mitra);
+        $data['negara_id'] = set_value('negara_id', $mou_row->negara_id);
+        $data['provinsi_id'] = set_value('provinsi_id', $mou_row->provinsi_id);
+        $data['kota_kabupaten_id'] = set_value('kota_kabupaten_id', $mou_row->kota_kabupaten_id);
+        $data['kecamatan_id'] = set_value('kecamatan_id', $mou_row->kecamatan_id);
+        $data['kelurahan_id'] = set_value('kelurahan_id', $mou_row->kelurahan_id);
+        $data['alamat'] = set_value('alamat', $mou_row->alamat);
+        $data['durasi'] = set_value('durasi', $mou_row->durasi);
+        $data['tanggal_akhir'] = set_value('tanggal_akhir', $mou_row->tanggal_akhir);
+        $data['dokumen'] = set_value('dokumen', $mou_row->dokumen);
+        $data['nama_negara'] = set_value('nama_negara', $mou_row->nama_negara);
+        $data['province_name'] = set_value('province_name', $mou_row->province_name);
+        $data['kota_kabupaten_nama'] = set_value('kota_kabupaten_nama', $mou_row->kota_kabupaten_nama);
+        $data['kecamatan_nama'] = set_value('kecamatan_nama', $mou_row->kecamatan_nama);
+        $data['kelurahan_nama'] = set_value('kelurahan_nama', $mou_row->kelurahan_nama);
 
-
-        $this->template->load('_template/main_template', 'mou/view_detail', $data);
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('mou/view_detail', $data, true)
+        );
+        echo json_encode($data_response);
     }
+
+    //province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama
 
     public function edit()
     {

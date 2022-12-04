@@ -139,9 +139,7 @@
                 },
                 {
                     data: "nama_negara",
-                }, {
-                    data: "durasi",
-                },
+                }, 
                 {
                     data: "kategori_moa",
                     render: function(data, type, row, meta) {
@@ -152,24 +150,24 @@
                     data: "tingkat_moa",
                 },
                 {
-                    data: "tanggal",
+                    data: "tanggal_moa",
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
                     }
                 },
                 {
-                    data: "tanggal_akhir",
+                    data: "tanggal_akhir_moa",
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
                     }
                 },
                 {
-                    data: "tanggal_akhir",
+                    data: "tanggal_akhir_moa",
                     searchable: false,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let date_sekarang = new Date();
-                        let tanggal_akhir = new Date(row['tanggal_akhir']);
+                        let tanggal_akhir = new Date(row['tanggal_akhir_moa']);
                         let taggal_6_bulan = addMonths(date_sekarang, 3)
                         let result = ``;
                         if (tanggal_akhir > date_sekarang && tanggal_akhir <

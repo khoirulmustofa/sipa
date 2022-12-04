@@ -6,13 +6,13 @@ if (!defined('BASEPATH'))
 class Moa_model extends CI_Model
 {
 
-    public function getMOAList($tahun_kerja_sama = "")
+    public function get_list_moa($tahun_kerja_sama = "")
     {
-        $this->db->select("a.id as no,a.id,a.nama_lembaga_mitra_moa,b.nama_negara,a.durasi,a.kategori_moa,a.tingkat_moa,a.tanggal,a.tanggal_akhir");
+        $this->db->select("a.id as no,a.id,a.nama_lembaga_mitra_moa,b.nama_negara,a.kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
         $this->db->from("tbl_moa as a");
         $this->db->join("master_negara as b", "b.id = a.negara_id", "left");
         if ($tahun_kerja_sama != "") {
-            $this->db->where("YEAR(a.tanggal)", $tahun_kerja_sama);
+            $this->db->where("YEAR(a.tanggal_moa)", $tahun_kerja_sama);
         }
         $this->db->get();
         $query = $this->db->last_query();
@@ -21,7 +21,7 @@ class Moa_model extends CI_Model
 
     public function getTahunMOA()
     {
-        $this->db->select("DISTINCT YEAR(tanggal) as tahun_moa");
+        $this->db->select("DISTINCT YEAR(tanggal_moa) as tahun_moa");
         $this->db->from("tbl_moa");
         return  $this->db->get();
     }
@@ -74,7 +74,7 @@ class Moa_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from("tbl_moa");
-        $this->db->order_by("tanggal");
+        $this->db->order_by("tanggal_moa");
         return  $this->db->get();
     }
 }

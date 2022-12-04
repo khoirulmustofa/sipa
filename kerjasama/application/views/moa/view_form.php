@@ -14,6 +14,7 @@ echo form_open_multipart($action, $attribute);
             <label for="mou_id">Pilih MOU</label>
             <select class="form-control" id="mou_id" name="mou_id">
                 <option value="">--Pilih MOU--</option>
+                <option value="0">MOU BELUM ADA</option>
                 <?php foreach ($mou_result as $key => $value) { ?>
                     <option value="<?php echo $value->id ?>" <?php echo $value->id == $mou_id ? "selected" : "" ?>>
                         <?php echo $value->nama_lembaga_mitra ?>
@@ -49,8 +50,12 @@ echo form_open_multipart($action, $attribute);
             </select>
         </div>
         <div class="form-group">
-            <label for="tanggal">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal ?>" placeholder="Masukan Tanggal ...">
+            <label for="tanggal">Tanggal Mulai</label>
+            <input type="date" class="form-control" id="tanggal_moa" name="tanggal_moa" value="<?php echo $tanggal_moa ?>" placeholder="Masukan Tanggal ...">
+        </div>
+        <div class="form-group">
+            <label for="durasi">Tanggal Akhir</label>
+            <input type="date" class="form-control" id="tanggal_akhir_moa" name="tanggal_akhir_moa" value="<?= $tanggal_akhir_moa ?>" placeholder="Masukan Durasi ...">
         </div>
         <div class="form-group">
             <label for="nama_lembaga_mitra_moa">Nama Lembaga Mitra</label>
@@ -127,39 +132,36 @@ echo form_open_multipart($action, $attribute);
             <label for="alamat_moa">Alamat</label>
             <textarea class="form-control" name="alamat_moa" id="alamat_moa" cols="30" rows="5" placeholder="Masukan Alamat ..."><?= $alamat_moa ?></textarea>
         </div>
+
         <div class="form-group">
-            <label for="durasi">Durasi</label>
-            <input type="number" class="form-control" id="durasi" name="durasi" value="<?= $durasi ?>" placeholder="Masukan Durasi ...">
-        </div>
-        <div class="form-group">
-            <label for="dokumen1">Dokumen 1</label>
+            <label for="dokumen1_moa">Dokumen 1</label>
             <div class="input-group">
-                <input type="file" class="form-control" id="dokumen1" name="dokumen1">
+                <input type="file" class="form-control" id="dokumen1_moa" name="dokumen1_moa">
                 <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen1()">Nomor Surat</button>
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen1_moa()">Nomor Surat</button>
                 </div>
             </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen1" name="nama_dokumen1">
+            <input type="text" class="form-control mt-2" id="nama_dokumen1_moa" value="<?php echo $nama_dokumen1_moa ?>" name="nama_dokumen1_moa">
         </div>
         <div class="form-group">
-            <label for="dokumen1">Dokumen 1</label>
+            <label for="dokumen2_moa">Dokumen 1</label>
             <div class="input-group">
-                <input type="file" class="form-control" id="dokumen1" name="dokumen2">
+                <input type="file" class="form-control" id="dokumen1_moa" name="dokumen2_moa">
                 <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen2()">Nomor Surat</button>
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen2_moa()">Nomor Surat</button>
                 </div>
             </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen2" name="nama_dokumen2">
+            <input type="text" class="form-control mt-2" id="nama_dokumen2_moa" value="<?php echo $nama_dokumen2_moa ?>" name="nama_dokumen2_moa">
         </div>
         <div class="form-group">
-            <label for="dokumen3">Dokumen 1</label>
+            <label for="dokumen3_moa">Dokumen 1</label>
             <div class="input-group">
-                <input type="file" class="form-control" id="dokumen3" name="dokumen3">
+                <input type="file" class="form-control" id="dokumen3_moa" name="dokumen3_moa">
                 <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen3()">Nomor Surat</button>
+                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen3_moa()">Nomor Surat</button>
                 </div>
             </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen3" name="nama_dokumen3">
+            <input type="text" class="form-control mt-2" id="nama_dokumen3_moa" value="<?php echo $nama_dokumen3_moa ?>" name="nama_dokumen3_moa">
         </div>
         <div class="form-group">
             <label for="kode_prodi">Pilih Prodi</label>
@@ -200,9 +202,21 @@ echo form_open_multipart($action, $attribute);
             $('#indonesia').show();
         }
 
-        $('#nama_dokumen1').hide();
-        $('#nama_dokumen2').hide();
-        $('#nama_dokumen3').hide();
+        let nama_dokumen1_moa = '<?php echo $nama_dokumen1_moa ?>';
+        let nama_dokumen2_moa = '<?php echo $nama_dokumen2_moa ?>';
+        let nama_dokumen3_moa = '<?php echo $nama_dokumen3_moa ?>';
+
+        if (nama_dokumen1_moa == '' || nama_dokumen1_moa == null) {
+            $('#nama_dokumen1_moa').hide();
+        }
+
+        if (nama_dokumen2_moa == '' || nama_dokumen2_moa == null) {
+            $('#nama_dokumen2_moa').hide();
+        }
+
+        if (nama_dokumen3_moa == '' || nama_dokumen3_moa == null) {
+            $('#nama_dokumen3_moa').hide();
+        }
 
     });
 
@@ -363,15 +377,15 @@ echo form_open_multipart($action, $attribute);
         });
     });
 
-    function btn_show_dokumen1() {
-        $('#nama_dokumen1').show();
+    function btn_show_dokumen1_moa() {
+        $('#nama_dokumen1_moa').show();
     }
 
-    function btn_show_dokumen2() {
-        $('#nama_dokumen2').show();
+    function btn_show_dokumen2_moa() {
+        $('#nama_dokumen2_moa').show();
     }
 
-    function btn_show_dokumen3() {
-        $('#nama_dokumen3').show();
+    function btn_show_dokumen3_moa() {
+        $('#nama_dokumen3_moa').show();
     }
 </script>
