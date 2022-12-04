@@ -41,7 +41,7 @@ CREATE TABLE `tbl_moa` (
   `mou_id` bigint(20) DEFAULT NULL,
   `kategori_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tingkat_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tanggal` date DEFAULT NULL,
+  `tanggal_moa` date DEFAULT NULL,
   `nama_lembaga_mitra_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `negara_id` int(11) DEFAULT NULL,
   `provinsi_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -49,21 +49,19 @@ CREATE TABLE `tbl_moa` (
   `kecamatan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kelurahan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `durasi` int(11) DEFAULT NULL,
   `tanggal_akhir_moa` date DEFAULT NULL,
-  `dokumen1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen3` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dokumen1_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dokumen2_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dokumen3_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen1_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen2_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_dokumen3_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kode_prodi` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `status` int(11) unsigned DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `mou_id` (`mou_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `tbl_mou` */
 
@@ -87,7 +85,7 @@ CREATE TABLE `tbl_mou` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
