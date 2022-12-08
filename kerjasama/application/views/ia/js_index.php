@@ -106,9 +106,20 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row, meta) {
+                        let btn_detail = ``;
                         let btn_update = ``;
                         let btn_delete = ``;
-                        if (status_login != 'Tata Usaha') {
+                        if (status_login == 'Fakultas') {
+                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>`;
+
+                        }
+
+                        if (status_login == 'Tata Usaha') {
+                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>`;
                             btn_update = ` <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>`;
@@ -117,10 +128,10 @@
                                         </button>`;
                         }
 
+
+
                         return `<div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                        ${btn_detail}
                                        ${btn_update}
                                        ${btn_delete}
                                     </div>`;
