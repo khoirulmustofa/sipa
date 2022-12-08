@@ -18,11 +18,17 @@ class Dashboard extends CI_Controller
         $this->load->model('Moa_model');
         $this->load->model('Prodi_model');
 
+        // set kode prodi
+        $kode_prodi = "";
+        if ($_SESSION['status_login'] == "Prodi") {
+            $kode_prodi = $_SESSION['kode_prodi'];
+        }
+
         $data['menu'] = 'menu_dashboard';
         $data['title'] = "Dashboard";
         $data['load_js'] = 'dashboard/js_index';
         $data['tahun_moa_result'] = $this->Moa_model->get_tahun_moa()->result();
-        $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
+        $data['prodi_result'] = $this->Prodi_model->get_prodi_by_id($kode_prodi)->result();
 
         $this->template->load('_template/main_template', 'dashboard/view_index', $data);
     }
