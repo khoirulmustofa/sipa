@@ -116,17 +116,36 @@
                                                     <i class="fas fa-calendar-plus"></i>
                                                 </button>`;
                         }
+
+                        let btn_detail = ``;
+                        let btn_update = ``;
+                        let btn_delete = ``;
+
+                        if (status_login == 'Fakultas') {
+                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>`;
+                        }
+
+                        if (status_login == 'Tata Usaha') {
+                            btn_detail = `<a href="<?php echo base_url('moa/detail?id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>`;
+                            btn_update = `<button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
+                                            <i class="far fa-edit"></i>
+                                        </button>`;
+                            btn_delete = `<button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>`;
+                        }
+
                         return `<div class="btn-group" role="group" aria-label="Basic example">
                                         ${btnPerpanjang}
-                                        <a href="<?php echo base_url('moa/detail?id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
-                                            <i class="far fa-edit"></i>
-                                        </button>
-                                        <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
+                                        ${btn_detail}
+                                        ${btn_update}
+                                        ${btn_delete}
+                                        
+                                        
                                     </div>`;
                     }
                 },              
