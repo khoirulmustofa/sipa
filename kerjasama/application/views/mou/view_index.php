@@ -30,7 +30,9 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <button type="button" onclick="btn_tambah()" class="btn btn-success float-right" ><i class="far fa-plus-square"></i> Tambah MOU</button>
+                                <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
+                                    <button type="button" onclick="btn_tambah()" class="btn btn-success float-right"><i class="far fa-plus-square"></i> Tambah MOU</button>
+                                <?php } ?>
                             </div>
                         </div>
 
@@ -45,7 +47,7 @@
                                         <th>Tanggal</th>
                                         <th>Nama Lembaga</th>
                                         <th>Periode</th>
-                                        <th>Negara</th>                                        
+                                        <th>Negara</th>
                                         <th>Durasi</th>
                                         <th>Akhir</th>
                                         <th>Status</th>
