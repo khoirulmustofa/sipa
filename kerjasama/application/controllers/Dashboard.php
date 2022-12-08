@@ -57,12 +57,15 @@ class Dashboard extends CI_Controller
         $this->load->model('Moa_model');
         // set kode prodi
         $kode_prodi = "";
+        if ($_SESSION['status_login'] == "Prodi") {
+            $kode_prodi = $_SESSION['kode_prodi'];
+        }
 
         $tahun = $this->input->get('tahun', TRUE);
         $tingkat_moa = $this->input->get('tingkat_moa', TRUE);
 
         $data_response['status'] = true;
-        $data_response['data_count_kegiatan'] = $this->Moa_model->get_count_moa_by_prodi($kode_prodi,$tahun,$tingkat_moa)->result();
+        $data_response['data_count_kegiatan'] = $this->Moa_model->get_count_moa_by_prodi($kode_prodi, $tahun, $tingkat_moa)->result();
 
         echo json_encode($data_response);
     }
