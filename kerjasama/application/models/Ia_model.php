@@ -52,16 +52,19 @@ class Ia_model extends CI_Model
 
     public function get_rekapitulasi_kerjasama($tingkat_ia = "")
     {
-
         $this->db->select("a.id,d.nama_prodi,b.nama_lembaga_mitra_moa");
         $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
         $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
         $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
         $this->db->select("a.judul_kegiatan,a.manfaat_kegiatan,a.tanggal_awal,a.dokumen1");
+        $this->db->select("DATEDIFF(a.tanggal_akhir,a.tanggal_awal) as selisih_hari");
+        $this->db->select("b.dokumen1_moa,b.dokumen2_moa,b.dokumen3_moa");
+        $this->db->select("f.dokumen");
         $this->db->from("tbl_ia as a");
         $this->db->join("tbl_moa as b", "b.id = a.moa_id");
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.id");
         $this->db->join("tb_prodi as d", "d.kode_prodi = c.kode_prodi");
+        $this->db->join("tbl_mou as f", "f.id = b.mou_id", 'left');
         if ($tingkat_ia != "") {
             $this->db->where("a.tingkat_ia", $tingkat_ia);
         }
@@ -108,7 +111,7 @@ class Ia_model extends CI_Model
         $this->db->select("a.id as no,a.id,d.nama_prodi,b.nama_lembaga_mitra_moa,a.tingkat_ia,a.judul_kegiatan,a.manfaat_kegiatan,a.tanggal_awal,a.tanggal_akhir,DATEDIFF(a.tanggal_akhir,a.tanggal_awal) as selisih_hari");
         $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
         $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
-        $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");      
+        $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
         $this->db->from("tbl_ia as a");
         $this->db->join("tbl_moa as b", "b.id = a.moa_id");
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.id");

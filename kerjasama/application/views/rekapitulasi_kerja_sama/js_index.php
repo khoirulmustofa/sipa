@@ -130,21 +130,28 @@
                     let btn_dok_2 = ``;
                     let btn_dok_3 = ``;
 
-                    if (row['dokumen1'] != '') {
-                        btn_dok_1 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
+                    if (row['dokumen'] != '' || row['dokumen'] != null) {
+                        // btn_dok_1 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
+                    } else {
+
+                        if (row['dokumen1_moa'] != "" || row['dokumen1_moa'] == null) {
+                            btn_dok_1 = `<button type="button" onclick="btn_preview('${row['dokumen1_moa']}')"  class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
+                        }
+
+                        if (row['dokumen2_moa'] != "" || row['dokumen2_moa'] == null) {
+                            btn_dok_2 = `<button type="button" onclick="btn_preview('${row['dokumen2_moa']}')" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 2</button>`;
+                        }
+
+                        if (row['dokumen3_moa'] != "" || row['dokumen3_moa'] == null) {
+                            btn_dok_3 = `<button type="button" onclick="btn_preview('${row['dokumen3_moa']}')" class="btn btn-info btn-sm" > Lihat Dokumen 3</button>`;
+                        }
                     }
 
-                    if (row['dokumen2'] != '') {
-                        btn_dok_2 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 2</button>`;
-                    }
-
-                    if (row['dokumen3'] != '') {
-                        btn_dok_3 = `<button type="button" class="btn btn-info btn-sm" > Lihat Dokumen 3</button>`;
-                    }
-
-
-
-                    return btn_dok_1 + btn_dok_2 + btn_dok_3;
+                    return `<div>
+                            ${btn_dok_1}
+                            ${btn_dok_2}
+                            ${btn_dok_3}
+                            </div>`;
                 }
             }, ],
             order: [
@@ -181,7 +188,36 @@
     function btn_cetak_rekap() {
         let tanggal_awal = $('#tanggal_awal').val();
         let tanggal_akhir = $('#tanggal_akhir').val();
-        
+
         window.open(`<?php echo base_url('rekapitulasi_kerja_sama/cetak_pdf?') ?>tanggal_awal=${tanggal_awal}&tanggal_akhir=${tanggal_akhir}`, "_blank");
+    }
+
+    function btn_preview(file) {
+        Swal.fire({
+            title: 'Processing ...',
+            html: 'Please wait...',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+        Swal.close();
+        if (file != null || file != '') {
+            let html = `<embed src="<?php echo base_url('assets/doc_moa') ?>/${file}" width=100% height="720"></embed>`;
+            let button = `<a class="btn btn-info btn-block" href="<?php echo base_url('assets/file_dok') ?>/${file}" download><i class="fas fa-cloud-download-alt"></i> Dowload</a>`;
+            $('#view_modal_preview').html(html);
+            $('#view_modal_button').html(button);
+            $('#modal_preview').modal('show');
+        } else {
+            Swal.fire({
+                title: "Ooops..",
+                icon: 'warning',
+                html: 'File tidak ditemukan',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+            });
+        }
+
     }
 </script>
