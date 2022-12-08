@@ -179,6 +179,9 @@
     }
 
     function btn_cetak_rekap() {
-        window.location.replace("<?php echo base_url('rekapitulasi_kerja_sama/cetak_pdf?tanggal_awal=lll&tanggal_akhir=12') ?>");
+        let tanggal_awal = $('#tanggal_awal').val();
+        let tanggal_akhir = $('#tanggal_akhir').val();
+        
+        window.open(`<?php echo base_url('rekapitulasi_kerja_sama/cetak_pdf?') ?>tanggal_awal=${tanggal_awal}&tanggal_akhir=${tanggal_akhir}`, "_blank");
     }
 </script>
