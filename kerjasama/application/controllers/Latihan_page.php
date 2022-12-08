@@ -13,8 +13,10 @@ class Latihan_page extends CI_Controller
 
     public function index()
     {
-        $array = ['a','b','c','d','e','f','g','h','i','j'];
+        //     $array = ['a','b','c','d','e','f','g','h','i','j'];
 
-      print_r(array_search('z',$array));    
+        //   print_r(array_search('z',$array));    
+
+        echo date('Y', strtotime('-1 year'));
     }
 }

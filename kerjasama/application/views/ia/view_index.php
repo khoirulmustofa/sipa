@@ -8,27 +8,27 @@
                         Fakultas Teknik Universitas Islam Riau</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
+                    <?php if (($_SESSION['status_login'] == "Prodi")) { ?>
                         <button type="button" class="btn btn-success" onclick="btn_create()"><i class="far fa-plus-square"></i> Tambah IA</button>
                     <?php } ?>
                 </div>
             </div>
         </div>
-       
+
     </div>
     <div class="page-inner mt--5">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                   
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tahun IA :</label>
                                     <select class="form-control" id="tahun_kerja_sama" name="tahun_kerja_sama">
                                         <option value="">--Pilih Tahun--</option>
-                                        
+
                                         <option value="5">> 5 Tahun</option>
                                     </select>
                                 </div>
@@ -43,6 +43,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Action</th>
+                                        <th>Prodi</th>
                                         <th>Tingkatan</th>
                                         <th>Judul Kegiatan</th>
                                         <th>Awal Kegiatan</th>
@@ -65,4 +66,3 @@
         <div id="view_modal_form"></div>
     </div>
 </div>
-

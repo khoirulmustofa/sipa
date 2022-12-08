@@ -1,5 +1,6 @@
 {
     "require": {
-        "ozdemir/datatables": "^2.3"
+        "ozdemir/datatables": "^2.3",
+        "mpdf/mpdf": "^8.1"
     }
 }

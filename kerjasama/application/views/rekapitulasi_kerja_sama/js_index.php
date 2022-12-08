@@ -97,36 +97,56 @@
                 dataType: "JSON",
             },
             columns: [{
-                    data: "id",
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },{
-                    data: "nama_prodi",
-                }, {
-                    data: "nama_lembaga_mitra_moa",
-                    render: function(data, type, row, meta) {
-                        return explodeLembagaMitra(data);
+                data: "id",
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            }, {
+                data: "nama_prodi",
+            }, {
+                data: "nama_lembaga_mitra_moa",
+                render: function(data, type, row, meta) {
+                    return explodeLembagaMitra(data);
+                }
+
+            }, {
+                data: "internasional",
+            }, {
+                data: "nasional",
+            }, {
+                data: "wilayah",
+            }, {
+                data: "judul_kegiatan",
+            }, {
+                data: "manfaat_kegiatan",
+            }, {
+                data: "tanggal_awal",
+            }, {
+                data: "dokumen1",
+                render: function(data, type, row, meta) {
+                    let btn_dok_1 = ``;
+                    let btn_dok_2 = ``;
+                    let btn_dok_3 = ``;
+
+                    if (row['dokumen1'] != '') {
+                        btn_dok_1 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
                     }
 
-                }, {
-                    data: "internasional",
-                }, {
-                    data: "nasional",
-                }, {
-                    data: "wilayah",
-                }, {
-                    data: "judul_kegiatan",
-                }, {
-                    data: "manfaat_kegiatan",
-                }, {
-                    data: "tanggal_awal",
-                }, {
-                    data: "dokumen1",
-                },
-            ],
+                    if (row['dokumen2'] != '') {
+                        btn_dok_2 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 2</button>`;
+                    }
+
+                    if (row['dokumen3'] != '') {
+                        btn_dok_3 = `<button type="button" class="btn btn-info btn-sm" > Lihat Dokumen 3</button>`;
+                    }
+
+
+
+                    return btn_dok_1 + btn_dok_2 + btn_dok_3;
+                }
+            }, ],
             order: [
                 [2, 'asc']
             ],
@@ -156,5 +176,9 @@
         }
 
         return result;
+    }
+
+    function btn_cetak_rekap() {
+        window.location.replace("<?php echo base_url('rekapitulasi_kerja_sama/cetak_pdf?tanggal_awal=lll&tanggal_akhir=12') ?>");
     }
 </script>

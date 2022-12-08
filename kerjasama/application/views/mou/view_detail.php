@@ -55,7 +55,7 @@
                 <td>Dokumen</td>
                 <td>
                     <?php if ($dokumen != "") { ?>
-                        <button type="button" onclick="btn_lihat_dokumen('<?php echo $dokumen ?>')" class="btn btn-info"><i class="fas fa-eye"></i> Lihat</button>
+                        <button type="button" onclick="btn_lihat_dokumen('<?php echo $dokumen ?>')" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Lihat</button>
                         <div id="preview_dokumen"></div>
                     <?php } ?>
 
@@ -68,34 +68,18 @@
                     $tanggal_akhir    = date('Y-m-d', strtotime($tanggal_akhir));
                     $tanggal_6lagi =  date('Y-m-d', strtotime('+6 months'));
 
-                    if ($tanggal_akhir > $tanggal_sekarang && $tanggal_akhir < $tanggal_6lagi) { ?>
-                        <button class="btn btn-warning">
-                            <span class="btn-label">
-                                <i class="fa fa-exclamation-circle"></i>
-                            </span>
-                            Akan Berakhir
-                        </button>
+                    if ($tanggal_akhir > $tanggal_sekarang && $tanggal_akhir < $tanggal_6lagi) { ?>                        
+                        <button type="button" class="btn btn-warning btn-sm"> Akan Berakhir</button>
                         <a href="<?php echo base_url('mou/perpanjang?mou_id=' . $id) ?>" class="btn btn-success">
                             <span class="btn-label">
                                 <i class="fa fa-check"></i>
                             </span>
                             Perpanjang
                         </a>
-                    <?php   } else if ($tanggal_akhir > $tanggal_sekarang) { ?>
-                        <button class="btn btn-default">
-                            <span class="btn-label">
-                                <i class="fas fa-ban"></i>
-                            </span>
-                            Berakhir
-                        </button>
-
+                    <?php } else if ($tanggal_akhir < $tanggal_sekarang) { ?>                        
+                        <button type="button" class="btn btn-danger btn-sm"> Berakhir</button>
                     <?php  } else { ?>
-                        <button class="btn btn-success">
-                            <span class="btn-label">
-                                <i class="fa fa-check"></i>
-                            </span>
-                            Aktif
-                        </button>
+                        <button type="button" class="btn btn-success btn-sm">Aktif</button>
                     <?php } ?>
                 </td>
             </tr>

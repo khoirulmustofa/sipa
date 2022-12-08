@@ -10,6 +10,8 @@ class Dosen_model extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("tb_dosen");
+        $this->db->where('status_dosen', 'Dosen Tetap Program Studi');
+        $this->db->where('status', 'Aktif');
         $this->db->order_by("nama_dosen");
         return  $this->db->get();
     }
@@ -18,7 +20,7 @@ class Dosen_model extends CI_Model
     {
         $this->db->select("*");
         $this->db->from("tb_dosen");
-        $this->db->where_in("npk",$arry_npk);
+        $this->db->where_in("npk", $arry_npk);
         return  $this->db->get();
     }
 }

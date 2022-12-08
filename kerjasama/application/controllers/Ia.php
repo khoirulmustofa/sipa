@@ -32,17 +32,33 @@ class Ia extends CI_Controller
         $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
         $this->load->model('Ia_model');
 
+         // cek status_login ?
+       $kode_prodi= "";
+       if (($_SESSION['status_login'] == "Prodi")) {
+           $kode_prodi = $_SESSION['kode_prodi'];
+       }
+
         $datatables = new Datatables(new CodeigniterAdapter());
-        $query = $this->Ia_model->getIAList();
+        $query = $this->Ia_model->get_list_ai($kode_prodi);
         $datatables->query($query);
         echo $datatables->generate();
     }
 
     public function create()
     {
+        // initialize model
         $this->load->model('Ia_model');
         $this->load->model('Moa_model');
         $this->load->model('Dosen_model');
+
+        // cek status_login ?
+       $kode_prodi= "";
+        if (($_SESSION['status_login'] == "Prodi")) {
+            $kode_prodi = $_SESSION['kode_prodi'];
+        }
+
+
+
 
         $data['menu'] = "menu_ia";
         $data['title'] = 'Tambah Implementation Arrangement (IA)';
@@ -57,7 +73,7 @@ class Ia extends CI_Controller
         $data['tanggal_akhir']  = set_value('tanggal_akhir');
         $data['dosen_terlibat']  = set_value('dosen_terlibat');
 
-        $data['moa_result'] = $this->Moa_model->get_moa()->result();
+        $data['moa_result'] = $this->Moa_model->get_moa_by_prodi($kode_prodi)->result();
         $data['dosen_result'] = $this->Dosen_model->get_dosen()->result();
 
         $data_response =  array(

@@ -108,16 +108,32 @@
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row, meta) {
-                        return `<div class="btn-group" role="group" aria-label="Basic example">                                       
-                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                        let btn_detail = ``;
+                        let btn_update = ``;
+                        let btn_delete = ``;
+
+                        if (status_login == 'Fakultas') {
+                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
+                                        </button>`;
+                        }
+
+                        if (status_login == 'Tata Usaha') {
+                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </button>`;
+                            btn_update = `<button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
-                                        </button>
-                                        <button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
+                                        </button>`;
+                            btn_delete = `<button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
                                             <i class="far fa-trash-alt"></i>
-                                        </button>
+                                        </button>`;
+                        }
+                        
+                        return `<div class="btn-group" role="group" aria-label="Basic example">                                       
+                                        ${btn_detail}
+                                        ${btn_update}
+                                        ${btn_delete}                                                                               
                                     </div>`;
                     }
                 },
@@ -135,7 +151,7 @@
                     data: "periode",
                 }, {
                     data: "nama_negara",
-                },                
+                },
                 {
                     data: "durasi",
                 },
@@ -156,11 +172,11 @@
                         let result = ``;
                         if (tanggal_akhir > date_sekarang && tanggal_akhir <
                             new Date(taggal_6_bulan)) {
-                            result = "<div class='berkedip'>Akan Berakhir</div>";
+                            result = `<button type="button" class="btn btn-warning btn-sm berkedip" id="alert_demo_3_1">Akan Berakhir</button>`;
                         } else if (tanggal_akhir < date_sekarang) {
-                            result = "Berakhir";
+                            result = `<button type="button" class="btn btn-danger btn-sm" > Berakhir</button>`;
                         } else {
-                            result = "Aktif";
+                            result = `<button type="button" class="btn btn-success btn-sm" >Aktif</button>`;
                         }
                         return result;
                     }
@@ -205,7 +221,7 @@
     function btn_tambah() {
         swalLoading()
         $.ajax({
-            url: '<?php echo base_url('mou/tambah') ?>',            
+            url: '<?php echo base_url('mou/tambah') ?>',
             type: "GET",
             dataType: "JSON",
             success: function(respon) {
@@ -213,7 +229,7 @@
                 if (respon.status) {
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
-                } else {                    
+                } else {
                     messegeWarning(respon.messege);
                 }
             },
@@ -224,7 +240,7 @@
         });
     }
 
-    function btn_edit(id) {     
+    function btn_edit(id) {
         $.ajax({
             url: '<?php echo base_url('mou/edit') ?>',
             data: {
@@ -237,7 +253,7 @@
                 if (respon.status) {
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
-                } else {                    
+                } else {
                     messegeWarning(respon.messege);
                 }
             },
@@ -262,7 +278,7 @@
                     $('.modal-dialog').addClass('modal-xl');
                     $('#view_modal_form').html(respon.view_modal_form);
                     $('#modal_form').modal('show');
-                } else {                    
+                } else {
                     messegeWarning(respon.messege);
                 }
             },
@@ -270,7 +286,7 @@
                 Swal.close();
                 alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
             }
-        }); 
+        });
     }
 
     function btn_delete(id) {

@@ -8,18 +8,29 @@ class Moa_model extends CI_Model
 
     public function get_list_moa($tahun_kerja_sama = "")
     {
-        $this->db->select("a.id as no,a.id,a.nama_lembaga_mitra_moa,b.nama_negara,a.kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
+        $this->db->select("a.id as no,a.id,a.nama_lembaga_mitra_moa,a.periode,b.nama_negara,(GROUP_CONCAT(c.kategori)) as kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
         $this->db->from("tbl_moa as a");
         $this->db->join("master_negara as b", "b.id = a.negara_id", "left");
+        $this->db->join("tbl_moa_kategori as c", "c.moa_id = a.id");
         if ($tahun_kerja_sama != "") {
             $this->db->where("YEAR(a.tanggal_moa)", $tahun_kerja_sama);
+        } else {
+            $this->db->where("YEAR(a.tanggal_moa) >=", date('Y', strtotime('-5 year')));
         }
+        $this->db->group_by("a.id");
         $this->db->get();
         $query = $this->db->last_query();
         return $query;
     }
 
     public function getTahunMOA()
+    {
+        $this->db->select("DISTINCT YEAR(tanggal_moa) as tahun_moa");
+        $this->db->from("tbl_moa");
+        return  $this->db->get();
+    }
+
+    public function get_tahun_moa()
     {
         $this->db->select("DISTINCT YEAR(tanggal_moa) as tahun_moa");
         $this->db->from("tbl_moa");
@@ -46,6 +57,14 @@ class Moa_model extends CI_Model
         return  $this->db->affected_rows();
     }
 
+    public function get_moa_by_waktu_buat($waktu_buat = "")
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_moa");
+        $this->db->where('waktu_buat', $waktu_buat);
+        return  $this->db->get();
+    }
+
 
     public function get_moa_detail_by_id($id = "")
     {
@@ -64,7 +83,7 @@ class Moa_model extends CI_Model
     }
 
     public function get_moa_by_id($id = "")
-    {       
+    {
         $this->db->from("tbl_moa");
         $this->db->where("id", $id);
         return  $this->db->get();
@@ -75,6 +94,49 @@ class Moa_model extends CI_Model
         $this->db->select('*');
         $this->db->from("tbl_moa");
         $this->db->order_by("tanggal_moa");
+        return  $this->db->get();
+    }
+
+    public function get_moa_by_prodi($kode_prodi = "")
+    {
+        $this->db->select('a.id,a.mou_id,a.tingkat_moa,a.tanggal_moa,a.nama_lembaga_mitra_moa,a.tanggal_akhir_moa');
+        $this->db->from("tbl_moa as a");
+        $this->db->join("tbl_moa_prodi as b", "b.moa_id= a.id");
+        if ($kode_prodi != "") {
+            $this->db->where("kode_prodi", $kode_prodi);
+        }
+        return  $this->db->get();
+    }
+
+    public function get_count_moa($tahun = "", $tingkat_moa = "")
+    {
+        // $this->db->select("COUNT(a.id) as count");
+        $this->db->from('tbl_moa');
+        if ($tahun != "") {
+            $this->db->where("YEAR(tanggal_moa)", $tahun);
+        }
+        if ($tingkat_moa != "") {
+            $this->db->where("tingkat_moa", $tingkat_moa);
+        }
+        return $this->db->count_all_results();
+    }
+
+    public function get_count_moa_by_prodi($kode_prodi = "", $tahun = "", $tingkat_moa = "")
+    {
+        $this->db->select("b.kode_prodi,COUNT(b.kode_prodi) as count_prodi,c.nama_prodi");
+        $this->db->from("tbl_moa as a");
+        $this->db->join("tbl_moa_prodi as b", "b.moa_id = a.id", 'right');
+        $this->db->join("tb_prodi as c", "c.kode_prodi = b.kode_prodi",);
+        if ($kode_prodi != "") {
+            $this->db->where("b.kode_prodi", $kode_prodi);
+        }
+        if ($tahun != "") {
+            $this->db->where("YEAR(a.tanggal_moa)", $tahun);
+        }
+        if ($tingkat_moa != "") {
+            $this->db->where("a.tingkat_moa", $tingkat_moa);
+        }
+        $this->db->group_by("b.kode_prodi");
         return  $this->db->get();
     }
 }

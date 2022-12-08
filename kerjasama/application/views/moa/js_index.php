@@ -118,9 +118,9 @@
                         }
                         return `<div class="btn-group" role="group" aria-label="Basic example">
                                         ${btnPerpanjang}
-                                        <button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                                        <a href="<?php echo base_url('moa/detail?id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>
+                                        </a>
                                         <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>
@@ -129,13 +129,16 @@
                                         </button>
                                     </div>`;
                     }
-                },
+                },              
+                 
                 {
                     data: "nama_lembaga_mitra_moa",
                     render: function(data, type, row, meta) {
                         return explodeLembagaMitra(data);
                     }
 
+                },{
+                    data: "periode",
                 },
                 {
                     data: "nama_negara",
@@ -143,7 +146,7 @@
                 {
                     data: "kategori_moa",
                     render: function(data, type, row, meta) {
-                        return explodeLembagaMitra(data);
+                        return explode_koma(data);
                     }
                 },
                 {
@@ -200,6 +203,17 @@
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         var mmddyyyy = dt.getDate() + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
         return mmddyyyy;
+    }
+
+    function explode_koma(data) {
+        let nama = data.split(",");
+        let result = ``;
+
+        for (const element of nama) {
+            result += element + "<br>";
+        }
+
+        return result;
     }
 
     function explodeLembagaMitra(data) {

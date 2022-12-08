@@ -55,11 +55,11 @@ echo form_open_multipart($action, $attribute);
         </div>
         <div class="form-group">
             <label for="tanggal">Tanggal Mulai</label>
-            <input type="date" class="form-control" id="tanggal_moa" name="tanggal_moa" value="<?php echo $tanggal_moa ?>" placeholder="Masukan Tanggal ...">
+            <input type="date" class="form-control" id="tanggal_moa" name="tanggal_moa" placeholder="Masukan Tanggal ...">
         </div>
         <div class="form-group">
             <label for="durasi">Tanggal Akhir</label>
-            <input type="date" class="form-control" id="tanggal_akhir_moa" name="tanggal_akhir_moa" value="<?= $tanggal_akhir_moa ?>" placeholder="Masukan Durasi ...">
+            <input type="date" class="form-control" id="tanggal_akhir_moa" name="tanggal_akhir_moa" placeholder="Masukan Durasi ...">
         </div>
         <div class="form-group">
             <label for="nama_lembaga_mitra_moa">Nama Lembaga Mitra</label>
@@ -170,10 +170,10 @@ echo form_open_multipart($action, $attribute);
         <div class="form-group">
             <label for="kode_prodi">Pilih Prodi</label>
             <div class="form-check">
-                <?php 
-                $arr_kode_prodi= array();
+                <?php
+                $arr_kode_prodi = array();
                 foreach ($moa_prodi_result as $key1 => $value1) {
-                   $arr_kode_prodi[] = $value1->kode_prodi;
+                    $arr_kode_prodi[] = $value1->kode_prodi;
                 } ?>
                 <?php foreach ($prodi_result as $key => $value) { ?>
                     <label class="form-check-label">
@@ -186,6 +186,7 @@ echo form_open_multipart($action, $attribute);
     </div>
     <div class="card-footer">
         <input type="hidden" name="id" value="<?= $id ?>">
+        <input type="hidden" name="periode" value="<?= $periode ?>">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="far fa-times-circle"></i> Tutup</button>
         <button type="submit" class="btn btn-primary float-right"><i class="far fa-save"></i> Simpan</button>
     </div>
@@ -370,7 +371,7 @@ echo form_open_multipart($action, $attribute);
                     Swal.close();
                     if (respon.status) {
                         messegeSuccess(respon.messege);
-                        $("#myDatatables").DataTable().ajax.reload(null, false);
+                        window.location.replace("<?php echo base_url('moa/detail?id=') ?>" + respon.moa_id);
                         $('#modal_form').modal('hide');
                     } else {
                         messegeWarning(respon.messege);

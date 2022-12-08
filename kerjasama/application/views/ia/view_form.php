@@ -17,7 +17,7 @@ echo form_open_multipart($action, $attribute);
                 <?php foreach ($moa_result as $key => $value) { ?>
                     <option value="<?php echo $value->id ?>" <?php echo $value->id == $moa_id ? "selected" : "" ?>>
                         <?php $nama_lembaga_array = explode("#", $value->nama_lembaga_mitra_moa); ?>
-                        <?php echo  $nama_lembaga_array[0] . ", dll (" . set_bulan_tahun($value->tanggal) . " - " . set_bulan_tahun($value->tanggal_akhir) . ")" ?>
+                        <?php echo  $nama_lembaga_array[0] . ", dll (" . set_bulan_tahun($value->tanggal_moa) . " - " . set_bulan_tahun($value->tanggal_akhir_moa) . ")" ?>
                     </option>
                 <?php } ?>
             </select>

@@ -90,8 +90,13 @@
                                     }
                                     ?>
 
-                                </span>
 
+
+                                </span>
+                                <?php
+                                if (isset($_SESSION["kode_prodi"])) {
+                                    echo $_SESSION["kode_prodi"];
+                                } ?>
 
                             </a>
                             <div class="clearfix"></div>
@@ -119,30 +124,29 @@
                     </div>
                     <ul class="nav nav-primary">
 
-                        <?php if ($_SESSION['status_login'] == "Fakultas") { ?>
-                            <!-- untuk Fakultas -->
+                        <?php if ($_SESSION['status_login'] == 'Prodi') { ?>
                             <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('dashboard') ?>">
                                     <i class="fas fa-tachometer-alt"></i>
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item<?php echo $menu == "menu_mou" ? ' active' : "" ?>">
-                                <a href="<?php echo base_url('tu/kerja_sama') ?>">
+                            <li class="nav-item<?php echo $menu == "menu_ia" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('ia') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Memorandum of Understanding (MOU)</p>
+                                    <p>IA</p>
+                                    <!-- <p>Implementation Arrangement (IA)</p> -->
                                 </a>
                             </li>
-                            <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
-                                <a href="<?php echo base_url('prodi/kegiatan') ?>">
-                                    <i class="fas fa-book-open"></i>
-                                    <p>Kegiatan</p>
+                            <li class="nav-item<?php echo $menu == "menu_rekapitulasi" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('rekapitulasi_kerja_sama') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Rekapitulasi Kerjasama</p>
                                 </a>
                             </li>
-                        <?php  } ?>
+                        <?php } ?>
 
-                        <?php if ($_SESSION['status_login'] == "Tata Usaha") { ?>
-                            <!-- untuk Tata Usaha -->
+                        <?php if ($_SESSION['status_login'] == 'Tata Usaha') { ?>
                             <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('dashboard') ?>">
                                     <i class="fas fa-tachometer-alt"></i>
@@ -152,19 +156,22 @@
                             <li class="nav-item<?php echo $menu == "menu_mou" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('mou') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Memorandum of Understanding (MOU)</p>
+                                    <p>MOU</p>
+                                    <!-- <p>Memorandum of Understanding (MOU)</p> -->
                                 </a>
                             </li>
                             <li class="nav-item<?php echo $menu == "menu_moa" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('moa') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Memorandum of Agreement (MOA)</p>
+                                    <p>MOA</p>
+                                    <!-- <p>Memorandum of Agreement (MOA)</p> -->
                                 </a>
                             </li>
                             <li class="nav-item<?php echo $menu == "menu_ia" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('ia') ?>">
                                     <i class="fas fa-link"></i>
-                                    <p>Implementation Arrangement (IA)</p>
+                                    <p>IA</p>
+                                    <!-- <p>Implementation Arrangement (IA)</p> -->
                                 </a>
                             </li>
                             <li class="nav-item<?php echo $menu == "menu_rekapitulasi" ? ' active' : "" ?>">
@@ -173,24 +180,44 @@
                                     <p>Rekapitulasi Kerjasama</p>
                                 </a>
                             </li>
-
                         <?php } ?>
 
-                        <?php if ($_SESSION['status_login'] == "Prodi") { ?>
-                            <!-- untuk Prodi -->
+                        <?php if ($_SESSION['status_login'] == 'Fakultas') { ?>
                             <li class="nav-item<?php echo $menu == "menu_dashboard" ? ' active' : "" ?>">
                                 <a href="<?php echo base_url('dashboard') ?>">
                                     <i class="fas fa-tachometer-alt"></i>
                                     <p>Dashboard</p>
                                 </a>
                             </li>
-                            <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' active' : "" ?>">
-                                <a href="<?php echo base_url('prodi/kegiatan') ?>">
-                                    <i class="fas fa-book-open"></i>
-                                    <p>Kegiatan</p>
+                            <li class="nav-item<?php echo $menu == "menu_mou" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('mou') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>MOU</p>
+                                    <!-- <p>Memorandum of Understanding (MOU)</p> -->
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_moa" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('moa') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>MOA</p>
+                                    <!-- <p>Memorandum of Agreement (MOA)</p> -->
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_ia" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('ia') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>IA</p>
+                                    <!-- <p>Implementation Arrangement (IA)</p> -->
+                                </a>
+                            </li>
+                            <li class="nav-item<?php echo $menu == "menu_rekapitulasi" ? ' active' : "" ?>">
+                                <a href="<?php echo base_url('rekapitulasi_kerja_sama') ?>">
+                                    <i class="fas fa-link"></i>
+                                    <p>Rekapitulasi Kerjasama</p>
                                 </a>
                             </li>
                         <?php } ?>
+
                         <li class="nav-item<?php echo $menu == "menu_kegiatan" ? ' ' : "" ?>">
                             <a href="<?php echo str_replace('kerjasama/', '', base_url()) ?>">
                                 <i class="far fa-arrow-alt-circle-left"></i>
@@ -203,7 +230,6 @@
                                 <p>Logout</p>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </div>

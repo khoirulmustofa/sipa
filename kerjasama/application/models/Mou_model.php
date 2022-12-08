@@ -19,6 +19,8 @@ class Mou_model extends CI_Model
         $this->db->join("master_kelurahan as f", "f.master_kelurahan_id = a.kelurahan_id", "left");
         if ($tahun_kerja_sama != "") {
             $this->db->where("YEAR(a.tanggal)", $tahun_kerja_sama);
+        } else {
+            $this->db->where("YEAR(a.tanggal) >=", date('Y', strtotime('-5 year')));
         }
         $this->db->get();
         $query = $this->db->last_query();
@@ -86,5 +88,15 @@ class Mou_model extends CI_Model
         $this->db->join("master_kelurahan as f", "f.master_kelurahan_id = a.kelurahan_id", "left");
         $this->db->where("a.id", $mou_id);
         return  $this->db->get();
+    }
+
+    public function get_count_mou($tahun = "")
+    {
+        // $this->db->select("COUNT(a.id) as count");
+        $this->db->from('tbl_mou');
+        if ($tahun != "") {
+            $this->db->where("YEAR(tanggal)", $tahun);
+        }
+        return $this->db->count_all_results();
     }
 }
