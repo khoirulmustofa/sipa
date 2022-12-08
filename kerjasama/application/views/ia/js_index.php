@@ -120,12 +120,6 @@
                             btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </button>`;
-                            btn_update = ` <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
-                                            <i class="far fa-edit"></i>
-                                        </button>`;
-                            btn_delete = `<button type="button" onclick="btn_delete('${data}')" title="Delete" class="btn btn-danger btn-sm">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>`;
                         }
 
                         if (status_login == 'Prodi') {
