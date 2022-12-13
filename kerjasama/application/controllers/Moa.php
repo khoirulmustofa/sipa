@@ -31,11 +31,15 @@ class Moa extends CI_Controller
     //  data ajax list MOU
     public function list()
     {
-        $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
+        
         $this->load->model('Moa_model');
 
+        $tahun_kerja_sama = $this->input->post('tahun_kerja_sama', TRUE);
+        $kategori = $this->input->post('kategori', TRUE);
+        $tingkat_moa = $this->input->post('tingkat_moa', TRUE);
+
         $datatables = new Datatables(new CodeigniterAdapter());
-        $query = $this->Moa_model->get_list_moa($tahun_kerja_sama);
+        $query = $this->Moa_model->get_list_moa($tahun_kerja_sama,$kategori,$tingkat_moa);
         $datatables->query($query);
         echo $datatables->generate();
     }

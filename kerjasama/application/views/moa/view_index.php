@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Tahun MOA :</label>
                                     <select class="form-control" id="tahun_kerja_sama" name="tahun_kerja_sama">
@@ -32,6 +32,31 @@
                                         <option value="5">> 5 Tahun</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Kategori :</label>
+                                    <select class="form-control" id="kategori" name="kategori">
+                                        <option value="">--Pilih Kategori--</option>
+                                        <option value="Pendidikan/Pengajaran">Pendidikan/Pengajaran</option>
+                                        <option value="Penelitian">Penelitian</option>
+                                        <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tingkatan :</label>
+                                    <select class="form-control" id="tingkat_moa" name="tingkat_moa">
+                                        <option value="">--Pilih Tingkatan--</option>
+                                        <option value="Wilayah">Wilayah</option>
+                                        <option value="Nasional">Nasional</option>
+                                        <option value="Internasional">Internasional</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" onclick="btn_filter()" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
                             </div>
                         </div>
 

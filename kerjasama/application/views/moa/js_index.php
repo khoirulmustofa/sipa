@@ -8,21 +8,14 @@
         dataTablesMOA();
     });
 
-    $(function() {
-        // fungsi untuk cek negara indonesia atau tidak
-        $("#tahun_kerja_sama").change(function() {
-            let tahunKerjaSama = $("#tahun_kerja_sama").val();
-            if (tahunKerjaSama == "") {
-                messegeWarning("Pilih Tahun Kerja Sama");
-                $("#tahun_kerja_sama").focus();
-                return false;
-            }
-            dataTablesMOA(tahunKerjaSama);
-        });
-    });
+   
+
+    function btn_filter() {
+        dataTablesMOA();
+    }
 
     // fungsi untuk load data MOU
-    function dataTablesMOA(tahunKerjaSama = "") {
+    function dataTablesMOA() {
         api_data_table();
         $("#myDatatables").DataTable({
             initComplete: function() {
@@ -91,7 +84,9 @@
             ajax: {
                 url: '<?php echo base_url('moa/list'); ?>',
                 data: {
-                    tahun_kerja_sama: tahunKerjaSama
+                    tahun_kerja_sama: $('#tahun_kerja_sama').val(),
+                    kategori: $('#kategori').val(),
+                    tingkat_moa: $('#tingkat_moa').val(),
                 },
                 type: "POST",
                 dataType: "JSON",

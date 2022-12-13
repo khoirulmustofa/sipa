@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 class Moa_model extends CI_Model
 {
 
-    public function get_list_moa($tahun_kerja_sama = "")
+    public function get_list_moa($tahun_kerja_sama = "", $kategori = "", $tingkat_moa = "")
     {
         $this->db->select("a.id as no,a.id,(GROUP_CONCAT(DISTINCT d.nama_lembaga_mitra)) as nama_lembaga_mitra,a.periode,b.nama_negara,(GROUP_CONCAT(DISTINCT c.kategori)) as kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
         $this->db->from("tbl_moa as a");
@@ -18,6 +18,15 @@ class Moa_model extends CI_Model
         } else {
             $this->db->where("YEAR(a.tanggal_moa) >=", date('Y', strtotime('-5 year')));
         }
+
+        if ( $kategori != '' ) {
+            $this->db->where("c.kategori", $kategori);
+        }
+
+        if ( $tingkat_moa != '' ) {
+            $this->db->where("a.tingkat_moa", $tingkat_moa);
+        }
+
         $this->db->group_by("a.id");
         $this->db->get();
         $query = $this->db->last_query();
