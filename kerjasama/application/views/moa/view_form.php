@@ -64,20 +64,17 @@ echo form_open_multipart($action, $attribute);
         <div class="form-group">
             <label for="nama_lembaga_mitra_moa">Nama Lembaga Mitra</label>
             <div class="tambah_mitra_wrap">
-                <button class="btn btn-success tambah_mitra">Tambah</button>
-                <?php if ($nama_lembaga_mitra_moa == "") { ?>
-                    <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
-                <?php } else { ?>
-                    <?php $array_nama_lembaga_mitra_moa = explode('#', $nama_lembaga_mitra_moa); ?>
-                    <?php if (count($array_nama_lembaga_mitra_moa) > 0) { ?>
-                        <?php foreach ($array_nama_lembaga_mitra_moa as $key => $value) { ?>
-                            <?php if ($array_nama_lembaga_mitra_moa[0] == $value) { ?>
-                                <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value ?>" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
-                            <?php } else { ?>
-                                <div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value ?>" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>
-                            <?php } ?>
+                <button type="button" class="btn btn-success btn-sm tambah_mitra">Tambah</button>
+                <?php if (count($moa_lembaga_mitra_result) > 0) { ?>
+                    <?php foreach ($moa_lembaga_mitra_result as $key => $value) { ?>
+                        <?php if ($key == 0) { ?>
+                            <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value->nama_lembaga_mitra ?>" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
+                        <?php } else { ?>
+                            <div class="input-group pb-1"><input type="text" name="nama_lembaga_mitra_moa[]" value="<?php echo $value->nama_lembaga_mitra ?>" class="form-control" placeholder="Nama Lembaga Mitra"><span><a href="#" class="btn_hapus_mitra"> Hapus</a></span></div>
                         <?php } ?>
-                    <?php  } ?>
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="pb-1 pt-1"><input type="text" name="nama_lembaga_mitra_moa[]" class="form-control" placeholder="Nama Lembaga Mitra ..."></div>
                 <?php } ?>
             </div>
         </div>
@@ -138,42 +135,76 @@ echo form_open_multipart($action, $attribute);
         </div>
 
         <div class="form-group">
-            <label for="dokumen1_moa">Dokumen 1</label>
-            <div class="input-group">
-                <input type="file" class="form-control" id="dokumen1_moa" name="dokumen1_moa">
-                <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen1_moa()">Nomor Surat</button>
-                </div>
+            <label for="dokumen1_moa">Dokumen Pendukung</label>
+            <div class="wrap_dokumen_pendukung">
+                <?php if (count($moa_dokumen_result) > 0) { ?>
+                    <?php foreach ($moa_dokumen_result as $key => $value) { ?>
+                        <?php if ($key == 0) { ?>
+                            <div class="card shadow-lg">
+                                <div class="card-body p-1">
+                                    <select class="form-control form-control mb-2 " name="jenis_dokumen[]">
+                                        <option value="">--Pilih Jenis Dokumen--</option>
+                                        <option value="Absensi" <?php echo $value->jenis_dokumen == 'Absensi' ? "selected" : "" ?>>Absensi</option>
+                                        <option value="Materi" <?php echo $value->jenis_dokumen == 'Materi' ? "selected" : "" ?>>Materi</option>
+                                        <option value="Foto" <?php echo $value->jenis_dokumen == 'Foto' ? "selected" : "" ?>>Foto</option>
+                                        <option value="Jurnal" <?php echo $value->jenis_dokumen == 'Jurnal' ? "selected" : "" ?>>Jurnal</option>
+                                        <option value="Surat" <?php echo $value->jenis_dokumen == 'Surat' ? "selected" : "" ?>>Surat</option>
+                                        <option value="Lainnya" <?php echo $value->jenis_dokumen == 'Lainnya' ? "selected" : "" ?>>Lainnya</option>
+                                    </select>
+                                    <input type="file" class="form-control mb-2" name="files[]">
+                                    <a href="<?php echo base_url('assets/doc_moa/' . $value->file_dokumen)  ?>" target="_blank" rel="noopener noreferrer">Link Dokumen</a>
+                                    <input type="text" class="form-control mb-2 nama_file" name="nama_file[]" value="<?php echo $value->nama_file ?>" placeholder="Nomor Surat">
+                                </div>
+                            </div>
+                        <?php  } else { ?>
+                            <div class="card shadow-lg">
+                                <div class="card-body p-1">
+                                    <button class="btn btn-default btn-sm float-right mb-1 hapus_dokumen_pendukung">Hapus</button>
+                                    <select class="form-control form-control mb-2 " name="jenis_dokumen[]">
+                                        <option value="">--Pilih Jenis Dokumen--</option>
+                                        <option value="Absensi" <?php echo $value->jenis_dokumen == 'Absensi' ? "selected" : "" ?>>Absensi</option>
+                                        <option value="Materi" <?php echo $value->jenis_dokumen == 'Materi' ? "selected" : "" ?>>Materi</option>
+                                        <option value="Foto" <?php echo $value->jenis_dokumen == 'Foto' ? "selected" : "" ?>>Foto</option>
+                                        <option value="Jurnal" <?php echo $value->jenis_dokumen == 'Jurnal' ? "selected" : "" ?>>Jurnal</option>
+                                        <option value="Surat" <?php echo $value->jenis_dokumen == 'Surat' ? "selected" : "" ?>>Surat</option>
+                                        <option value="Lainnya" <?php echo $value->jenis_dokumen == 'Lainnya' ? "selected" : "" ?>>Lainnya</option>
+                                    </select>
+                                    <input type="file" class="form-control mb-2" name="files[]">
+                                    <a href="<?php echo base_url('assets/doc_moa/' . $value->file_dokumen)  ?>" target="_blank" rel="noopener noreferrer">Link Dokumen</a>
+                                    <input type="text" class="form-control mb-2 nama_file" name="nama_file[]" value="<?php echo $value->nama_file ?>" placeholder="Nomor Surat">
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="card shadow-lg">
+                        <div class="card-body p-1">
+                            <select class="form-control form-control mb-2 " name="jenis_dokumen[]">
+                                <option value="">--Pilih Jenis Dokumen--</option>
+                                <option value="Absensi">Absensi</option>
+                                <option value="Materi">Materi</option>
+                                <option value="Foto">Foto</option>
+                                <option value="Jurnal">Jurnal</option>
+                                <option value="Surat">Surat</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                            <input type="file" class="form-control mb-2" name="files[]">
+                            <input type="text" class="form-control mb-2 nama_file" name="nama_file[]" placeholder="Nomor Surat">
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen1_moa" value="<?php echo $nama_dokumen1_moa ?>" name="nama_dokumen1_moa">
+
+            <button type="button" id="tambah_dokumen_pendukung" class="btn btn-success btn-sm float-right">Tambah Dokumen</button>
         </div>
-        <div class="form-group">
-            <label for="dokumen2_moa">Dokumen 2</label>
-            <div class="input-group">
-                <input type="file" class="form-control" id="dokumen1_moa" name="dokumen2_moa">
-                <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen2_moa()">Nomor Surat</button>
-                </div>
-            </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen2_moa" value="<?php echo $nama_dokumen2_moa ?>" name="nama_dokumen2_moa">
-        </div>
-        <div class="form-group">
-            <label for="dokumen3_moa">Dokumen 3</label>
-            <div class="input-group">
-                <input type="file" class="form-control" id="dokumen3_moa" name="dokumen3_moa">
-                <div class="input-group-prepend">
-                    <button class="btn btn-default btn-border" type="button" onclick="btn_show_dokumen3_moa()">Nomor Surat</button>
-                </div>
-            </div>
-            <input type="text" class="form-control mt-2" id="nama_dokumen3_moa" value="<?php echo $nama_dokumen3_moa ?>" name="nama_dokumen3_moa">
-        </div>
+
         <div class="form-group">
             <label for="kode_prodi">Pilih Prodi</label>
             <div class="form-check">
-                <?php 
-                $arr_kode_prodi= array();
+                <?php
+                $arr_kode_prodi = array();
                 foreach ($moa_prodi_result as $key1 => $value1) {
-                   $arr_kode_prodi[] = $value1->kode_prodi;
+                    $arr_kode_prodi[] = $value1->kode_prodi;
                 } ?>
                 <?php foreach ($prodi_result as $key => $value) { ?>
                     <label class="form-check-label">
@@ -210,25 +241,34 @@ echo form_open_multipart($action, $attribute);
             $('#indonesia').show();
         }
 
-        let nama_dokumen1_moa = '<?php echo $nama_dokumen1_moa ?>';
-        let nama_dokumen2_moa = '<?php echo $nama_dokumen2_moa ?>';
-        let nama_dokumen3_moa = '<?php echo $nama_dokumen3_moa ?>';
-
-        if (nama_dokumen1_moa == '' || nama_dokumen1_moa == null) {
-            $('#nama_dokumen1_moa').hide();
-        }
-
-        if (nama_dokumen2_moa == '' || nama_dokumen2_moa == null) {
-            $('#nama_dokumen2_moa').hide();
-        }
-
-        if (nama_dokumen3_moa == '' || nama_dokumen3_moa == null) {
-            $('#nama_dokumen3_moa').hide();
-        }
-
     });
 
     $(function() {
+
+        $("#tambah_dokumen_pendukung").click(function(e) {
+            e.preventDefault();
+            $(".wrap_dokumen_pendukung").append(`<div class="card shadow-lg">                                                    
+                                                    <div class="card-body p-1"> 
+                                                        <button class="btn btn-default btn-sm float-right mb-1 hapus_dokumen_pendukung">Hapus</button>                                                        
+                                                        <select class="form-control form-control mb-2 " name="jenis_dokumen[]">
+                                                            <option value="">--Pilih Jenis Dokumen--</option>
+                                                            <option value="Absensi">Absensi</option>
+                                                            <option value="Materi">Materi</option>
+                                                            <option value="Foto">Foto</option>
+                                                            <option value="Jurnal">Jurnal</option>
+                                                            <option value="Surat">Surat</option>
+                                                            <option value="Lainnya">Lainnya</option>
+                                                        </select>
+                                                        <input type="file" class="form-control mb-2" name="files[]">
+                                                        <input type="text" class="form-control mb-2 nama_file" name="nama_file[]" placeholder="Nomor Surat">
+                                                    </div>
+                                            </div>`);
+        });
+
+        $(".wrap_dokumen_pendukung").on("click", ".hapus_dokumen_pendukung", function(e) {
+            e.preventDefault();
+            $(this).parent().parent('div').remove();
+        })
 
         $(".tambah_mitra").click(function(e) {
             e.preventDefault();
@@ -382,7 +422,15 @@ echo form_open_multipart($action, $attribute);
                 }
             });
         });
+
+        $(".check_Jenis").change(function() {
+            console.log(this.val);
+        });
     });
+
+    function check_Jenis(val) {
+        alert(val.value);
+    }
 
     function btn_show_dokumen1_moa() {
         $('#nama_dokumen1_moa').show();

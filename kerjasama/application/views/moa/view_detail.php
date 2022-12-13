@@ -83,12 +83,12 @@
                                         <th>Lembaga Mitra</th>
                                         <td>:</td>
                                         <td>
-                                            <?php $arr_nama_lembaga_mitra = explode("#", $moa_row->nama_lembaga_mitra_moa);
-
+                                            <?php
                                             $result = "";
                                             $no = 1;
-                                            foreach ($arr_nama_lembaga_mitra as $key => $value) {
-                                                $result = $result . $no++ . ". " . $value . "<br>";
+
+                                            foreach ($moa_lembaga_mitra_result as $key => $value) {
+                                                $result .= $result . $no++ . ". " . $value->nama_lembaga_mitra . "<br>";
                                             }
                                             echo $result;
                                             ?>
@@ -100,41 +100,17 @@
                                         <td><?= $moa_row->alamat_moa ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Dokumen Pendukung 1</th>
+                                        <th>Dokumen Pendukung</th>
                                         <td>:</td>
                                         <td><?php
-                                            if ($moa_row->nama_dokumen1_moa != "") {
-                                                echo $moa_row->nama_dokumen1_moa;
+                                            $doc_pendukung = "";
+                                            foreach ($moa_dokumen_result as $key => $value) {
+                                                $doc_pendukung .= $value->jenis_dokumen;
                                             }
-                                            if ($moa_row->dokumen1_moa != "") {
-                                                echo '<br>';
-                                                echo '<button type="button" onclick="btn_show_dok_pendukung(\'' . $moa_row->dokumen1_moa . '\')"  class="btn btn-info btn-sm"> Lihat</button>';
-                                            } ?></td>
+                                            echo $doc_pendukung;
+                                            ?></td>
                                     </tr>
-                                    <tr>
-                                        <th>Dokumen Pendukung 2</th>
-                                        <td>:</td>
-                                        <td><?php
-                                            if ($moa_row->nama_dokumen2_moa != "") {
-                                                echo $moa_row->nama_dokumen2_moa;
-                                            }
-                                            if ($moa_row->dokumen2_moa != "") {
-                                                echo '<br>';
-                                                echo '<button type="button" onclick="btn_show_dok_pendukung(\'' . $moa_row->dokumen2_moa . '\')"  class="btn btn-info btn-sm"> Lihat</button>';
-                                            } ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Dokumen Pendukung 3</th>
-                                        <td>:</td>
-                                        <td><?php
-                                            if ($moa_row->nama_dokumen3_moa != "") {
-                                                echo $moa_row->nama_dokumen3_moa;
-                                            }
-                                            if ($moa_row->dokumen3_moa != "") {
-                                                echo '<br>';
-                                                echo '<button type="button" onclick="btn_show_dok_pendukung(\'' . $moa_row->dokumen3_moa . '\')"  class="btn btn-info btn-sm"> Lihat</button>';
-                                            } ?></td>
-                                    </tr>
+
                                     <tr>
                                         <th>Ditujukan Kepada Prodi</th>
                                         <td>:</td>

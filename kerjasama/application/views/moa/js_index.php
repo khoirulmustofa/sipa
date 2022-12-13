@@ -151,9 +151,9 @@
                 },              
                  
                 {
-                    data: "nama_lembaga_mitra_moa",
+                    data: "nama_lembaga_mitra",
                     render: function(data, type, row, meta) {
-                        return explodeLembagaMitra(data);
+                        return explode_koma(data);
                     }
 
                 },{
@@ -225,28 +225,11 @@
     }
 
     function explode_koma(data) {
-        let nama = data.split(",");
-        let result = ``;
+      
+        return data.replace(",", "<br>");;
+    }   
 
-        for (const element of nama) {
-            result += element + "<br>";
-        }
-
-        return result;
-    }
-
-    function explodeLembagaMitra(data) {
-        let nama = data.split("#");
-        let result = ``;
-
-        for (const element of nama) {
-            result += element + "<br>";
-        }
-
-        return result;
-    }
-
-    function addMonths(isoDate, numberMonths) {
+    function addMonths(isoDate, numberMonths) { 
         var dateObject = new Date(isoDate),
             day = dateObject.getDate(); // returns day of the month number
 

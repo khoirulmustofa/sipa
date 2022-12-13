@@ -8,10 +8,11 @@ class Moa_model extends CI_Model
 
     public function get_list_moa($tahun_kerja_sama = "")
     {
-        $this->db->select("a.id as no,a.id,a.nama_lembaga_mitra_moa,a.periode,b.nama_negara,(GROUP_CONCAT(c.kategori)) as kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
+        $this->db->select("a.id as no,a.id,(GROUP_CONCAT(DISTINCT d.nama_lembaga_mitra)) as nama_lembaga_mitra,a.periode,b.nama_negara,(GROUP_CONCAT(DISTINCT c.kategori)) as kategori_moa,a.tingkat_moa,a.tanggal_moa,a.tanggal_akhir_moa");
         $this->db->from("tbl_moa as a");
         $this->db->join("master_negara as b", "b.id = a.negara_id", "left");
         $this->db->join("tbl_moa_kategori as c", "c.moa_id = a.id");
+        $this->db->join("tbl_moa_lembaga_mitra as d", "d.moa_id = a.id");
         if ($tahun_kerja_sama != "") {
             $this->db->where("YEAR(a.tanggal_moa)", $tahun_kerja_sama);
         } else {
