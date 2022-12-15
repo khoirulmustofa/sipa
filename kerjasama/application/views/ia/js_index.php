@@ -9,18 +9,9 @@
         dataTablesIA();
     });
 
-    $(function() {
-        // fungsi untuk cek negara indonesia atau tidak
-        $("#tahun_kerja_sama").change(function() {
-            let tahunKerjaSama = $("#tahun_kerja_sama").val();
-            if (tahunKerjaSama == "") {
-                messegeWarning("Pilih Tahun Kerja Sama");
-                $("#tahun_kerja_sama").focus();
-                return false;
-            }
-            dataTablesIA();
-        });
-    });
+    function btn_filter() {
+        dataTablesIA();
+    }
 
     // fungsi untuk load data MOU
     function dataTablesIA() {
@@ -91,6 +82,11 @@
             ],
             ajax: {
                 url: '<?php echo base_url('ia/list'); ?>',
+                data:{
+                  tahun_ia :  $("#tahun_ia").val(),
+                  kategori_ia :  $("#kategori_ia").val(),
+                  kode_prodi :  $("#kode_prodi").val(),
+                },
                 type: "POST",
                 dataType: "JSON",
             },
@@ -148,15 +144,15 @@
                     data: "tingkat_ia",
                 },
                 {
-                    data: "judul_kegiatan",
+                    data: "judul_kegiatan_ia",
                 }, {
-                    data: "tanggal_awal",
+                    data: "tanggal_awal_ia",
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
                     }
                 },
                 {
-                    data: "tanggal_akhir",
+                    data: "tanggal_akhir_ia",
                     render: function(data, type, row, meta) {
                         return getFormattedDate(data);
                     }

@@ -21,17 +21,46 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Tahun IA :</label>
-                                    <select class="form-control" id="tahun_kerja_sama" name="tahun_kerja_sama">
+                                    <select class="form-control" id="tahun_ia" name="tahun_ia">
                                         <option value="">--Pilih Tahun--</option>
-
+                                        <?php foreach ($tahun_ia_result as $key => $value) {
+                                            echo '<option value="' . $value->tahun_ia . '">' . $value->tahun_ia . '</option>';
+                                        } ?>
                                         <option value="5">> 5 Tahun</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Kategori :</label>
+                                    <select class="form-control" id="kategori_ia" name="kategori_ia">
+                                        <option value="">--Pilih Kategori--</option>
+                                        <option value="Pendidikan/Pengajaran">Pendidikan/Pengajaran</option>
+                                        <option value="Penelitian">Penelitian</option>
+                                        <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <?php if ($_SESSION['status_login'] != 'Prodi') { ?>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Prodi :</label>
+                                        <select class="form-control" id="kode_prodi" name="kode_prodi">
+                                            <option value="">--Pilih Prodi--</option>
+                                            <?php foreach ($prodi_result as $key => $value) {
+                                                echo '<option value="' . $value->kode_prodi . '">' . $value->nama_prodi . '</option>';
+                                            } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php } ?>
+
+                            <div class="col-md-3">
+                                <button type="button" onclick="btn_filter()" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
                             </div>
                         </div>
 

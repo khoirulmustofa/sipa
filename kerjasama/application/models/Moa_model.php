@@ -109,9 +109,10 @@ class Moa_model extends CI_Model
 
     public function get_moa_by_prodi($kode_prodi = "")
     {
-        $this->db->select('a.id,a.mou_id,a.tingkat_moa,a.tanggal_moa,a.nama_lembaga_mitra_moa,a.tanggal_akhir_moa');
+        $this->db->select('a.id,c.id as moa_lembaga_mitra_id,a.mou_id,a.tingkat_moa,c.nama_lembaga_mitra,a.tanggal_moa,a.tanggal_akhir_moa');
         $this->db->from("tbl_moa as a");
         $this->db->join("tbl_moa_prodi as b", "b.moa_id= a.id");
+        $this->db->join("tbl_moa_lembaga_mitra as c", "c.moa_id= a.id");
         if ($kode_prodi != "") {
             $this->db->where("kode_prodi", $kode_prodi);
         }
