@@ -148,6 +148,7 @@ class Mou extends CI_Controller
     {
         $this->load->model('Mou_model');
         $this->load->model('Wilayah_indonesia_model');
+         $this->load->model('Ia_model');
 
         $mou_id = $this->input->get('id', TRUE);
         $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
@@ -174,11 +175,9 @@ class Mou extends CI_Controller
         $data['kecamatan_nama'] = set_value('kecamatan_nama', $mou_row->kecamatan_nama);
         $data['kelurahan_nama'] = set_value('kelurahan_nama', $mou_row->kelurahan_nama);
 
-        $data_response =  array(
-            'status' => true,
-            'view_modal_form' => $this->load->view('mou/view_detail', $data, true)
-        );
-        echo json_encode($data_response);
+        $data['ia_result'] = $this->Ia_model->get_ia_prodi_by_mou_id($mou_id)->result();
+     
+        $this->template->load('_template/main_template', 'mou/view_detail', $data);
     }
 
     //province_name,d.kota_kabupaten_nama,e.kecamatan_nama,f.kelurahan_nama

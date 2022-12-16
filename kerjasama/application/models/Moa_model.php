@@ -150,4 +150,6 @@ class Moa_model extends CI_Model
         $this->db->group_by("b.kode_prodi");
         return  $this->db->get();
     }
+
+   
 }

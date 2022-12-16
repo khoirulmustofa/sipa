@@ -113,15 +113,15 @@
                         let btn_delete = ``;
 
                         if (status_login == 'Fakultas') {
-                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                            btn_detail = `<a type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>`;
+                                        </a>`;
                         }
 
                         if (status_login == 'Tata Usaha') {
-                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                            btn_detail = `<a href="<?php echo base_url('mou/detail?id=')?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>`;
+                                        </a>`;
                             btn_update = `<button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>`;

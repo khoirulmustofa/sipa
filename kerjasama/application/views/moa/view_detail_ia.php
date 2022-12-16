@@ -9,19 +9,19 @@
     </tr>
     <tr>
         <td>Judul Kegiatan</td>
-        <td><?php echo $judul_kegiatan; ?></td>
+        <td><?php echo $judul_kegiatan_ia; ?></td>
     </tr>
     <tr>
         <td>Manfaat Kegiatan</td>
-        <td><?php echo $manfaat_kegiatan; ?></td>
+        <td><?php echo $manfaat_kegiatan_ia; ?></td>
     </tr>
     <tr>
         <td>Tanggal Awal</td>
-        <td><?php echo $tanggal_awal; ?></td>
+        <td><?php echo $tanggal_awal_ia; ?></td>
     </tr>
     <tr>
         <td>Tanggal Akhir</td>
-        <td><?php echo $tanggal_akhir; ?></td>
+        <td><?php echo $tanggal_akhir_ia; ?></td>
     </tr>
     <tr>
         <td>Dosen Terlibat</td>
@@ -31,45 +31,7 @@
             } ?>
         </td>
     </tr>
-    <tr>
-        <td>Dokumen1</td>
-        <td><?php
-            if ($dokumen1 != "") {
-                echo '<br>';
-                echo '<button type="button" onclick="btn_show_dok_ia1()"  class="btn btn-info btn-sm"> Lihat</button>';
-            } ?>
-            <div id="show_doc1">
-                <embed src="<?php echo base_url('assets/doc_ia/') . $dokumen1 ?>" type="" style="width: 100%;" height="720px">
-                <button type="button" class="btn btn-default btn-sm" onclick="btn_hide_dok_ia1()">Tutup Dokumen</button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Dokumen2</td>
-        <td><?php
-            if ($dokumen2 != "") {
-                echo '<br>';
-                echo '<button type="button" onclick="btn_show_dok_ia2()"  class="btn btn-info btn-sm"> Lihat</button>';
-            } ?>
-            <div id="show_doc2">
-                <embed src="<?php echo base_url('assets/doc_ia/') . $dokumen2 ?>" type="" style="width: 100%;" height="720px">
-                <button type="button" class="btn btn-default btn-sm" onclick="btn_hide_dok_ia2()">Tutup Dokumen</button>
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Dokumen3</td>
-        <td><?php
-            if ($dokumen3 != "") {
-                echo '<br>';
-                echo '<button type="button" onclick="btn_show_dok_ia3()"  class="btn btn-info btn-sm"> Lihat</button>';
-            } ?>
-            <div id="show_doc3">
-                <embed src="<?php echo base_url('assets/doc_ia/') . $dokumen3 ?>" type="" style="width: 100%;" height="720px">
-                <button type="button" class="btn btn-default btn-sm" onclick="btn_hide_dok_ia3()">Tutup Dokumen</button>
-            </div>
-        </td>
-    </tr>
+    
 </table>
 
 <script>

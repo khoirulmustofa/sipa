@@ -8,21 +8,12 @@
         load_data_tables();
     });
 
-    $(function() {
-        // fungsi untuk cek negara indonesia atau tidak
-        $("#tingkat_ia").change(function() {
-            let tingkat_ia = $("#tingkat_ia").val();
-            if (tingkat_ia == "") {
-                messegeWarning("Pilih Tingkatan");
-                $("#tingkat_ia").focus();
-                return false;
-            }
-            load_data_tables(tingkat_ia);
-        });
-    });
+    function btn_filter() {
+        load_data_tables();
+    }
 
     // fungsi untuk load data MOU
-    function load_data_tables(tingkat_ia = "") {
+    function load_data_tables() {
         api_data_table();
         $("#myDatatables").DataTable({
             initComplete: function() {
@@ -91,7 +82,9 @@
             ajax: {
                 url: '<?php echo base_url('rekapitulasi_kerja_sama/list'); ?>',
                 data: {
-                    tingkat_ia: tingkat_ia
+                    tingkat_ia: $("#tingkat_ia").val(),
+                    kategori_ia: $("#kategori_ia").val(),
+                    kode_prodi: $("#kode_prodi").val(),
                 },
                 type: "POST",
                 dataType: "JSON",
@@ -106,7 +99,7 @@
             }, {
                 data: "nama_prodi",
             }, {
-                data: "nama_lembaga_mitra_moa",
+                data: "nama_lembaga_mitra",
                 render: function(data, type, row, meta) {
                     return explodeLembagaMitra(data);
                 }
@@ -118,41 +111,24 @@
             }, {
                 data: "wilayah",
             }, {
-                data: "judul_kegiatan",
+                data: "judul_kegiatan_ia",
             }, {
-                data: "manfaat_kegiatan",
+                data: "manfaat_kegiatan_ia",
             }, {
-                data: "tanggal_awal",
+                data: "tanggal_awal_ia",
             }, {
-                data: "dokumen1",
+                data: "file_dokumen",
                 render: function(data, type, row, meta) {
-                    let btn_dok_1 = ``;
-                    let btn_dok_2 = ``;
-                    let btn_dok_3 = ``;
+                    let nama = data.split(",");
+                    let result = ``;
 
-                    if (row['dokumen'] != '' || row['dokumen'] != null) {
-                        // btn_dok_1 = `<button type="button" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
-                    } else {
-
-                        if (row['dokumen1_moa'] != "" || row['dokumen1_moa'] == null) {
-                            btn_dok_1 = `<button type="button" onclick="btn_preview('${row['dokumen1_moa']}')"  class="btn btn-info btn-sm mr-2" > Lihat Dokumen 1</button>`;
-                        }
-
-                        if (row['dokumen2_moa'] != "" || row['dokumen2_moa'] == null) {
-                            btn_dok_2 = `<button type="button" onclick="btn_preview('${row['dokumen2_moa']}')" class="btn btn-info btn-sm mr-2" > Lihat Dokumen 2</button>`;
-                        }
-
-                        if (row['dokumen3_moa'] != "" || row['dokumen3_moa'] == null) {
-                            btn_dok_3 = `<button type="button" onclick="btn_preview('${row['dokumen3_moa']}')" class="btn btn-info btn-sm" > Lihat Dokumen 3</button>`;
-                        }
+                    for (const element of nama) {
+                        result += element + "<br>";
                     }
 
-                    return `<div>
-                            ${btn_dok_1}
-                            ${btn_dok_2}
-                            ${btn_dok_3}
-                            </div>`;
+                    return result;
                 }
+
             }, ],
             order: [
                 [2, 'asc']
@@ -186,8 +162,8 @@
     }
 
     function btn_cetak_rekap() {
-        let tanggal_awal = $('#tanggal_awal').val();
-        let tanggal_akhir = $('#tanggal_akhir').val();
+        let tanggal_awal = $('#tanggal_awal_ia').val();
+        let tanggal_akhir = $('#tanggal_akhir_ia').val();
 
         window.open(`<?php echo base_url('rekapitulasi_kerja_sama/cetak_pdf?') ?>tanggal_awal=${tanggal_awal}&tanggal_akhir=${tanggal_akhir}`, "_blank");
     }

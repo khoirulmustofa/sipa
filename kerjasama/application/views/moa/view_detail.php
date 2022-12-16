@@ -176,7 +176,7 @@
                                             <td><button type="button" onclick="btn_detail_ia('<?php echo $value->id ?>','<?php echo $value->kode_prodi ?>')" class="btn btn-info btn-sm">Detail</button></td>
                                             <td><?php echo $value->nama_prodi ?></td>
                                             <td><?php echo $value->tingkat_ia ?></td>
-                                            <td><?php echo $value->judul_kegiatan ?></td>
+                                            <td><?php echo $value->judul_kegiatan_ia ?></td>
                                             <td><?php echo $value->selisih_hari ?></td>
                                         </tr>
                                     <?php } ?>

@@ -662,23 +662,21 @@ class Moa extends CI_Controller
         $ia_id = $this->input->get('ia_id', TRUE);
         $kode_prodi = $this->input->get('kode_prodi', TRUE);
 
-        $ia_detail_row = $this->Ia_model->get_ia_prodi_by_moa_id_prodi($ia_id, $kode_prodi)->row();
-        $dosen_terlibat_arr = explode("#", $ia_detail_row->dosen_terlibat);
-        $dosen_terlibat_result = $this->Dosen_model->get_dosen_by_npk_arr($dosen_terlibat_arr)->result();
+        $ia_detail_row = $this->Ia_model->get_ia_prodi_by_moa_id_prodi($ia_id, $kode_prodi)->row();       
+      
+        $dosen_terlibat_result = $this->Ia_model->get_dosen_by_ia_id($ia_id)->result();
 
         $data = array(
             'id' => $ia_detail_row->id,
-            'moa_id' => $ia_detail_row->moa_id,
+            'moa_lembaga_mitra_id' => $ia_detail_row->moa_lembaga_mitra_id,
             'kategori_ia' => $ia_detail_row->kategori_ia,
             'tingkat_ia' => $ia_detail_row->tingkat_ia,
-            'judul_kegiatan' => $ia_detail_row->judul_kegiatan,
-            'manfaat_kegiatan' => $ia_detail_row->manfaat_kegiatan,
-            'tanggal_awal' => $ia_detail_row->tanggal_awal,
-            'tanggal_akhir' => $ia_detail_row->tanggal_akhir,
-            'dosen_terlibat_result' => $dosen_terlibat_result,
-            'dokumen1' => $ia_detail_row->dokumen1,
-            'dokumen2' => $ia_detail_row->dokumen2,
-            'dokumen3' => $ia_detail_row->dokumen3,
+            'judul_kegiatan_ia' => $ia_detail_row->judul_kegiatan_ia,
+            'manfaat_kegiatan_ia' => $ia_detail_row->manfaat_kegiatan_ia,
+            'tanggal_awal_ia' => $ia_detail_row->tanggal_awal_ia,
+            'tanggal_akhir_ia' => $ia_detail_row->tanggal_akhir_ia,
+            'nama_prodi'=> $ia_detail_row->nama_prodi,
+            'dosen_terlibat_result' => $dosen_terlibat_result,  
         );
 
         $data_response =  array(

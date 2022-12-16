@@ -74,13 +74,13 @@
                 <tr>
                     <td><?php echo $no++ ?></td>
                     <td><?php echo $value->nama_prodi ?></td>
-                    <td><?php echo str_replace("#", "<br>", $value->nama_lembaga_mitra_moa) ?></td>
+                    <td><?php echo str_replace("#", "<br>", $value->nama_lembaga_mitra) ?></td>
                     <td><?php echo $value->internasional ?></td>
                     <td><?php echo $value->nasional ?></td>
                     <td><?php echo $value->wilayah ?></td>
-                    <td><?php echo $value->judul_kegiatan ?></td>
-                    <td><?php echo $value->manfaat_kegiatan ?></td>
-                    <td><?php echo tgl_indo($value->tanggal_awal) . " - " . $value->selisih_hari . " Hari" ?></td>
+                    <td><?php echo $value->judul_kegiatan_ia ?></td>
+                    <td><?php echo $value->manfaat_kegiatan_ia ?></td>
+                    <td><?php echo tgl_indo($value->tanggal_awal_ia) . " - " . $value->selisih_hari . " Hari" ?></td>
                 </tr>
             <?php } ?>
 

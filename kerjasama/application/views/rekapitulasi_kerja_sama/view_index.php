@@ -17,44 +17,67 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+
                         <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>Pilih Tahun Awal :</label>
+                                    <input type="date" class="form-control" name="tanggal_awal_ia" id="tanggal_awal_ia">
+
+                                </div>
+                            </div>
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Tingkatan :</label>
-                                            <select class="form-control" id="tingkat_ia" name="tingkat_ia">
-                                                <option value="">--Pilih Tingkatan--</option>
-                                                <option value="Wilayah">Wilayah</option>
-                                                <option value="Nasional">Nasional</option>
-                                                <option value="Internasional">Internasional</option>
-                                            </select>
+                                <div class="form-group">
+                                    <label>Pilih Tahun Akhit :</label>
+                                    <div class="input-group mb-3">
+                                        <input type="date" class="form-control" name="tanggal_akhir_ia" id="tanggal_akhir_ia">
+                                        <div class="input-group-append">
+                                            <span><button type="button" onclick="btn_cetak_rekap()" class="btn btn-info ml-2"><i class="far fa-file-pdf"></i> Cetak</button></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Pilih Tahun Awal :</label>
-                                            <input type="date" class="form-control" name="tanggal_awal" id="tanggal_awal">
 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Pilih Tahun Akhit :</label>
-                                            <div class="input-group mb-3">
-                                                <input type="date" class="form-control" name="tanggal_akhir" id="tanggal_akhir">
-                                                <div class="input-group-append">
-                                                    <span><button type="button" onclick="btn_cetak_rekap()" class="btn btn-info ml-2"><i class="far fa-file-pdf"></i> Cetak</button></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tingkatan :</label>
+                                    <select class="form-control" id="tingkat_ia" name="tingkat_ia">
+                                        <option value="">--Pilih Tingkatan--</option>
+                                        <option value="Wilayah">Wilayah</option>
+                                        <option value="Nasional">Nasional</option>
+                                        <option value="Internasional">Internasional</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Kategori :</label>
+                                    <select class="form-control" id="kategori_ia" name="kategori_ia">
+                                        <option value="">--Pilih Kategori--</option>
+                                        <option value="Pendidikan/Pengajaran">Pendidikan/Pengajaran</option>
+                                        <option value="Penelitian">Penelitian</option>
+                                        <option value="Pengabdian Masyarakat">Pengabdian Masyarakat</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <?php if ($_SESSION['status_login'] != 'Prodi') { ?>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Prodi :</label>
+                                        <select class="form-control" id="kode_prodi" name="kode_prodi">
+                                            <option value="">--Pilih Prodi--</option>
+                                            <?php foreach ($prodi_result as $key => $value) {
+                                                echo '<option value="' . $value->kode_prodi . '">' . $value->nama_prodi . '</option>';
+                                            } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <div class="col-md-3">
+                                <button type="button" onclick="btn_filter()" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
                             </div>
                         </div>
 

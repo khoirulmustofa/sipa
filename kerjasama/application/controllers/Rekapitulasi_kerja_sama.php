@@ -2,7 +2,6 @@
 
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
-use phpDocumentor\Reflection\Types\This;
 
 
 if (!defined('BASEPATH'))
@@ -18,22 +17,27 @@ class Rekapitulasi_kerja_sama extends CI_Controller
     public function index()
     {
         $this->load->model('Moa_model');
+        $this->load->model('Prodi_model');
 
         $data['menu'] = 'menu_rekapitulasi';
         $data['title'] = "Table Kerja Sama Tridarma";
         $data['load_css'] = 'rekapitulasi_kerja_sama/css_index';
         $data['load_js'] = 'rekapitulasi_kerja_sama/js_index';
         $data['tahun_moa_result'] = $this->Moa_model->getTahunMOA()->result();
+        $data['prodi_result'] = $this->Prodi_model->get_prodi()->result();
         $this->template->load('_template/main_template', 'rekapitulasi_kerja_sama/view_index', $data);
     }
 
     public function list()
     {
         $tingkat_ia = $this->input->post('tingkat_ia', TRUE);
+        $kategori_ia = $this->input->post('kategori_ia', TRUE);
+        $kode_prodi = $this->input->post('kode_prodi', TRUE);
+
         $this->load->model('Ia_model');
 
         $datatables = new Datatables(new CodeigniterAdapter());
-        $query = $this->Ia_model->get_rekapitulasi_kerjasama($tingkat_ia);
+        $query = $this->Ia_model->get_rekapitulasi_kerjasama($tingkat_ia,$kategori_ia,$kode_prodi);
         $datatables->query($query);
         echo $datatables->generate();
     }
@@ -51,7 +55,7 @@ class Rekapitulasi_kerja_sama extends CI_Controller
         $this->data['title_pdf'] = 'Laporan Penjualan Toko Kita';
 
         // filename dari pdf ketika didownload
-        $file_pdf = 'laporan_penjualan_toko_kita';
+        $file_pdf = 'Laporna Bos';
         // setting paper
         $paper = 'A4';
         //orientasi paper potrait / landscape

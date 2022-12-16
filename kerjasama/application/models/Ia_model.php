@@ -76,74 +76,102 @@ class Ia_model extends CI_Model
         return  $this->db->affected_rows();
     }
 
-    public function get_rekapitulasi_kerjasama($tingkat_ia = "")
+    public function get_rekapitulasi_kerjasama($tingkat_ia = "", $kategori_ia = "", $kode_prodi = "")
     {
-        $this->db->select("a.id,d.nama_prodi,b.nama_lembaga_mitra_moa");
+        $this->db->select("a.id,d.nama_prodi,b.nama_lembaga_mitra");
         $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
         $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
         $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
-        $this->db->select("a.judul_kegiatan,a.manfaat_kegiatan,a.tanggal_awal_ia,a.dokumen1");
+        $this->db->select("a.judul_kegiatan_ia,a.manfaat_kegiatan_ia,a.tanggal_awal_ia");
+        $this->db->select("(GROUP_CONCAT(DISTINCT f.file_dokumen)) as file_dokumen");
         $this->db->select("DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
-        $this->db->select("b.dokumen1_moa,b.dokumen2_moa,b.dokumen3_moa");
-        $this->db->select("f.dokumen");
         $this->db->from("tbl_ia as a");
-        $this->db->join("tbl_moa as b", "b.id = a.moa_id");
-        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.id");
-        $this->db->join("tb_prodi as d", "d.kode_prodi = c.kode_prodi");
-        $this->db->join("tbl_mou as f", "f.id = b.mou_id", 'left');
+        $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+        $this->db->join("tbl_ia_dokumen as f", "f.ia_id = a.id");
+        // $this->db->join("tbl_mou as g", "g.id = f.mou_id");
+        // $this->db->join("tbl_ia_dokumen as g", "g.id = f.mou_id");
         if ($tingkat_ia != "") {
             $this->db->where("a.tingkat_ia", $tingkat_ia);
         }
+
+        if ($kategori_ia != "") {
+            $this->db->where('a.kategori_ia', $kategori_ia);
+        }
+
+        if ($kode_prodi != "") {
+            $this->db->where('d.kode_prodi', $kode_prodi);
+        }
+
         $this->db->get();
         $query = $this->db->last_query();
         return $query;
     }
 
-    public function get_ia_prodi_by_moa_id($moa_id = "")
+    public function get_dosen_by_ia_id($ia_id = "")
     {
-        $this->db->select("a.*,c.kode_prodi,c.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->select("a.*,c.*");
         $this->db->from("tbl_ia as a");
-        $this->db->join("tbl_moa_prodi as b", "b.moa_id = a.moa_id");
-        $this->db->join("tb_prodi as c", "c.kode_prodi = b.kode_prodi");
-        $this->db->where("a.moa_id", $moa_id);
+        $this->db->join("tbl_ia_dosen as b", "b.ia_id = a.id");
+        $this->db->join("tb_dosen as c", "c.npk = b. npk");
+        
+        $this->db->where("a.id", $ia_id);
         return  $this->db->get();
     }
 
     public function get_ia_prodi_by_moa_id_prodi($ia_id = "", $kode_prodi = "")
     {
-        $this->db->select("a.*,c.kode_prodi,b.nama_lembaga_mitra_moac.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->select("a.*,c.kode_prodi,d.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
         $this->db->from("tbl_ia as a");
-        $this->db->join("tbl_moa_prodi as b", "b.moa_id = a.moa_id");
-        $this->db->join("tb_prodi as c", "c.kode_prodi = b.kode_prodi");
+        $this->db->join("tbl_moa_lembaga_mitra as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.moa_id");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
         $this->db->where("a.id", $ia_id);
-        $this->db->where("b.kode_prodi", $kode_prodi);
+        $this->db->where("c.kode_prodi", $kode_prodi);
+        return  $this->db->get();
+    }
+
+    public function get_ia_prodi_by_moa_id($moa_id = "")
+    {
+        $this->db->select("a.*,c.kode_prodi,d.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->from("tbl_ia as a");
+        $this->db->join("tbl_moa_lembaga_mitra as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.moa_id");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+        $this->db->where("c.moa_id", $moa_id);
         return  $this->db->get();
     }
 
     public function get_rekapitulasi_kerjasama_for_pdf($tanggal_awal_ia = "", $tanggal_akhir_ia = "")
     {
 
-        // $this->db->select("a.id,d.nama_prodi,b.nama_lembaga_mitra_moa");
-        // $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
-        // $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
-        // $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
-        // $this->db->select("a.judul_kegiatan,a.manfaat_kegiatan,a.tanggal_awal_ia,a.dokumen1");
-        // $this->db->from("tbl_ia as a");
-        // $this->db->join("tbl_moa as b", "b.id = a.moa_id");
-        // $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.id");
-        // $this->db->join("tb_prodi as d", "d.kode_prodi = c.kode_prodi");
-        // $this->db->where("a.tanggal_awal_ia BETWEEN '$tanggal_awal_ia' AND '$tanggal_akhir_ia' ");
-
-        $this->db->select("a.id as no,a.id,d.nama_prodi,b.nama_lembaga_mitra_moa,a.tingkat_ia,a.judul_kegiatan,a.manfaat_kegiatan,a.tanggal_awal_ia,a.tanggal_akhir_ia,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->select("a.id,d.nama_prodi,b.nama_lembaga_mitra");
         $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
         $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
         $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
+        $this->db->select("a.judul_kegiatan_ia,a.manfaat_kegiatan_ia,a.tanggal_awal_ia");
+        $this->db->select("DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
         $this->db->from("tbl_ia as a");
-        $this->db->join("tbl_moa as b", "b.id = a.moa_id");
-        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b.id");
-        $this->db->join("tb_prodi as d", "d.kode_prodi = c.kode_prodi");
+        $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+       
         $this->db->where("a.tanggal_awal_ia BETWEEN '$tanggal_awal_ia' AND '$tanggal_akhir_ia' ");
 
+        return  $this->db->get();
+    }
+
+
+    public function get_ia_prodi_by_mou_id($mou_id = "")
+    {
+        $this->db->select("a.*,f.kode_prodi,f.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->from("tbl_ia as a");
+        $this->db->join("tbl_moa_lembaga_mitra as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa as c", "c.id = b.moa_id");
+        $this->db->join("tbl_moa_prodi as d", "d.moa_id = c.id");
+        $this->db->join("tb_prodi as f", "f.kode_prodi = d. kode_prodi");
+        $this->db->where("c.mou_id", $mou_id);
         return  $this->db->get();
     }
 }
