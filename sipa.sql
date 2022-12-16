@@ -18,17 +18,60 @@ DROP TABLE IF EXISTS `tbl_ia`;
 
 CREATE TABLE `tbl_ia` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `moa_id` bigint(20) DEFAULT NULL,
-  `kategori_ia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tingkat_ia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `judul_kegiatan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `manfaat_kegiatan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tanggal_awal` date DEFAULT NULL,
-  `tanggal_akhir` date DEFAULT NULL,
-  `dosen_terlibat` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `moa_lembaga_mitra_id` int(11) DEFAULT NULL,
+  `kategori_ia` varchar(255) DEFAULT NULL,
+  `tingkat_ia` varchar(255) DEFAULT NULL,
+  `judul_kegiatan_ia` text DEFAULT NULL,
+  `manfaat_kegiatan_ia` text DEFAULT NULL,
+  `tanggal_awal_ia` date DEFAULT NULL,
+  `tanggal_akhir_ia` date DEFAULT NULL,
+  `waktu_buat` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `tbl_ia_dokumen` */
+
+DROP TABLE IF EXISTS `tbl_ia_dokumen`;
+
+CREATE TABLE `tbl_ia_dokumen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ia_id` bigint(20) DEFAULT NULL,
+  `jenis_dokumen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_dokumen` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_file` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_ia_dosen` */
+
+DROP TABLE IF EXISTS `tbl_ia_dosen`;
+
+CREATE TABLE `tbl_ia_dosen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ia_id` bigint(20) DEFAULT NULL,
+  `npk` char(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `tbl_ia_dosen_luar_biasa` */
+
+DROP TABLE IF EXISTS `tbl_ia_dosen_luar_biasa`;
+
+CREATE TABLE `tbl_ia_dosen_luar_biasa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ia_id` bigint(20) DEFAULT NULL,
+  `nama_dosen_luar_biasa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_ia_mahasiswa` */
+
+DROP TABLE IF EXISTS `tbl_ia_mahasiswa`;
+
+CREATE TABLE `tbl_ia_mahasiswa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ia_id` bigint(20) DEFAULT NULL,
+  `nama_mahasiswa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -39,10 +82,9 @@ DROP TABLE IF EXISTS `tbl_moa`;
 CREATE TABLE `tbl_moa` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `mou_id` bigint(20) DEFAULT NULL,
-  `kategori_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tingkat_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_moa` date DEFAULT NULL,
-  `nama_lembaga_mitra_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `periode` int(11) DEFAULT NULL,
   `negara_id` int(11) DEFAULT NULL,
   `provinsi_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kota_kabupaten_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -50,18 +92,67 @@ CREATE TABLE `tbl_moa` (
   `kelurahan_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_akhir_moa` date DEFAULT NULL,
-  `dokumen1_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen2_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dokumen3_moa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen1_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen2_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nama_dokumen3_moa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kode_prodi` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `waktu_buat` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `mou_id` (`mou_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_moa_dokumen` */
+
+DROP TABLE IF EXISTS `tbl_moa_dokumen`;
+
+CREATE TABLE `tbl_moa_dokumen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `moa_id` bigint(20) DEFAULT NULL,
+  `jenis_dokumen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_dokumen` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nama_file` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_moa_kategori` */
+
+DROP TABLE IF EXISTS `tbl_moa_kategori`;
+
+CREATE TABLE `tbl_moa_kategori` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `moa_id` bigint(20) DEFAULT NULL,
+  `kategori` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_moa_lembaga` */
+
+DROP TABLE IF EXISTS `tbl_moa_lembaga`;
+
+CREATE TABLE `tbl_moa_lembaga` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `moa_id` bigint(20) DEFAULT NULL,
+  `nama_lembaga` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Table structure for table `tbl_moa_lembaga_mitra` */
+
+DROP TABLE IF EXISTS `tbl_moa_lembaga_mitra`;
+
+CREATE TABLE `tbl_moa_lembaga_mitra` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `moa_id` bigint(20) DEFAULT NULL,
+  `nama_lembaga_mitra` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `tbl_moa_prodi` */
+
+DROP TABLE IF EXISTS `tbl_moa_prodi`;
+
+CREATE TABLE `tbl_moa_prodi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `moa_id` bigint(20) DEFAULT NULL,
+  `kode_prodi` char(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `tbl_mou` */
 
@@ -85,7 +176,7 @@ CREATE TABLE `tbl_mou` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
