@@ -9,6 +9,16 @@
 
         <label><strong>Dokumen MOU</strong></label>
         <ol>
+            <?php foreach ($mou_dokumen_result as $key => $value) { ?>
+                <li>                    
+                    <span><a href="<?php echo base_url('assets/doc_mou/') . $value->dokumen_mou ?>" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">Lihat</a></span>
+                </li>
+            <?php  } ?>
+        </ol>
+        <hr>
+
+        <label><strong>Dokumen MOA</strong></label>
+        <ol>
             <?php foreach ($moa_dokumen_result as $key => $value) { ?>
                 <li>
                     <p><?php echo "Jenis Dokumen : " . $value->jenis_dokumen ?></p>
@@ -22,7 +32,7 @@
             <?php foreach ($ia_dokumen_result as $key => $value) { ?>
                 <li>
                     <p><?php echo "Jenis Dokumen : " . $value->jenis_dokumen ?></p>
-                    <span><a href="<?php echo base_url('assets/doc_ia/') . $value->file_dokumen ?>" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">Lihat</a></span>                    
+                    <span><a href="<?php echo base_url('assets/doc_ia/') . $value->file_dokumen ?>" class="btn btn-info btn-sm" target="_blank" rel="noopener noreferrer">Lihat</a></span>
                 </li>
             <?php  } ?>
         </ol>

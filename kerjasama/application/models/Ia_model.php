@@ -13,6 +13,7 @@ class Ia_model extends CI_Model
         $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
         $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+        $this->db->join("tbl_ia_kategori as e", "e.ia_id = a. id");
         if ($kode_prodi != "") {
             $this->db->where('c.kode_prodi', $kode_prodi);
         }
@@ -24,7 +25,7 @@ class Ia_model extends CI_Model
         }
 
         if ($kategori_ia != "") {
-            $this->db->where('a.kategori_ia', $kategori_ia);
+            $this->db->where('e.kategori', $kategori_ia);
         }
 
         $this->db->get();
@@ -202,6 +203,17 @@ class Ia_model extends CI_Model
         $this->db->from("tbl_ia as a");
         $this->db->join("tbl_moa_lembaga_mitra as b","b.id = a.moa_lembaga_mitra_id");
         $this->db->join("tbl_moa_dokumen as c","c.moa_id = b.moa_id");
+        $this->db->where("a.id",$ia_id);
+        return  $this->db->get();
+    }
+
+    public function get_dokumen_mou_by_ia_id($ia_id = "")
+    {
+        $this->db->select("*,d.dokumen as dokumen_mou");
+        $this->db->from("tbl_ia as a");
+        $this->db->join("tbl_moa_lembaga_mitra as b","b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa as c","c.id = b.moa_id");
+        $this->db->join("tbl_mou as d","d.id = c.mou_id");
         $this->db->where("a.id",$ia_id);
         return  $this->db->get();
     }

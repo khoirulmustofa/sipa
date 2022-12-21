@@ -50,8 +50,10 @@ class Rekapitulasi_kerja_sama extends CI_Controller
         $id_ia = $this->input->get('id', TRUE);
 
         $data['title'] = "Detail Kerjasama";
-        $data['ia_dokumen_result'] =  $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id($id_ia)->result();
+        $data['mou_dokumen_result'] = $this->Ia_model->get_dokumen_mou_by_ia_id($id_ia)->result();
         $data['moa_dokumen_result'] = $this->Ia_model->get_dokumen_moa_by_ia_id($id_ia)->result();
+        $data['ia_dokumen_result'] =  $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id($id_ia)->result();
+        
 
         $data_response =  array(
             'status' => true,
