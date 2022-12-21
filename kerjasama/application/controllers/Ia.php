@@ -60,6 +60,9 @@ class Ia extends CI_Controller
         $this->load->model('Dosen_model');
         $this->load->model('Ia_dosen_model');
         $this->load->model('Ia_dokumen_model');
+        $this->load->model('Ia_kategori_model');
+        $this->load->model('Ia_dosen_luar_biasa_model');
+        $this->load->model('Ia_mahasiswa_model');
 
         // cek status_login ?
         $kode_prodi = "";
@@ -71,7 +74,7 @@ class Ia extends CI_Controller
         $data['title'] = 'Tambah Implementation Arrangement (IA)';
         $data['action'] = "ia/create_action";
         $data['id']  = set_value('id');
-        $data['moa_id']  = set_value('moa_id');
+        $data['moa_lembaga_mitra_id']  = set_value('moa_lembaga_mitra_id');
         $data['kategori_ia']  = set_value('kategori_ia');
         $data['tingkat_ia']  = set_value('tingkat_ia');
         $data['judul_kegiatan_ia']  = set_value('judul_kegiatan_ia');
@@ -82,7 +85,10 @@ class Ia extends CI_Controller
 
         $data['moa_result'] = $this->Moa_model->get_moa_by_prodi($kode_prodi)->result();
         $data['dosen_result'] = $this->Dosen_model->get_dosen()->result();
+        $data['ia_kategori_result'] = $this->Ia_kategori_model->get_ia_kategori_by_ia_id('')->result();
         $data['ia_dosen_result'] = $this->Ia_dosen_model->get_ia_dosen_by_ia_id('')->result();
+        $data['ia_dosen_luar_biasa_result'] = $this->Ia_dosen_luar_biasa_model->get_ia_dosen_luar_biasa_by_ia_id('')->result();
+        $data['ia_mahasiswa_result'] = $this->Ia_mahasiswa_model->get_ia_mahasiswa_by_ia_id('')->result();
         $data['ia_dokumen_result'] = $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id('')->result();
 
         $data_response =  array(
@@ -100,11 +106,12 @@ class Ia extends CI_Controller
         $this->load->model('Ia_dosen_model');
         $this->load->model('Ia_dosen_luar_biasa_model');
         $this->load->model('Ia_mahasiswa_model');
+        $this->load->model('Ia_kategori_model');
 
         // validasi form
         $this->form_validation->set_rules('moa_lembaga_mitra_id', 'MOA Lembaga', 'trim|required');
-        $this->form_validation->set_rules('kategori_ia', 'kategori moa', 'trim|required');
-        $this->form_validation->set_rules('tingkat_ia', 'tingkat moa', 'trim|required');
+        $this->form_validation->set_rules('kategori_ia[]', 'Kategori IA', 'trim|required');
+        $this->form_validation->set_rules('tingkat_ia', 'tingkat IA', 'trim|required');
         $this->form_validation->set_rules('judul_kegiatan_ia', 'judul kegiatan', 'trim|required');
         $this->form_validation->set_rules('manfaat_kegiatan_ia', 'manfaat kegiatan', 'trim|required');
         $this->form_validation->set_rules('tanggal_awal_ia', 'tanggal awal', 'trim|required');
@@ -121,7 +128,6 @@ class Ia extends CI_Controller
 
             $tanda_waktu = date('Y:m:d H:i:s');
             $data['moa_lembaga_mitra_id'] = $this->input->post('moa_lembaga_mitra_id', TRUE);
-            $data['kategori_ia'] = $this->input->post('kategori_ia', TRUE);
             $data['tingkat_ia'] = $this->input->post('tingkat_ia', TRUE);
             $data['judul_kegiatan_ia'] = $this->input->post('judul_kegiatan_ia', TRUE);
             $data['manfaat_kegiatan_ia'] = $this->input->post('manfaat_kegiatan_ia', TRUE);
@@ -132,6 +138,14 @@ class Ia extends CI_Controller
             $this->Ia_model->insert_ia($data);
             // get IA by waktu buat
             $ia_row = $this->Ia_model->get_ia_by_waktu_buat($tanda_waktu)->row();
+
+            // insert tbl_ia_kategori
+            $kategori_ia_arr = $this->input->post('kategori_ia[]', TRUE);
+            foreach ($kategori_ia_arr as $key => $value) {
+                $data_kategori['ia_id'] = $ia_row->id;
+                $data_kategori['kategori'] = $value;
+                $this->Ia_kategori_model->insert_ia_kategori($data_kategori);
+            }
 
             // insert tbl_ia_dosen
             $npk_arr = $this->input->post('npk[]', TRUE);
@@ -204,32 +218,41 @@ class Ia extends CI_Controller
         $this->load->model('Ia_model');
         $this->load->model('Moa_model');
         $this->load->model('Dosen_model');
+        $this->load->model('Ia_dosen_model');
+        $this->load->model('Ia_dokumen_model');
+        $this->load->model('Ia_kategori_model');
+        $this->load->model('Ia_dosen_luar_biasa_model');
+        $this->load->model('Ia_mahasiswa_model');
 
-        $id = $this->input->get('id', TRUE);
+        $id = $this->input->get('ia_id', TRUE);
         $ia_row = $this->Ia_model->get_ia_by_id($id)->row();
 
+        // cek status_login ?
+        $kode_prodi = "";
+        if (($_SESSION['status_login'] == "Prodi")) {
+            $kode_prodi = $_SESSION['kode_prodi'];
+        }
+
+        $data['menu'] = 'menu_ia';
         $data['title'] = 'Detail Implementation Arrangement (IA)';
         $data['id']  = $ia_row->id;
-        $data['kategori_ia']  = $ia_row->kategori_ia;
-        $data['moa_id']  = $ia_row->moa_id;
+        $data['moa_lembaga_mitra_id'] = $ia_row->moa_lembaga_mitra_id;
         $data['tingkat_ia']  = $ia_row->tingkat_ia;
-        $data['judul_kegiatan']  = $ia_row->judul_kegiatan;
-        $data['manfaat_kegiatan']  = $ia_row->manfaat_kegiatan;
-        $data['tanggal_awal']  = $ia_row->tanggal_awal;
-        $data['tanggal_akhir']  = $ia_row->tanggal_akhir;
-        $data['dosen_terlibat']  = $ia_row->dosen_terlibat;
-        $data['dokumen1']  = $ia_row->dokumen1;
-        $data['dokumen2']  = $ia_row->dokumen2;
-        $data['dokumen3']  = $ia_row->dokumen3;
+        $data['judul_kegiatan_ia']  = $ia_row->judul_kegiatan_ia;
+        $data['manfaat_kegiatan_ia']  = $ia_row->manfaat_kegiatan_ia;
+        $data['tanggal_awal_ia']  = $ia_row->tanggal_awal_ia;
+        $data['tanggal_akhir_ia']  = $ia_row->tanggal_akhir_ia;
+        $data['selisih_hari'] = $ia_row->selisih_hari;
 
-        $data['moa_result'] = $this->Moa_model->get_moa()->result();
+        $data['moa_result'] = $this->Moa_model->get_moa_by_prodi($kode_prodi)->result();
         $data['dosen_result'] = $this->Dosen_model->get_dosen()->result();
+        $data['ia_kategori_result'] = $this->Ia_kategori_model->get_ia_kategori_by_ia_id($ia_row->id)->result();
+        $data['ia_dosen_result'] = $this->Ia_dosen_model->get_ia_dosen_dosen_by_ia_id($ia_row->id)->result();
+        $data['ia_dosen_luar_biasa_result'] = $this->Ia_dosen_luar_biasa_model->get_ia_dosen_luar_biasa_by_ia_id($ia_row->id)->result();
+        $data['ia_mahasiswa_result'] = $this->Ia_mahasiswa_model->get_ia_mahasiswa_by_ia_id($ia_row->id)->result();
+        $data['ia_dokumen_result'] = $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id($ia_row->id)->result();
 
-        $data_response =  array(
-            'status' => true,
-            'view_modal_form' => $this->load->view('ia/view_detail', $data, true)
-        );
-        echo json_encode($data_response);
+        $this->template->load('_template/main_template', 'ia/view_detail', $data);
     }
 
     public function update()
@@ -239,6 +262,9 @@ class Ia extends CI_Controller
         $this->load->model('Dosen_model');
         $this->load->model('Ia_dosen_model');
         $this->load->model('Ia_dokumen_model');
+        $this->load->model('Ia_kategori_model');
+        $this->load->model('Ia_dosen_luar_biasa_model');
+        $this->load->model('Ia_mahasiswa_model');
 
         $id = $this->input->get('id', TRUE);
         $ia_row = $this->Ia_model->get_ia_by_id($id)->row();
@@ -254,7 +280,6 @@ class Ia extends CI_Controller
         $data['action'] = "ia/update_action";
         $data['id']  = $ia_row->id;
         $data['moa_lembaga_mitra_id'] = $ia_row->moa_lembaga_mitra_id;
-        $data['kategori_ia']  = $ia_row->kategori_ia;
         $data['tingkat_ia']  = $ia_row->tingkat_ia;
         $data['judul_kegiatan_ia']  = $ia_row->judul_kegiatan_ia;
         $data['manfaat_kegiatan_ia']  = $ia_row->manfaat_kegiatan_ia;
@@ -263,11 +288,15 @@ class Ia extends CI_Controller
 
         $data['moa_result'] = $this->Moa_model->get_moa_by_prodi($kode_prodi)->result();
         $data['dosen_result'] = $this->Dosen_model->get_dosen()->result();
+        $data['ia_kategori_result'] = $this->Ia_kategori_model->get_ia_kategori_by_ia_id($ia_row->id)->result();
         $data['ia_dosen_result'] = $this->Ia_dosen_model->get_ia_dosen_by_ia_id($ia_row->id)->result();
+        $data['ia_dosen_luar_biasa_result'] = $this->Ia_dosen_luar_biasa_model->get_ia_dosen_luar_biasa_by_ia_id($ia_row->id)->result();
+        $data['ia_mahasiswa_result'] = $this->Ia_mahasiswa_model->get_ia_mahasiswa_by_ia_id($ia_row->id)->result();
         $data['ia_dokumen_result'] = $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id($ia_row->id)->result();
 
         $data_response =  array(
             'status' => true,
+            'ia_kategori_result' => $this->Ia_kategori_model->get_ia_kategori_by_ia_id($ia_row->id)->result(),
             'view_modal_form' => $this->load->view('ia/view_form', $data, true)
         );
         echo json_encode($data_response);
@@ -275,17 +304,22 @@ class Ia extends CI_Controller
 
     public function update_action()
     {
+        // INIT MODEL
         $this->load->model('Ia_model');
+        $this->load->model('Ia_dokumen_model');
+        $this->load->model('Ia_dosen_model');
+        $this->load->model('Ia_dosen_luar_biasa_model');
+        $this->load->model('Ia_mahasiswa_model');
+        $this->load->model('Ia_kategori_model');
 
         // validasi form
-        $this->form_validation->set_rules('moa_id', 'moa id', 'trim|required');
-        $this->form_validation->set_rules('kategori_ia', 'kategori moa', 'trim|required');
-        $this->form_validation->set_rules('tingkat_ia', 'tingkat moa', 'trim|required');
-        $this->form_validation->set_rules('judul_kegiatan', 'judul kegiatan', 'trim|required');
-        $this->form_validation->set_rules('manfaat_kegiatan', 'manfaat kegiatan', 'trim|required');
-        $this->form_validation->set_rules('tanggal_awal', 'tanggal awal', 'trim|required');
-        $this->form_validation->set_rules('tanggal_akhir', 'tanggal akhir', 'trim|required');
-        $this->form_validation->set_rules('dosen_terlibat[]', 'dosen terlibat', 'trim|required');
+        $this->form_validation->set_rules('moa_lembaga_mitra_id', 'MOA Lembaga', 'trim|required');
+        $this->form_validation->set_rules('kategori_ia[]', 'Kategori IA', 'trim|required');
+        $this->form_validation->set_rules('tingkat_ia', 'tingkat IA', 'trim|required');
+        $this->form_validation->set_rules('judul_kegiatan_ia', 'judul kegiatan', 'trim|required');
+        $this->form_validation->set_rules('manfaat_kegiatan_ia', 'manfaat kegiatan', 'trim|required');
+        $this->form_validation->set_rules('tanggal_awal_ia', 'tanggal awal', 'trim|required');
+        $this->form_validation->set_rules('tanggal_akhir_ia', 'tanggal akhir', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
             $data_response =  array(
@@ -295,59 +329,90 @@ class Ia extends CI_Controller
             );
             echo json_encode($data_response);
         } else {
-            // jika ada dokumen 1
-            if (!empty($_FILES['dokumen1']['name'])) {
-                $config_doc1['upload_path'] = './assets/doc_ia/';
-                $config_doc1['allowed_types'] = '*';
-                $config_doc1['file_name'] = "doc1_" . date('Ymdhis');
-                $this->load->library('upload', $config_doc1);
-                $this->upload->initialize($config_doc1);
-
-                $this->upload->do_upload('dokumen1');
-                $data_upload1 = $this->upload->data();
-                $data['dokumen1'] = $data_upload1['file_name'];
-            }
-
-            // jika ada dokumen 2
-            if (!empty($_FILES['dokumen2']['name'])) {
-                $config_doc2['upload_path'] = './assets/doc_ia/';
-                $config_doc2['allowed_types'] = '*';
-                $config_doc2['file_name'] = "doc2_" . date('Ymdhis');
-                $this->load->library('upload', $config_doc2);
-                $this->upload->initialize($config_doc2);
-
-                $this->upload->do_upload('dokumen2');
-                $data_upload2 = $this->upload->data();
-                $data['dokumen2'] = $data_upload2['file_name'];
-            }
-
-            // jika ada dokumen 3
-            if (!empty($_FILES['dokumen3']['name'])) {
-                $config_doc3['upload_path'] = './assets/doc_ia/';
-                $config_doc3['allowed_types'] = '*';
-                $config_doc3['file_name'] = "doc3_" . date('Ymdhis');
-                $this->load->library('upload', $config_doc3);
-                $this->upload->initialize($config_doc3);
-
-                $this->upload->do_upload('dokumen3');
-                $data_upload3 = $this->upload->data();
-                $data['dokumen3'] = $data_upload3['file_name'];
-            }
-
-            $data['moa_id'] = $this->input->post('moa_id', TRUE);
-            $data['kategori_ia'] = $this->input->post('kategori_ia', TRUE);
-            $data['tingkat_ia'] = $this->input->post('tingkat_ia', TRUE);
-            $data['judul_kegiatan'] = $this->input->post('judul_kegiatan', TRUE);
-            $data['manfaat_kegiatan'] = $this->input->post('manfaat_kegiatan', TRUE);
-            $data['tanggal_awal'] = $this->input->post('tanggal_awal', TRUE);
-            $data['tanggal_akhir'] = $this->input->post('tanggal_akhir', TRUE);
-            $data['dosen_terlibat'] = implode("#", $this->input->post('dosen_terlibat[]', TRUE));
             $id = $this->input->post('id', TRUE);
-            $this->Ia_model->update_ia_by_id($id, $data);
+
+            $data['moa_lembaga_mitra_id'] = $this->input->post('moa_lembaga_mitra_id', TRUE);
+            $data['tingkat_ia'] = $this->input->post('tingkat_ia', TRUE);
+            $data['judul_kegiatan_ia'] = $this->input->post('judul_kegiatan_ia', TRUE);
+            $data['manfaat_kegiatan_ia'] = $this->input->post('manfaat_kegiatan_ia', TRUE);
+            $data['tanggal_awal_ia'] = $this->input->post('tanggal_awal_ia', TRUE);
+            $data['tanggal_akhir_ia'] = $this->input->post('tanggal_akhir_ia', TRUE);
+            // insert into tbl_ia
+            $this->Ia_model->update_ia_by_id($id,$data);
+           
+
+            $this->Ia_kategori_model->delete_ia_kategori_by_ia_id($id);
+            // insert tbl_ia_kategori
+            $kategori_ia_arr = $this->input->post('kategori_ia[]', TRUE);
+            foreach ($kategori_ia_arr as $key => $value) {
+                $data_kategori['ia_id'] = $id;
+                $data_kategori['kategori'] = $value;
+                $this->Ia_kategori_model->insert_ia_kategori($data_kategori);
+            }
+
+            $this->Ia_dosen_model->delete_ia_dosen_by_ia_id($id);
+            // insert tbl_ia_dosen
+            $npk_arr = $this->input->post('npk[]', TRUE);
+            foreach ($npk_arr as $key => $value) {
+                $data_dosen['ia_id'] = $id;
+                $data_dosen['npk'] = $value;
+                $this->Ia_dosen_model->insert_ia_dosen($data_dosen);
+            }
+
+            $this->Ia_dosen_luar_biasa_model->delete_ia_dosen_luar_biasa_by_ia_id($id);
+            // insert tbl_ia_dosen_luar_biasa
+            $nama_dosen_luar_biasa_arr = $this->input->post('nama_dosen_luar_biasa[]', TRUE);
+            foreach ($nama_dosen_luar_biasa_arr as $key => $value) {
+                $data_dosen_luar_biasa['ia_id'] = $id;
+                $data_dosen_luar_biasa['nama_dosen_luar_biasa'] = $value;
+                $this->Ia_dosen_luar_biasa_model->insert_ia_dosen_luar_biasa($data_dosen_luar_biasa);
+            }
+
+            $this->Ia_mahasiswa_model->delete_ia_mahasiswa_by_ia_id($id);
+            // insert tbl_ia_mahasiswa
+            $nama_mahasiswa_arr = $this->input->post('nama_mahasiswa[]', TRUE);
+            foreach ($nama_mahasiswa_arr as $key => $value) {
+                $data_mahasiswa['ia_id'] = $id;
+                $data_mahasiswa['nama_mahasiswa'] = $value;
+                $this->Ia_mahasiswa_model->insert_ia_mahasiswa($data_mahasiswa);
+            }
+
+            // insert  tbl_moa_dokumen
+            $count = count($_FILES['files']['name']);
+
+            for ($i = 0; $i < $count; $i++) {
+
+                $nama_file_arr =  $this->input->post('nama_file[]', TRUE);
+                $jenis_dokumen_arr =  $this->input->post('jenis_dokumen[]', TRUE);
+
+                if (!empty($_FILES['files']['name'][$i])) {
+
+                    $_FILES['file']['name'] = $_FILES['files']['name'][$i];
+                    $_FILES['file']['type'] = $_FILES['files']['type'][$i];
+                    $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+                    $_FILES['file']['error'] = $_FILES['files']['error'][$i];
+                    $_FILES['file']['size'] = $_FILES['files']['size'][$i];
+
+                    $config_doc1['upload_path'] = './assets/doc_ia/';
+                    $config_doc1['allowed_types'] = '*';
+                    $config_doc1['file_name'] = "doc_ia_" . date('Ymdhis');
+                    $this->load->library('upload', $config_doc1);
+                    $this->upload->initialize($config_doc1);
+
+                    $this->upload->do_upload('file');
+                    $data_upload = $this->upload->data();
+                    $data_dokumen['ia_id'] = $id;
+                    $data_dokumen['jenis_dokumen'] = $jenis_dokumen_arr[$i];
+                    $data_dokumen['file_dokumen'] = $data_upload['file_name'];
+                    $data_dokumen['nama_file'] = $nama_file_arr[$i];
+                    $this->Ia_dokumen_model->insert_ia_dokumen($data_dokumen);
+                }
+            }
+
             $data_response =  array(
                 'status' => true,
                 // 'token_csrf' => $this->security->get_csrf_hash(),
-                'messege' => 'Tambah Implementation Arrangement (IA) BERHASIL'
+                'messege' => 'Update Implementation Arrangement (IA) BERHASIL'
             );
 
             echo json_encode($data_response);

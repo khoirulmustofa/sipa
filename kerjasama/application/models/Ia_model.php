@@ -54,7 +54,7 @@ class Ia_model extends CI_Model
 
     public function get_ia_by_id($id = "")
     {
-        $this->db->select("*");
+        $this->db->select("*,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
         $this->db->from("tbl_ia as a");
         $this->db->where("id", $id);
 
@@ -82,16 +82,24 @@ class Ia_model extends CI_Model
         $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
         $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
         $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
-        $this->db->select("a.judul_kegiatan_ia,a.manfaat_kegiatan_ia,a.tanggal_awal_ia");
-        $this->db->select("(GROUP_CONCAT(DISTINCT f.file_dokumen)) as file_dokumen");
+        $this->db->select("a.judul_kegiatan_ia,a.manfaat_kegiatan_ia,a.tanggal_awal_ia,tanggal_akhir_ia");
+        $this->db->select("f.file_dokumen");
         $this->db->select("DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
         $this->db->from("tbl_ia as a");
-        $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id",);
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
         $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
         $this->db->join("tbl_ia_dokumen as f", "f.ia_id = a.id");
-        // $this->db->join("tbl_mou as g", "g.id = f.mou_id");
-        // $this->db->join("tbl_ia_dokumen as g", "g.id = f.mou_id");
+
+        // $this->db->select("a.id as no,a.id,d.nama_prodi,a.tingkat_ia,a.judul_kegiatan_ia,a.tanggal_awal_ia,a.tanggal_akhir_ia,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        // $this->db->select("IF(a.tingkat_ia = 'Internasional', 'Internasional', NULL) as internasional");
+        // $this->db->select("IF(a.tingkat_ia = 'Nasional', 'Nasional', NULL) as nasional");
+        // $this->db->select("IF(a.tingkat_ia = 'Wilayah', 'Wilayah', NULL) as wilayah");
+        // $this->db->from("tbl_ia as a");
+        // $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
+        // $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
+        // $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+
         if ($tingkat_ia != "") {
             $this->db->where("a.tingkat_ia", $tingkat_ia);
         }
@@ -103,7 +111,7 @@ class Ia_model extends CI_Model
         if ($kode_prodi != "") {
             $this->db->where('d.kode_prodi', $kode_prodi);
         }
-
+        $this->db->group_by("a.id,d.nama_prodi");
         $this->db->get();
         $query = $this->db->last_query();
         return $query;
@@ -172,6 +180,29 @@ class Ia_model extends CI_Model
         $this->db->join("tbl_moa_prodi as d", "d.moa_id = c.id");
         $this->db->join("tb_prodi as f", "f.kode_prodi = d. kode_prodi");
         $this->db->where("c.mou_id", $mou_id);
+        return  $this->db->get();
+    }
+
+    public function get_ia_prodi_by_ia_id($ia_id = "",$kode_prodi = "")
+    {
+        $this->db->select("a.*,f.kode_prodi,f.nama_prodi,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
+        $this->db->from("tbl_ia as a");
+        $this->db->join("tbl_moa_lembaga_mitra as b", "b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa as c", "c.id = b.moa_id");
+        $this->db->join("tbl_moa_prodi as d", "d.moa_id = c.id");
+        $this->db->join("tb_prodi as f", "f.kode_prodi = d. kode_prodi");
+        $this->db->where("a.id", $ia_id);
+        $this->db->where("d.kode_prodi", $kode_prodi);
+        return  $this->db->get();
+    }
+
+    public function get_dokumen_moa_by_ia_id($ia_id = "")
+    {
+        $this->db->select("*");
+        $this->db->from("tbl_ia as a");
+        $this->db->join("tbl_moa_lembaga_mitra as b","b.id = a.moa_lembaga_mitra_id");
+        $this->db->join("tbl_moa_dokumen as c","c.moa_id = b.moa_id");
+        $this->db->where("a.id",$ia_id);
         return  $this->db->get();
     }
 }

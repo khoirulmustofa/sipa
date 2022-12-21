@@ -82,10 +82,10 @@
             ],
             ajax: {
                 url: '<?php echo base_url('ia/list'); ?>',
-                data:{
-                  tahun_ia :  $("#tahun_ia").val(),
-                  kategori_ia :  $("#kategori_ia").val(),
-                  kode_prodi :  $("#kode_prodi").val(),
+                data: {
+                    tahun_ia: $("#tahun_ia").val(),
+                    kategori_ia: $("#kategori_ia").val(),
+                    kode_prodi: $("#kode_prodi").val(),
                 },
                 type: "POST",
                 dataType: "JSON",
@@ -106,22 +106,22 @@
                         let btn_update = ``;
                         let btn_delete = ``;
                         if (status_login == 'Fakultas') {
-                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                            btn_detail = `<a type="button" href="<?php echo base_url('ia/detail?ia_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>`;
+                                        </a>`;
 
                         }
 
                         if (status_login == 'Tata Usaha') {
-                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                            btn_detail = `<a type="button" href="<?php echo base_url('ia/detail?ia_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>`;
+                                        </a>`;
                         }
 
                         if (status_login == 'Prodi') {
-                            btn_detail = `<button type="button" onclick="btn_detail('${data}')" title="Detail" class="btn btn-info btn-sm">
+                            btn_detail = `<a type="button" href="<?php echo base_url('ia/detail?ia_id=') ?>${data}" title="Detail" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i>
-                                        </button>`;
+                                        </a>`;
                             btn_update = ` <button type="button" onclick="btn_edit('${data}')" title="Edit" class="btn btn-warning btn-sm">
                                             <i class="far fa-edit"></i>
                                         </button>`;

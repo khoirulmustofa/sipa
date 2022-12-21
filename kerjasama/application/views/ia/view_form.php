@@ -15,19 +15,32 @@ echo form_open_multipart($action, $attribute);
             <select class="form-control" id="moa_lembaga_mitra_id" name="moa_lembaga_mitra_id">
                 <option value="">--Pilih MOA--</option>
                 <?php foreach ($moa_result as $key => $value) { ?>
-                    <option value="<?php echo $value->moa_lembaga_mitra_id ?>"> <?php echo $value->nama_lembaga_mitra." (" . set_bulan_tahun($value->tanggal_moa) . "~" . set_bulan_tahun($value->tanggal_akhir_moa) . ")" ?></option>
+                    <option value="<?php echo $value->moa_lembaga_mitra_id ?>" <?php echo $value->moa_lembaga_mitra_id == $moa_lembaga_mitra_id ? "selected":"" ?>> <?php echo $value->nama_lembaga_mitra . " (" . set_bulan_tahun($value->tanggal_moa) . "~" . set_bulan_tahun($value->tanggal_akhir_moa) . ")" ?></option>
                 <?php } ?>
             </select>
         </div>
 
         <div class="form-group">
             <label>Kategori</label>
-            <select class="form-control" name="kategori_ia" id="kategori_ia">
-                <option value="">--Pilih kategori--</option>
-                <option value="Pendidikan/Pengajaran" <?php echo $kategori_ia == 'Pendidikan/Pengajaran' ? 'selected' : ''; ?>>Pendidikan/Pengajaran</option>
-                <option value="Penelitian" <?php echo $kategori_ia == 'Penelitian' ? 'selected' : ''; ?>>Penelitian</option>
-                <option value="Pengabdian Masyarakat" <?php echo $kategori_ia == 'Pengabdian Masyarakat' ? 'selected' : ''; ?>>Pengabdian Masyarakat</option>
-            </select>
+            <?php
+            $array_ketegori = array();
+            foreach ($ia_kategori_result as $key => $value) {
+                $array_ketegori[] = $value->kategori;
+            } ?>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_ia[]" value="Pendidikan/Pengajaran" <?= in_array("Pendidikan/Pengajaran", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Pendidikan/Pengajaran</span>
+                </label>
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_ia[]" value="Penelitian" <?= in_array("Penelitian", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Penelitian</span>
+                </label>
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="kategori_ia[]" value="Pengabdian Masyarakat" <?= in_array("Pengabdian Masyarakat", $array_ketegori) ? "checked" : "" ?>>
+                    <span class="form-check-sign">Pengabdian Masyarakat</span>
+                </label>
+            </div>
         </div>
 
         <div class="form-group">
@@ -65,13 +78,13 @@ echo form_open_multipart($action, $attribute);
             <div class="tambah_dosen_wrap">
                 <?php
                 if (count($ia_dosen_result) > 0) {
-                    foreach ($array_dosen as $key => $value) { ?>
-                        <?php if ($array_dosen[0] == $value) { ?>
+                    foreach ($ia_dosen_result as $key => $value) { ?>
+                        <?php if ($key == 0) { ?>
                             <div class="pb-1 pt-1">
                                 <select class="form-control" name="npk[]">
                                     <option value="">--Pilih Dosen--</option>
                                     <?php foreach ($dosen_result as $key3 => $value3) { ?>
-                                        <option value="<?php echo $value3->npk ?>" <?php echo $value3->npk == $value ? "selected" : "" ?>>
+                                        <option value="<?php echo $value3->npk ?>" <?php echo $value3->npk == $value->npk ? "selected" : "" ?>>
                                             <?php echo $value3->nama_dosen ?>
                                         </option>
                                     <?php } ?>
@@ -82,7 +95,7 @@ echo form_open_multipart($action, $attribute);
                                 <select class="form-control" name="npk[]">
                                     <option value="">--Pilih Dosen--</option>
                                     <?php foreach ($dosen_result as $key2 => $value2) { ?>
-                                        <option value="<?php echo $value2->npk ?>" <?php echo $value2->npk == $value ? "selected" : "" ?>>
+                                        <option value="<?php echo $value2->npk ?>" <?php echo $value2->npk == $value->npk ? "selected" : "" ?>>
                                             <?php echo $value2->nama_dosen ?>
                                         </option>
                                     <?php } ?>
@@ -113,24 +126,68 @@ echo form_open_multipart($action, $attribute);
         <div class="form-group">
             <label for="nama_dosen_luar_biasa">Dosen Luar Biasa</label>
             <div class="nama_dosen_luar_biasa_wrap">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="nama_dosen_luar_biasa[]" placeholder="Masukan Nama Dosen ...">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-success tambah_nama_dosen_luar_biasa">Tambah Dosen Luar Biasa</button>
+                <?php if (count($ia_dosen_luar_biasa_result) > 0) { ?>
+                    <?php foreach ($ia_dosen_luar_biasa_result as $key => $value) {
+                        if ($key == 0) { ?>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="nama_dosen_luar_biasa[]" value="<?php echo $value->nama_dosen_luar_biasa ?>" placeholder="Masukan Nama Dosen ...">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-success tambah_nama_dosen_luar_biasa">Tambah Dosen Luar Biasa</button>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="input-group pb-1 pt-1">
+                                <input type="text" class="form-control" name="nama_dosen_luar_biasa[]" value="<?php echo $value->nama_dosen_luar_biasa ?>" placeholder="Masukan Nama Dosen ...">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-danger btn_hapus_nama_dosen_luar_biasa">Hapus</button>
+                                </div>
+                            </div>
+                    <?php   }
+                    }
+                    ?>
+
+                <?php } else { ?>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="nama_dosen_luar_biasa[]" placeholder="Masukan Nama Dosen ...">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-success tambah_nama_dosen_luar_biasa">Tambah Dosen Luar Biasa</button>
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
+
             </div>
         </div>
 
         <div class="form-group">
             <label for="nama_mahasiswa">Mahasiswa</label>
             <div class="nama_mahasiswa_wrap">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="nama_mahasiswa[]" placeholder="Masukan Nama Mahasiswa ...">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-success tambah_nama_mahasiswa">Tambah Mahasiswa</button>
+                <?php if (count($ia_mahasiswa_result) > 0) { ?>
+                    <?php foreach ($ia_mahasiswa_result as $key => $value) {
+                        if ($key == 0) { ?>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="nama_mahasiswa[]" value="<?php echo $value->nama_mahasiswa ?>" placeholder="Masukan Nama Mahasiswa ...">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-success tambah_nama_mahasiswa">Tambah Mahasiswa</button>
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="input-group pb-1 pt-1">
+                                <input type="text" class="form-control" name="nama_mahasiswa[]" value="<?php echo $value->nama_mahasiswa ?>" placeholder="Masukan Nama Mahasiswa ...">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-danger btn_hapus_nama_mahasiswa">Hapus</button>
+                                </div>
+                            </div>
+                    <?php }
+                    } ?>
+                <?php } else { ?>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="nama_mahasiswa[]" placeholder="Masukan Nama Mahasiswa ...">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-success tambah_nama_mahasiswa">Tambah Mahasiswa</button>
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
+
             </div>
         </div>
 

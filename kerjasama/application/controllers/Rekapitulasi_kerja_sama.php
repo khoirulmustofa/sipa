@@ -37,9 +37,27 @@ class Rekapitulasi_kerja_sama extends CI_Controller
         $this->load->model('Ia_model');
 
         $datatables = new Datatables(new CodeigniterAdapter());
-        $query = $this->Ia_model->get_rekapitulasi_kerjasama($tingkat_ia,$kategori_ia,$kode_prodi);
+        $query = $this->Ia_model->get_rekapitulasi_kerjasama($tingkat_ia, $kategori_ia, $kode_prodi);
         $datatables->query($query);
         echo $datatables->generate();
+    }
+
+    public function detail()
+    {
+        $this->load->model('Ia_dokumen_model');
+        $this->load->model('Ia_model');
+
+        $id_ia = $this->input->get('id', TRUE);
+
+        $data['title'] = "Detail Kerjasama";
+        $data['ia_dokumen_result'] =  $this->Ia_dokumen_model->get_ia_dokumen_by_ia_id($id_ia)->result();
+        $data['moa_dokumen_result'] = $this->Ia_model->get_dokumen_moa_by_ia_id($id_ia)->result();
+
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('rekapitulasi_kerja_sama/view_detail', $data, true)
+        );
+        echo json_encode($data_response);
     }
 
     public function cetak_pdf()
@@ -60,7 +78,7 @@ class Rekapitulasi_kerja_sama extends CI_Controller
         $paper = 'A4';
         //orientasi paper potrait / landscape
         $orientation = "landscape";
-        $data['data_rekap'] = $this->Ia_model->get_rekapitulasi_kerjasama_for_pdf($tanggal_awal,$tanggal_akhir)->result();
+        $data['data_rekap'] = $this->Ia_model->get_rekapitulasi_kerjasama_for_pdf($tanggal_awal, $tanggal_akhir)->result();
         $html = $this->load->view('rekapitulasi_kerja_sama/view_cetak_pdf', $data, true);
 
         // run dompdf

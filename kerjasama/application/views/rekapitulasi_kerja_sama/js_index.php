@@ -116,19 +116,15 @@
                 data: "manfaat_kegiatan_ia",
             }, {
                 data: "tanggal_awal_ia",
+                render: function(data, type, row, meta) {
+                    let result = getFormattedDate(data) + " sd " + getFormattedDate(row['tanggal_akhir_ia']) + " (" + row['selisih_hari'] + ") Hari";
+                    return result;
+                }
             }, {
                 data: "file_dokumen",
                 render: function(data, type, row, meta) {
-                    let nama = data.split(",");
-                    let result = ``;
-
-                    for (const element of nama) {
-                        result += element + "<br>";
-                    }
-
-                    return result;
+                    return `<button type="button" onclick="btn_detail('${row['id']}')" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Lihat</button>`;
                 }
-
             }, ],
             order: [
                 [2, 'asc']
@@ -195,5 +191,30 @@
             });
         }
 
+    }
+
+    function btn_detail(id) {
+        $.ajax({
+            url: '<?php echo base_url('rekapitulasi_kerja_sama/detail') ?>',
+            data: {
+                id: id
+            },
+            type: "GET",
+            dataType: "JSON",
+            success: function(respon) {
+                Swal.close();
+                if (respon.status) {
+                    $('.modal-dialog').addClass('modal-xl');
+                    $('#view_modal_form').html(respon.view_modal_form);
+                    $('#modal_form').modal('show');
+                } else {
+                    messegeWarning(respon.messege);
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                Swal.close();
+                alert("Code Status : " + xhr.status + "\nMessege Error :" + thrownError);
+            }
+        });
     }
 </script>

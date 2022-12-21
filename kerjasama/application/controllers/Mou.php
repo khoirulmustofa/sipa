@@ -148,14 +148,14 @@ class Mou extends CI_Controller
     {
         $this->load->model('Mou_model');
         $this->load->model('Wilayah_indonesia_model');
-         $this->load->model('Ia_model');
+        $this->load->model('Ia_model');
 
         $mou_id = $this->input->get('id', TRUE);
         $mou_row = $this->Mou_model->get_mou_detail_by_id($mou_id)->row();
 
         $data['menu'] = 'menu_mou';
         $data['title'] = "Detail Memorandum of Understanding (MOU)";
-        $data['load_js'] = 'mou/js_form';
+        $data['load_js'] = 'mou/js_detail';
         $data['id'] = set_value('id', $mou_row->id);
         $data['periode'] = set_value('periode', $mou_row->periode);
         $data['tanggal'] = set_value('tanggal', $mou_row->tanggal);
@@ -176,7 +176,7 @@ class Mou extends CI_Controller
         $data['kelurahan_nama'] = set_value('kelurahan_nama', $mou_row->kelurahan_nama);
 
         $data['ia_result'] = $this->Ia_model->get_ia_prodi_by_mou_id($mou_id)->result();
-     
+
         $this->template->load('_template/main_template', 'mou/view_detail', $data);
     }
 
@@ -403,6 +403,25 @@ class Mou extends CI_Controller
                 'messege' => 'Hapus Memorandum of Understanding (MOU) GAGAL'
             );
         }
+        echo json_encode($data_response);
+    }
+
+    public function detail_list()
+    {
+        $ia_id = $this->input->get('ia_id', TRUE);
+        $kode_prodi = $this->input->get('kode_prodi', TRUE);
+
+        $this->load->model('Ia_model');
+
+        $data['menu'] = "menu_moa";
+        $data['title'] = 'Table Implemantasi Arangement (IA) Prodi';
+
+        $data['ia_row'] = $this->Ia_model->get_ia_prodi_by_ia_id($ia_id, $kode_prodi)->row();
+
+        $data_response =  array(
+            'status' => true,
+            'view_modal_form' => $this->load->view('mou/view_detail_list', $data, true)
+        );
         echo json_encode($data_response);
     }
 }

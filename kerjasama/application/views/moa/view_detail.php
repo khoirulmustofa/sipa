@@ -104,12 +104,19 @@
                                         <td>:</td>
                                         <td><?php
                                             $doc_pendukung = "";
-                                            foreach ($moa_dokumen_result as $key => $value) {
-                                                $doc_pendukung .= $value->jenis_dokumen;
-                                            }
-                                            echo $doc_pendukung;
-                                            ?></td>
+                                            foreach ($moa_dokumen_result as $key => $value) { ?>
+                                                <div style="padding-top: 3px;padding-bottom: 3px;">
+                                                    <?php echo $value->jenis_dokumen ?>
+                                                    <br>
+                                                    <?php echo $value->nama_file ?>
+                                                    <br>
+                                                    <button type="button" onclick="btn_show_dok_pendukung('<?php echo $value->file_dokumen ?>')" class="btn btn-info btn-sm">Lihat</button>
+                                                    <hr>
+                                                </div>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
+
 
                                     <tr>
                                         <th>Ditujukan Kepada Prodi</th>
