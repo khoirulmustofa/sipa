@@ -184,16 +184,16 @@
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let date_sekarang = new Date();
-                        let tanggal_akhir = new Date(row['tanggal_akhir_moa']);
-                        let taggal_6_bulan = addMonths(date_sekarang, 3)
+                        let tanggal_akhir = new Date(row['tanggal_akhir']);
+                        var taggal_6_bulan = addMonths(date_sekarang, 3)
                         let result = ``;
                         if (tanggal_akhir > date_sekarang && tanggal_akhir <
                             new Date(taggal_6_bulan)) {
-                            result = "<div class='berkedip'>Akan Berakhir</div>";
+                            result = `<button type="button" class="btn btn-warning btn-sm berkedip" id="alert_demo_3_1">Akan Berakhir</button>`;
                         } else if (tanggal_akhir < date_sekarang) {
-                            result = "Berakhir";
+                            result = `<button type="button" class="btn btn-danger btn-sm" > Berakhir</button>`;
                         } else {
-                            result = "Aktif";
+                            result = `<button type="button" class="btn btn-success btn-sm" >Aktif</button>`;
                         }
                         return result;
                     }
