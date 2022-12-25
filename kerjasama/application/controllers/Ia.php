@@ -125,6 +125,11 @@ class Ia extends CI_Controller
             );
             echo json_encode($data_response);
         } else {
+             // cek status_login ?
+        $kode_prodi = "";
+        if (($_SESSION['status_login'] == "Prodi")) {
+            $kode_prodi = $_SESSION['kode_prodi'];
+        }
 
             $tanda_waktu = date('Y:m:d H:i:s');
             $data['moa_lembaga_mitra_id'] = $this->input->post('moa_lembaga_mitra_id', TRUE);
@@ -133,6 +138,7 @@ class Ia extends CI_Controller
             $data['manfaat_kegiatan_ia'] = $this->input->post('manfaat_kegiatan_ia', TRUE);
             $data['tanggal_awal_ia'] = $this->input->post('tanggal_awal_ia', TRUE);
             $data['tanggal_akhir_ia'] = $this->input->post('tanggal_akhir_ia', TRUE);
+            $data['kode_prodi'] = $kode_prodi;
             $data['waktu_buat'] = $tanda_waktu;
             // insert into tbl_ia
             $this->Ia_model->insert_ia($data);

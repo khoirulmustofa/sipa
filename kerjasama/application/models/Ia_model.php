@@ -12,7 +12,7 @@ class Ia_model extends CI_Model
         $this->db->from("tbl_ia as a");
         $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id");
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
-        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = a. kode_prodi");
         $this->db->join("tbl_ia_kategori as e", "e.ia_id = a. id");
         if ($kode_prodi != "") {
             $this->db->where('c.kode_prodi', $kode_prodi);
@@ -27,7 +27,7 @@ class Ia_model extends CI_Model
         if ($kategori_ia != "") {
             $this->db->where('e.kategori', $kategori_ia);
         }
-
+        $this->db->group_by('c.kode_prodi');
         $this->db->get();
         $query = $this->db->last_query();
         return $query;
@@ -89,7 +89,7 @@ class Ia_model extends CI_Model
         $this->db->from("tbl_ia as a");
         $this->db->join("tbl_moa_lembaga_mitra  as b", "b.id = a.moa_lembaga_mitra_id",);
         $this->db->join("tbl_moa_prodi as c", "c.moa_id = b. moa_id");
-        $this->db->join("tb_prodi as d", "d.kode_prodi = c. kode_prodi");
+        $this->db->join("tb_prodi as d", "d.kode_prodi = a. kode_prodi");
         $this->db->join("tbl_ia_dokumen as f", "f.ia_id = a.id");
 
         // $this->db->select("a.id as no,a.id,d.nama_prodi,a.tingkat_ia,a.judul_kegiatan_ia,a.tanggal_awal_ia,a.tanggal_akhir_ia,DATEDIFF(a.tanggal_akhir_ia,a.tanggal_awal_ia) as selisih_hari");
