@@ -24,13 +24,14 @@ CREATE TABLE `tbl_ia` (
   `manfaat_kegiatan_ia` text DEFAULT NULL,
   `tanggal_awal_ia` date DEFAULT NULL,
   `tanggal_akhir_ia` date DEFAULT NULL,
+  `kode_prodi` char(20) DEFAULT NULL,
   `waktu_buat` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_ia` */
 
-insert  into `tbl_ia`(`id`,`moa_lembaga_mitra_id`,`tingkat_ia`,`judul_kegiatan_ia`,`manfaat_kegiatan_ia`,`tanggal_awal_ia`,`tanggal_akhir_ia`,`waktu_buat`) values (2,26,'Wilayah','Judul Kegiatan','Judul Kegiatan','2022-12-01','2022-12-19','2022-12-19 20:43:12'),(3,23,'Internasional','Macan Asia','Haha','2022-12-20','2022-12-31','2022-12-20 19:13:52');
+insert  into `tbl_ia`(`id`,`moa_lembaga_mitra_id`,`tingkat_ia`,`judul_kegiatan_ia`,`manfaat_kegiatan_ia`,`tanggal_awal_ia`,`tanggal_akhir_ia`,`kode_prodi`,`waktu_buat`) values (1,26,'Wilayah','Judul Kegiatan','Manfaat Kegiatan','2022-12-01','2023-01-31','5','2022-12-26 06:07:06');
 
 /*Table structure for table `tbl_ia_dokumen` */
 
@@ -43,11 +44,11 @@ CREATE TABLE `tbl_ia_dokumen` (
   `file_dokumen` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nama_file` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_ia_dokumen` */
 
-insert  into `tbl_ia_dokumen`(`id`,`ia_id`,`jenis_dokumen`,`file_dokumen`,`nama_file`) values (1,1,'Absensi','doc_ia_20221215055135.png',''),(2,1,'Materi','doc_ia_202212150551351.png',''),(3,2,'Absensi','doc_ia_20221219084312.png',''),(4,3,'Surat','doc_ia_20221220071352.pdf','12345'),(5,3,'Foto','doc_ia_20221220071352.jpg','');
+insert  into `tbl_ia_dokumen`(`id`,`ia_id`,`jenis_dokumen`,`file_dokumen`,`nama_file`) values (1,1,'Absensi','doc_ia_20221226060706.pdf','');
 
 /*Table structure for table `tbl_ia_dosen` */
 
@@ -58,11 +59,11 @@ CREATE TABLE `tbl_ia_dosen` (
   `ia_id` bigint(20) DEFAULT NULL,
   `npk` char(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_ia_dosen` */
 
-insert  into `tbl_ia_dosen`(`id`,`ia_id`,`npk`) values (1,1,'61023099301'),(2,1,'51024077901'),(11,2,'51031126801'),(12,2,'28820423419'),(13,2,'11013066803'),(14,2,'51018088102'),(15,3,'51024077901'),(16,3,'51018088102');
+insert  into `tbl_ia_dosen`(`id`,`ia_id`,`npk`) values (1,1,'51007058402');
 
 /*Table structure for table `tbl_ia_dosen_luar_biasa` */
 
@@ -73,11 +74,11 @@ CREATE TABLE `tbl_ia_dosen_luar_biasa` (
   `ia_id` bigint(20) DEFAULT NULL,
   `nama_dosen_luar_biasa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_ia_dosen_luar_biasa` */
 
-insert  into `tbl_ia_dosen_luar_biasa`(`id`,`ia_id`,`nama_dosen_luar_biasa`) values (1,1,'Dosen Luar Biasa 1'),(2,1,'Dosen Luar Biasa 2'),(11,2,'Dosen Luar Biasa 1'),(12,2,'Dosen Luar Biasa 1'),(13,2,'Dosen Luar Biasa 1'),(14,2,'Dosen Luar Biasa 1'),(15,3,'jdjsjd');
+insert  into `tbl_ia_dosen_luar_biasa`(`id`,`ia_id`,`nama_dosen_luar_biasa`) values (1,1,'Dosen Luar Biasa');
 
 /*Table structure for table `tbl_ia_kategori` */
 
@@ -88,11 +89,11 @@ CREATE TABLE `tbl_ia_kategori` (
   `ia_id` bigint(20) DEFAULT NULL,
   `kategori` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_ia_kategori` */
 
-insert  into `tbl_ia_kategori`(`id`,`ia_id`,`kategori`) values (10,2,'Pendidikan/Pengajaran'),(11,2,'Penelitian'),(12,2,'Pengabdian Masyarakat'),(13,3,'Pendidikan/Pengajaran'),(14,3,'Penelitian');
+insert  into `tbl_ia_kategori`(`id`,`ia_id`,`kategori`) values (1,1,'Pendidikan/Pengajaran'),(2,1,'Penelitian'),(3,1,'Pengabdian Masyarakat');
 
 /*Table structure for table `tbl_ia_mahasiswa` */
 
@@ -103,11 +104,11 @@ CREATE TABLE `tbl_ia_mahasiswa` (
   `ia_id` bigint(20) DEFAULT NULL,
   `nama_mahasiswa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_ia_mahasiswa` */
 
-insert  into `tbl_ia_mahasiswa`(`id`,`ia_id`,`nama_mahasiswa`) values (1,1,'Mahasiswa 1'),(2,1,'Mahasiswa 2'),(11,2,'Mahasiswa 1'),(12,2,'Mahasiswa 1'),(13,2,'Mahasiswa 1'),(14,2,'Mahasiswa 1'),(15,3,'xjajdj');
+insert  into `tbl_ia_mahasiswa`(`id`,`ia_id`,`nama_mahasiswa`) values (1,1,'Mahasiswa');
 
 /*Table structure for table `tbl_moa` */
 
@@ -161,11 +162,11 @@ CREATE TABLE `tbl_moa_kategori` (
   `moa_id` bigint(20) DEFAULT NULL,
   `kategori` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `tbl_moa_kategori` */
 
-insert  into `tbl_moa_kategori`(`id`,`moa_id`,`kategori`) values (24,1,'Penelitian'),(25,1,'Pengabdian Masyarakat'),(26,2,'Penelitian'),(27,3,'Pendidikan/Pengajaran'),(28,4,'Pendidikan/Pengajaran'),(29,4,'Pengabdian Masyarakat');
+insert  into `tbl_moa_kategori`(`id`,`moa_id`,`kategori`) values (24,1,'Penelitian'),(25,1,'Pengabdian Masyarakat'),(26,2,'Penelitian'),(27,3,'Pendidikan/Pengajaran'),(32,4,'Pendidikan/Pengajaran'),(33,4,'Pengabdian Masyarakat');
 
 /*Table structure for table `tbl_moa_lembaga` */
 
@@ -189,11 +190,11 @@ CREATE TABLE `tbl_moa_lembaga_mitra` (
   `moa_id` bigint(20) DEFAULT NULL,
   `nama_lembaga_mitra` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_moa_lembaga_mitra` */
 
-insert  into `tbl_moa_lembaga_mitra`(`id`,`moa_id`,`nama_lembaga_mitra`) values (23,1,'Nama Lembaga Mitra 1'),(24,1,'Nama Lembaga Mitra 4'),(25,2,'dd'),(26,3,'CV. Hartono'),(27,4,'cx');
+insert  into `tbl_moa_lembaga_mitra`(`id`,`moa_id`,`nama_lembaga_mitra`) values (23,1,'Nama Lembaga Mitra 1'),(24,1,'Nama Lembaga Mitra 4'),(25,2,'dd'),(26,3,'CV. Hartono'),(29,4,'Nama Lembaga Mitra Test');
 
 /*Table structure for table `tbl_moa_prodi` */
 
@@ -204,11 +205,11 @@ CREATE TABLE `tbl_moa_prodi` (
   `moa_id` bigint(20) DEFAULT NULL,
   `kode_prodi` char(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tbl_moa_prodi` */
 
-insert  into `tbl_moa_prodi`(`id`,`moa_id`,`kode_prodi`) values (34,1,'5'),(35,1,'3'),(36,1,'2'),(37,2,'6'),(38,2,'5'),(39,3,'6'),(40,3,'5'),(41,3,'3'),(42,4,'6'),(43,4,'5');
+insert  into `tbl_moa_prodi`(`id`,`moa_id`,`kode_prodi`) values (34,1,'5'),(35,1,'3'),(36,1,'2'),(37,2,'6'),(38,2,'5'),(39,3,'6'),(40,3,'5'),(41,3,'3'),(46,4,'6'),(47,4,'2'),(48,4,'4');
 
 /*Table structure for table `tbl_mou` */
 
